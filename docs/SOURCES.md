@@ -22,3 +22,5 @@
 - NCRI 与 MonitorBench 的数据来源、许可和任务说明以对应上游仓库为准。
 
 根目录保留原 CoT-Control 的 MIT LICENSE。各源码、题库、压缩包和数据集的许可、引用要求与 canary 信息保留在对应依赖 clone 中。
+
+新评测包使用 uv.lock 中固定的公开 Inspect SDK。任务源码和引用的参考函数位于 src/cot_monitorability，来源与许可证见根 NOTICE 和 licenses。任务数据归档及 SHA-256 见包内 asset_specs.json；旧 dependencies.lock.json 保留旧服务器环境来源。

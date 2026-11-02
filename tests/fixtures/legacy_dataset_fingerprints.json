@@ -1,0 +1,26 @@
+{
+  "cot_controllability_qa": {
+    "samples": 427,
+    "sha256": "b707054747eba3726bd8b806ce130832ae0b06097374b4d5f0b2b913d7f200fa"
+  },
+  "openai_monitorability_process": {
+    "samples": 52,
+    "sha256": "19c67357b95aadc3758f61ea67582d9d00abc78c0b23b06be07e4932dacf04ba"
+  },
+  "openai_monitorability_intervention": {
+    "samples": 150,
+    "sha256": "9f5118155556381acb17efb2c9d2a6bdc810197503b9a55a02426e739c4b65d1"
+  },
+  "cot_immediacy_2510": {
+    "samples": 445,
+    "sha256": "debde9c41d73242f934a5ac5807a5c0ad1c5bed099196ec92b6fa9625dae04f5"
+  },
+  "ncri_bench": {
+    "samples": 83,
+    "sha256": "fc20dd0366d32b753857a9123ca06bb0eeb4bc6e5426667b857ed46e46998b31"
+  },
+  "monitorbench": {
+    "samples": 108,
+    "sha256": "ae009a58e839e5812e0e470874a69b103b8f67b8344d589b3eff290532efde6f"
+  }
+}

@@ -27,7 +27,6 @@ Thumbs.db
 .ipynb_checkpoints/
 
 # uv
-uv.lock
 repos/
 inspect_evals/
 inspect_ai/
@@ -37,3 +36,9 @@ eval_logs/*
 !eval_logs/index.json
 *.log
 /tmp/
+.venv-package/
+.ruff_cache/
+.pytest_cache/
+.mypy_cache/
+dist/
+build/

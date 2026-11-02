@@ -1,0 +1,37 @@
+{
+  "cot-control": {
+    "repository": "https://github.com/YuehHanChen/CoTControl.git",
+    "commit": "5d78aeffe0152ba087c2d31cd07712d029c64785",
+    "archive_url": "https://codeload.github.com/YuehHanChen/CoTControl/tar.gz/5d78aeffe0152ba087c2d31cd07712d029c64785",
+    "sha256": "64041b7385f4234cd3cda4ed02749209405b353faa29ea6afbcb0f592c8c56af"
+  },
+  "openai-monitorability": {
+    "repository": "https://github.com/openai/monitorability-evals.git",
+    "commit": "d14f181a0623f7949fdb2d8c3f15874115fa44ba",
+    "archive_url": "https://codeload.github.com/openai/monitorability-evals/tar.gz/d14f181a0623f7949fdb2d8c3f15874115fa44ba",
+    "sha256": "d1e40622187cf25dc52b8dac68bc228e8bb10eef3fc6384a42719bbaafc6d5bc"
+  },
+  "ncri": {
+    "repository": "https://github.com/neelnanda-io/nocot-bench.git",
+    "commit": "7e6ef5f128b32467723cf27600d1555a4bf1e80c",
+    "archive_url": "https://codeload.github.com/neelnanda-io/nocot-bench/tar.gz/7e6ef5f128b32467723cf27600d1555a4bf1e80c",
+    "sha256": "4801b6913a86a0a6b59358d72d1fe11f4d01ff3bce9241ede2b9b8b9989cef06",
+    "data_archive": {
+      "path": "data/nocot_data.zip",
+      "sha256": "24dd13f8e2c08feae3265d98235ffa580e2d33e435cfb0a9f88bf46fecbc1e30",
+      "password": "lantern-orchard-pebble"
+    }
+  },
+  "monitorbench": {
+    "repository": "https://github.com/ASTRAL-Group/MonitorBench.git",
+    "commit": "b6229e4b8ea9abcec38d61159c9cbd0f577ddf35",
+    "archive_url": "https://codeload.github.com/ASTRAL-Group/MonitorBench/tar.gz/b6229e4b8ea9abcec38d61159c9cbd0f577ddf35",
+    "sha256": "e2c4e48978fece764935d3aa213ef461f014c3b8faac6703b57647330a76ea17"
+  },
+  "monitorbench-port": {
+    "repository": "https://github.com/semsorock/inspect-evals-monitor-bench.git",
+    "commit": "9452b3ddcc1be81c4322e141dceb6f6c69b49434",
+    "archive_url": "https://codeload.github.com/semsorock/inspect-evals-monitor-bench/tar.gz/9452b3ddcc1be81c4322e141dceb6f6c69b49434",
+    "sha256": "b93b99a43403d66db8533073ce7dcf19d7b9279561c9ca17995dc519e9f63d80"
+  }
+}

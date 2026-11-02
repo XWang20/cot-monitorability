@@ -1,0 +1,21 @@
+id: openai-monitorability-process
+title: OpenAI process-level CoT monitorability
+description: Evaluates whether generated reasoning makes a required theorem path detectable, using the pinned OpenAI process dataset and monitor prompts. The default monitor scope is cot_only.
+group: Safeguards
+contributors:
+- XWang20
+version: 1-A
+tasks:
+- name: openai_monitorability_process
+  dataset_samples: 52
+  task_path: src/cot_monitorability/openai_process/openai_process.py
+external_assets:
+- type: direct_url
+  source: https://codeload.github.com/openai/monitorability-evals/tar.gz/d14f181a0623f7949fdb2d8c3f15874115fa44ba
+  fetch_method: download_and_verify
+  state: pinned
+  comment: Archive checksum and reference revision are recorded in asset_specs.json.
+metadata:
+  requires:
+    internet: true
+arxiv: https://arxiv.org/abs/2512.18311

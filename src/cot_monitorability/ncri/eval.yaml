@@ -1,0 +1,27 @@
+id: ncri-bench
+title: 'NCRI: configurable frozen no-CoT reasoning banks'
+description: Runs the pinned nocot-bench request, witnesses, grading and frozen placement logic. The default bank is arithmetic; banks=all_ncri selects the configured NCRI bank set.
+group: Reasoning
+contributors:
+- XWang20
+version: 1-A
+tasks:
+- name: ncri_bench
+  dataset_samples: 83
+  task_path: src/cot_monitorability/ncri/ncri.py
+  comment: 'Original methodology: https://www.lesswrong.com/posts/eRmzz8J8Qkzqvzrgg/astra-can-do-a-concerning-amount-with-no-chain-of-thought; no verified arXiv paper URL is supplied.'
+external_assets:
+- type: direct_url
+  source: https://codeload.github.com/neelnanda-io/nocot-bench/tar.gz/7e6ef5f128b32467723cf27600d1555a4bf1e80c
+  fetch_method: download_and_verify
+  state: pinned
+  comment: Archive checksum and reference revision are recorded in asset_specs.json.
+- type: huggingface
+  source: https://huggingface.co/datasets/Idavidrein/gpqa/tree/83022cefff930aea54f654c0b282e74b9eeda5c6
+  fetch_method: download_and_verify
+  state: pinned
+  gated: manual
+  comment: Optional GPQA bank. HF_TOKEN and accepted dataset terms are required; the reference fetcher validates rendered item hashes against the frozen manifest.
+metadata:
+  requires:
+    internet: true

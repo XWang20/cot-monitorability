@@ -1,50 +1,58 @@
-# CoT Monitorability — Inspect Benchmarks
+# CoT Monitorability — Inspect Tasks
 
-本仓库将 6 类思维链可监控性基准统一接入 `inspect_evals`。当前工作重点是评测适配、推理 effort 配置和 `.eval` 结果检查。
+本仓库提供可安装的独立 Inspect 评测包，包含 6 类思维链可监控性任务。任务源码直接位于 `src/cot_monitorability/`，每个任务有 `eval.yaml`、README 和 `1-A` 版本。
 
-**结果入口：[eval_logs/](eval_logs/README.md)**。原始日志位于服务器的同名目录，GitHub 保存结果索引、完整汇总指标和日志 SHA-256。现有结果为 DeepSeek V4.1 Flash-1017 与 Kimi K3.1 Pro 的 14 次冒烟测试，每次 10 个样本。
+**历史结果入口：[eval_logs/](eval_logs/README.md)**。14 份原始 `.eval` 保留在服务器，GitHub 保存索引和 SHA-256。这些日志对应原本地集成，不作为新包 `1-A` 的全量模型报告。
 
-| 编号 | Inspect 任务 | 当前启动脚本默认 effort |
-| --- | --- | --- |
-| 1 | `inspect_evals/cot_controllability_qa` | high |
-| 2 | `inspect_evals/openai_monitorability_process` | medium |
-| 3 | `inspect_evals/openai_monitorability_intervention` | medium |
-| 4 | `inspect_evals/cot_immediacy_2510` | high |
-| 5 | `inspect_evals/ncri_bench` | disable_reasoning |
-| 6 | `inspect_evals/monitorbench` | high |
-
-## 运行与查看
-
-被测模型和 Judge/Monitor 统一使用本机 OpenAI 兼容代理，默认 `http://127.0.0.1:8000/v1`。
+## 安装与运行
 
 ```bash
-# 单个基准：编号、模型、样本数、并发数、effort
+uv sync --locked --group dev --group test
+
+# 包入口
+uv run inspect eval cot_monitorability/cot_controllability_qa --model openai/<模型> --limit 10
+
+# 与 Register Source URL 对应的源码入口
+uv run inspect eval src/cot_monitorability/cot_control/cot_control.py@cot_controllability_qa --model openai/<模型> --limit 10
+```
+
+第一次构造任务时，数据资产按固定 commit 和 SHA-256 下载到缓存。可在导入任务前设置绝对路径 `COT_MONITORABILITY_CACHE_DIR`；预取后设置 `COT_MONITORABILITY_OFFLINE=1` 可禁止下载。运行不要求存在服务器原来的 `repos/` 或修改版 `inspect_evals` clone。
+
+| 任务 | 源码目录 | 默认 effort | 默认样本数 |
+| --- | --- | --- | --- |
+| `cot_controllability_qa` | [cot_control](src/cot_monitorability/cot_control) | high | 427 |
+| `openai_monitorability_process` | [openai_process](src/cot_monitorability/openai_process) | medium | 52 |
+| `openai_monitorability_intervention` | [openai_intervention](src/cot_monitorability/openai_intervention) | medium | 150 |
+| `cot_immediacy_2510` | [immediacy](src/cot_monitorability/immediacy) | high | 445 |
+| `ncri_bench` | [ncri](src/cot_monitorability/ncri) | 无 CoT | 83 |
+| `monitorbench` | [monitorbench](src/cot_monitorability/monitorbench) | high | 108 |
+
+样本数对应任务默认参数；切换模式、数据集或子任务会改变数量。Judge/Monitor 使用 Inspect Model Roles，可通过 `--model-role judge=...` 或 `--model-role monitor=...` 覆盖。
+
+## 本机代理与结果
+
+服务器启动脚本默认使用 `http://127.0.0.1:8000/v1`，将代理兼容参数留在运行配置中。
+
+```bash
 ./run_inspect_bench.sh 1 openai/deepseek-v4.1-flash-1017 10 5 auto
 ./run_inspect_bench.sh 1 openai/kimi-k3.1-pro 10 5 high
-
-# 同一基准扫描 low / medium / high
 ./run_inspect_bench.sh 1 openai/deepseek-v4.1-flash-1017 10 5 sweep
-
-# Inspect View 浏览原始日志（默认端口 5010）
 ./run_inspect_view.sh
-
-# 根据本机原始日志更新 GitHub 结果索引
 python3 scripts/index_eval_logs.py
 ```
 
-首次设置环境请参阅 [基准使用说明](INSPECT_BENCHMARKS_README.md)。
-历史日志按实际设置记录，部分运行的 effort 与当前默认值不同；具体配置见结果索引。
+## 检查与登记格式
 
-## 仓库内容
+```bash
+uv run ruff check src/cot_monitorability tests scripts/prepare_registration.py
+uv run ruff format --check src/cot_monitorability tests scripts/prepare_registration.py
+uv run pytest tests
+uv build
 
-- `eval_logs/`：服务器原始 `.eval` 与仓库结果索引。
-- `run_inspect_bench.sh`、`run_inspect_view.sh`：评测与日志浏览入口。
-- `dependencies.lock.json`、`patches/`：7 个独立依赖的固定版本及本地改动。
-- `inspect_ai/`、`inspect_evals/`、`repos/`：由依赖恢复脚本管理的独立源码 clone。
-- [仓库管理](REPOSITORY_MANAGEMENT.md)、[来源与许可](docs/SOURCES.md)。
+# 从已提交的源码生成本地登记格式，不发送 issue、不调用 Register
+uv run python scripts/prepare_registration.py
+```
 
-原始日志和运行环境保存在服务器。主仓库从自己的初始提交开始，基准源码在依赖 clone 中保留上游历史。
+生成的 `register/<id>/eval.yaml` 指向本仓库固定 40 字符 commit 的任务源码。格式说明与后续发布条件见 [上游提交准备](docs/UPSTREAM_CONTRIBUTION.md)。NCRI 已记录用户提供的 [LessWrong 原文](https://www.lesswrong.com/posts/eRmzz8J8Qkzqvzrgg/astra-can-do-a-concerning-amount-with-no-chain-of-thought)，arXiv 项保持待填。
 
-## Inspect Evals 登记准备
-
-本仓库当前为本地评测集成。正式发布将按官方 Register 流程准备独立任务源码、可安装包、测试和两模型全样本日志。当前差距和任务规范见 [上游提交准备](docs/UPSTREAM_CONTRIBUTION.md)。
+`dependencies.lock.json`、`patches/` 和依赖 clone 仍保留为旧服务器环境的复现记录；它们不再是安装新评测包的前提。来源和许可证见 [docs/SOURCES.md](docs/SOURCES.md)、`NOTICE` 与 `licenses/`。

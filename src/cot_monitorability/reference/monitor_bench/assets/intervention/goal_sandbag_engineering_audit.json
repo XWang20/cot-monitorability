@@ -1,0 +1,109 @@
+{
+  "audit_date": "2026-10-15",
+  "task": "goal_sandbag.engineering",
+  "monitorbench_revision": "43dda5994bfb16d34b1c30d4b3482d78a714e640",
+  "monitorbench_source_path": "datasets/goal_sandbag/mmlu_pro/MMLU_Pro.json",
+  "monitorbench_source_sha256": "2f34301bbd16ca1b6bceba864dbba53fd372f26cc56337aa60500fde73f68f56",
+  "derived_asset_path": "datasets/goal_sandbag_engineering.json",
+  "derived_asset_sha256": "2abe0ed1133146a13bf78f31fe7a38c0680105af7563b94342d344c1df4f4d7b",
+  "retained_fields": [
+    "question_id",
+    "question",
+    "options",
+    "answer"
+  ],
+  "removed_fields": [
+    "answer_index",
+    "category",
+    "cot_content",
+    "src"
+  ],
+  "transformation": "Keep question_id, question, options, and answer in that key order; preserve source row and option order and every string value; UTF-8 JSON, ensure_ascii=False, indent=2, final LF.",
+  "official_dataset": "TIGER-Lab/MMLU-Pro",
+  "official_revision": "b189ec765aa7ed75c8acfea42df31fdae71f97be",
+  "official_split": "test",
+  "official_file": "data/test-00000-of-00001.parquet",
+  "official_file_sha256": "0e24a191921c2f453518a537a8b2117bd137e7714d4ef1565e9ba06c1ecb9ad8",
+  "official_lfs_sha256": "0e24a191921c2f453518a537a8b2117bd137e7714d4ef1565e9ba06c1ecb9ad8",
+  "official_card_sha256": "4bd710f67da3fa359a33edce1b4b5816b3de416c823c2624ba5e89c2557d2a47",
+  "official_row_count": 12032,
+  "pinned_row_count": 150,
+  "unique_source_ids": 150,
+  "source_ids_sha256": "b0f40cb2ae90d17ff60b769b0bddaccf97dcfa32ed404ad3032f3915796221d2",
+  "targets_sha256": "d2e9eb59523abf9217e3a91995807fa32c92de4ff9bc0f9438f28a09cb8c7988",
+  "all_ids_matched": true,
+  "all_answers_and_indices_match": true,
+  "exact_complete_record_matches": 148,
+  "option_count_distribution": {
+    "4": 10,
+    "8": 1,
+    "9": 1,
+    "10": 138
+  },
+  "target_distribution": {
+    "A": 15,
+    "B": 10,
+    "C": 12,
+    "D": 14,
+    "E": 16,
+    "F": 18,
+    "G": 14,
+    "H": 19,
+    "I": 17,
+    "J": 15
+  },
+  "upstream_source_distribution": {
+    "ori_mmlu-electrical_engineering": 3,
+    "stemez-ElectricCircuits": 11,
+    "stemez-ElectricalMachines": 19,
+    "stemez-Electromagnetics": 18,
+    "stemez-ElectronicCommunications": 20,
+    "stemez-FluidMechanics": 9,
+    "stemez-HeatTransfer": 13,
+    "stemez-MachineDesign": 6,
+    "stemez-Thermodynamics": 29,
+    "stemez-TransportPhenomena": 22
+  },
+  "differences": [
+    {
+      "source_index": 0,
+      "question_id": 11535,
+      "differing_fields": [
+        {
+          "field": "question",
+          "pinned_field_sha256": "24893027ceb5b96058d769b7dcf484ae176acfdccb97e3de427995160783b14c",
+          "official_field_sha256": "ab19a5f8a009739b3a62b3e334b511346a46d9bf21075fc5ee97367215775cb6",
+          "only_whitespace": true
+        }
+      ],
+      "description": "Pinned question contains one space removed in the official snapshot.",
+      "resolution": "Preserve pinned MonitorBench text and option order."
+    },
+    {
+      "source_index": 5,
+      "question_id": 11572,
+      "differing_fields": [
+        {
+          "field": "options",
+          "pinned_field_sha256": "cae52b8e8f47125ee961cb2ecae7cf580026a337774e722a11812de2ee4a2888",
+          "official_field_sha256": "3be10a42a042bef495eedeb0aec7b32791f8b328e7c8c871b3033107e01decb5",
+          "only_whitespace": true
+        }
+      ],
+      "description": "Pinned options B, D, E, and J contain U+000B vertical tabs absent from the official snapshot.",
+      "resolution": "Preserve pinned MonitorBench text and option order."
+    }
+  ],
+  "rights": {
+    "dataset_card_license": "MIT",
+    "dataset_card_url": "https://huggingface.co/datasets/TIGER-Lab/MMLU-Pro/blob/b189ec765aa7ed75c8acfea42df31fdae71f97be/README.md",
+    "dataset_specific_copyright_notice": "Not supplied in the official dataset snapshot.",
+    "paper_source_license_statement": "MMLU-Pro paper Appendix A.5 declares the dataset MIT and the STEM website source open-licensed.",
+    "software_repository_license": "Apache-2.0",
+    "software_license_revision": "c992affcc124fd7238f13221e8ab8262928342a3",
+    "software_license_sha256": "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4",
+    "software_code_copied": false,
+    "source_website_terms_independently_verified": false,
+    "basis": "Dataset-level MIT declaration and authors' published source-license statement; no grant is inferred from MonitorBench's license."
+  }
+}

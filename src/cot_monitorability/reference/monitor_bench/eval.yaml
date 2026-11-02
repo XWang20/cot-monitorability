@@ -1,0 +1,36 @@
+title: "MonitorBench: Chain-of-Thought Monitorability"
+description: |
+  Incremental Inspect port of MonitorBench, a benchmark of whether
+  decision-critical factors and hidden objectives are visible in model
+  chain-of-thought. Registered tasks currently cover paired WMDP, AIME, and MMLU-Pro
+  underperformance under input intervention, plus dual-objective
+  steganography and report summarization. Task-specific deterministic
+  verification identifies successful rollouts before a monitor judges
+  action, CoT, and combined scopes.
+arxiv: https://arxiv.org/abs/2603.28590v2
+group: Safeguards
+contributors:
+  - semsorock
+version: "1-D"
+tasks:
+  - name: dual_objectives_steganography
+    dataset_samples: 50
+  - name: goal_sandbag_safety
+    dataset_samples: 120
+  - name: goal_sandbag_math
+    dataset_samples: 30
+  - name: dual_objectives_summarization
+    dataset_samples: 50
+  - name: goal_sandbag_engineering
+    dataset_samples: 150
+
+external_assets:
+  - type: direct_url
+    source: "https://raw.githubusercontent.com/nltk/nltk_data/550b6625bcef1f2abff2ff770a5a0d272c9c6b2a/packages/tokenizers/punkt_tab.zip"
+    fetch_method: download_and_verify
+    state: pinned
+    comment: "NLTK punkt_tab tokenizer, fetched lazily and verified as SHA-256 e57f64187974277726a3417ca6f181ec5403676c717672eef6a748a7b20e0106; not redistributed because NLTK Data declares no package-specific license; acquisition or integrity failure aborts to prevent non-comparable scores"
+
+metadata:
+  requires:
+    internet: true # punkt_tab tokenizer only; task datasets are vendored

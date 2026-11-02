@@ -1,0 +1,55 @@
+CoT Monitorability
+Original integration and packaging code: Xing Wang and contributors.
+The package includes copied or adapted reference implementations with their
+original notices and licence texts retained under licenses/.
+
+CoT-Control
+Copyright (c) 2025 Yueh-Han Chen. MIT.
+Source: https://github.com/YuehHanChen/CoTControl
+Revision: 5d78aeffe0152ba087c2d31cd07712d029c64785
+Copied/adapted reference helpers in src/cot_monitorability/reference/cot_control/.
+The Inspect adapter was migrated from our local integration into
+src/cot_monitorability/cot_control/.
+
+OpenAI monitorability-evals
+Copyright 2025 OpenAI. Apache-2.0.
+Source: https://github.com/openai/monitorability-evals
+Revision: d14f181a0623f7949fdb2d8c3f15874115fa44ba
+Copied/adapted run_eval_scaffold_lib.py and metric/intervention_gmean_metric.py
+in src/cot_monitorability/reference/openai_scaffold.py and openai_metrics.py.
+Local task adapters migrated into openai_common.py, openai_process/, and
+openai_intervention/. Original NOTICE is retained under licenses/.
+Dataset attribution remains in the pinned upstream archive.
+
+nocot-bench
+Copyright (c) 2026 Neel Nanda. MIT, subject to the source's dataset exceptions.
+Source: https://github.com/neelnanda-io/nocot-bench
+Revision: 7e6ef5f128b32467723cf27600d1555a4bf1e80c
+Copied/adapted reference implementations in src/cot_monitorability/reference/nocot/.
+Local task adapter migrated into src/cot_monitorability/ncri/.
+Original licence scope and dataset provenance remain with the pinned archive.
+
+MonitorBench
+Copyright (c) 2026 ASTRAL Group @ UIUC. MIT.
+Source: https://github.com/ASTRAL-Group/MonitorBench
+Revision: b6229e4b8ea9abcec38d61159c9cbd0f577ddf35
+Local task adapter migrated into src/cot_monitorability/monitorbench/.
+
+Community MonitorBench Inspect port
+Copyright (c) 2026. MIT.
+Source: https://github.com/semsorock/inspect-evals-monitor-bench
+Revision: 9452b3ddcc1be81c4322e141dceb6f6c69b49434
+Copied/adapted package in src/cot_monitorability/reference/monitor_bench/.
+Its full NOTICE, including ASTRAL, DeepScaleR, and dataset attribution, is
+retained at licenses/inspect-evals-monitor-bench-NOTICE.txt and the packaged
+assets/ATTRIBUTION.md. Imports were namespaced and role resolution adjusted.
+
+DeepMind Immediacy
+Judge prompt based on Appendix C of A Pragmatic Way to Measure Chain-of-Thought
+Monitorability, https://arxiv.org/abs/2510.23966.
+The local task and judge were migrated into src/cot_monitorability/immediacy/.
+Method fidelity remains subject to the documented human review before release.
+
+Inspect Evals metadata schema
+Derived from the MIT-licensed UKGovernmentBEIS/inspect_evals metadata model
+at 6aa39b98d4c15f832f8ba33fdb7e5ee9ffb17539, in schemas/inspect-evals-register.schema.json.

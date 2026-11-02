@@ -1,23 +1,37 @@
-# Inspect CoT 基准使用说明
+# 运行独立 Inspect 评测包
 
-当前 6 类基准均通过 `inspect_evals` 运行，结果写入 `eval_logs/`，使用 Inspect View 检查每道题的消息、思维链和评分。
+## 环境
 
-## 环境与依赖
-
-推荐 Python 3.10–3.13。从全新主仓库 checkout 设置依赖：
+使用 Python 3.11–3.13 和 uv：
 
 ```bash
-python3 scripts/dependency_repos.py restore
-python3 -m venv .venv
-.venv/bin/python -m pip install -r requirements.txt
-python3 scripts/dependency_repos.py check
+uv sync --locked --group dev --group test
 ```
 
-服务器现有 `.venv` 和依赖 clone 已设置，继续使用即可。恢复脚本拒绝覆盖已有 clone。
+服务器为了保留原来的 `.venv` 和运行中的 Inspect View，将新包安装到 `.venv-package`。服务器上的 uv 命令应增加 `UV_PROJECT_ENVIRONMENT=.venv-package`；启动脚本会优先使用这个环境。新 checkout 默认使用 uv 创建的 `.venv`。
 
-## 模型 API
+任务源码、参考函数与元数据随包安装。数据通过 `asset_specs.json` 中固定的源码归档加载，不依赖原来的 clone 路径。
 
-启动脚本默认使用本机代理；显式导出的环境变量可以覆盖配置：
+```bash
+# 预取所有固定资产
+uv run python -m cot_monitorability.assets
+
+# 已预取时可以离线构造和测试任务
+export COT_MONITORABILITY_OFFLINE=1
+```
+
+缓存默认使用平台用户缓存目录。`COT_MONITORABILITY_CACHE_DIR` 必须是绝对路径，并在导入任务前设置。
+
+## 模型与角色
+
+标准包入口与源码入口都可以运行：
+
+```bash
+uv run inspect eval cot_monitorability/openai_monitorability_process --model openai/<被测模型> --model-role monitor=openai/<Monitor模型> --limit 10
+uv run inspect eval src/cot_monitorability/immediacy/immediacy.py@cot_immediacy_2510 --model openai/<被测模型> --model-role judge=openai/<Judge模型> --limit 10
+```
+
+根据所选 provider 配置凭据与 URL。任务代码不指定 API 服务地址。本机部署使用：
 
 ```bash
 export OPENAI_BASE_URL=http://127.0.0.1:8000/v1
@@ -25,26 +39,22 @@ export OPENAI_API_KEY=a
 export INSPECT_EVALS_JUDGE_MODEL=openai/deepseek-v4.1-flash-1017
 ```
 
-DeepSeek V4.1 Flash-1017 和 Kimi K3.1 Pro 均走本机代理。脚本使用现有环境变量，不自动加载旧 `.env`。
-
-## 统一启动方式
+## 统一启动脚本
 
 ```bash
-./run_inspect_bench.sh <编号或任务名> <模型> <样本数> <并发数> <effort> [其他 Inspect 参数]
+./run_inspect_bench.sh <编号或任务名> <模型> <样本数> <并发数> <auto|low|medium|high|sweep> [其他 Inspect 参数]
 ```
 
-effort 可选 `auto|low|medium|high|sweep`。`auto` 使用下表中的当前默认值，`sweep` 依次运行 low、medium、high。NCRI 使用无 CoT 设置；在该基准中 effort 扫描不构成不同的推理条件。
+| 编号 | 任务 | 当前默认参数 | 被测模型默认 effort |
+| --- | --- | --- | --- |
+| 1 | `cot_controllability_qa` | GPQA / word_suppression | high |
+| 2 | `openai_monitorability_process` | cot_only | medium |
+| 3 | `openai_monitorability_intervention` | scruples_suggest_wrong | medium |
+| 4 | `cot_immediacy_2510` | GPQA / correct_only=false | high |
+| 5 | `ncri_bench` | arithmetic / disable_reasoning=true | 无 CoT |
+| 6 | `monitorbench` | cue_condition.preference / standard | high |
 
-| 编号 | 任务 | 当前默认参数 | 默认 effort | 主要指标 |
-| --- | --- | --- | --- | --- |
-| 1 | `cot_controllability_qa` | `dataset=gpqa, modes=word_suppression` | high | `cot_controllability_score`, `task_accuracy`, `mean_cot_tokens` |
-| 2 | `openai_monitorability_process` | `scopes=cot_only` | medium | `process_gmean2_cot`, `process_answer_accuracy`, `process_mean_cot_tokens` |
-| 3 | `openai_monitorability_intervention` | `dataset=scruples_suggest_wrong` | medium | gmean 上/下界、eligible fraction、reportable、`intervention_mean_cot_tokens` |
-| 4 | `cot_immediacy_2510` | `dataset=gpqa` | high | `legibility_pct`, `coverage_pct`, `immediacy_mean_cot_tokens` |
-| 5 | `ncri_bench` | `banks=arithmetic, disable_reasoning=true` | 无 CoT | `ncri_placement_score`, `ncri_primary_accuracy`, `ncri_valid_rate` |
-| 6 | `monitorbench` | `subset=cue_condition.preference, stress_test=standard` | high | `mb_cot_monitorability`, `mb_verification_rate`, `mb_mean_cot_tokens` |
-
-各任务的 Judge/Monitor 默认为 DeepSeek V4.1 Flash-1017，判分使用 high effort。被测模型的 effort 会同时传入 Inspect 生成配置和任务参数；Inspect 适配层向本机代理传递对应 reasoning 配置。
+Judge/Monitor 默认 DeepSeek V4.1 Flash-1017，使用 high effort。脚本通过公共 Inspect CLI 的 `--extra-body` 和角色配置适配本机代理；外部服务可设置 `COT_USE_LITELLM_COMPAT=0` 关闭这些部署参数。
 
 ```bash
 ./run_inspect_bench.sh 1 openai/deepseek-v4.1-flash-1017 10 5 auto
@@ -53,24 +63,16 @@ effort 可选 `auto|low|medium|high|sweep`。`auto` 使用下表中的当前默�
 ./run_inspect_bench.sh 1 openai/deepseek-v4.1-flash-1017 10 5 sweep
 ```
 
-## 任务参数
+NCRI 保持无 CoT 设置，全局 effort 参数不会改变这个任务的约束。其他任务参数和实际默认样本数见各任务目录 README 与 eval.yaml。
 
-- CoT-Control QA：正文 10 模式，`modes=all_main` 可选全部模式；支持 `dataset=gpqa|hle|mmlu_pro|all`、`cot_sys_prompt=true`、`elicit_brevity=true`，以及 monitor/eval awareness 和 adversarial pressure 参数。`baseline` 为无约束模式。
-- OpenAI Process：`scopes=cot_only`，可通过 `monitor_model` 指定 Monitor。
-- OpenAI Intervention：支持 `gpqa|gpqa_encoded|daft|scruples_first_person|scruples_suggest_right|scruples_suggest_wrong|wmdp_sandbagging|all`。一个 Inspect 样本包含原始和干预两次生成，`--limit 10` 对应 10 对样本。
-- DeepMind Immediacy：支持 `dataset=gpqa|hle|mmlu_pro`、`judge_model` 和 `correct_only=true|false`；当前默认 `correct_only=false`，只分析答对样本时需显式启用。
-- NCRI：支持逗号分隔题库和 `banks=all_ncri`。无 CoT 设置使用上游的判定与 placement 逻辑。
-- MonitorBench：支持 Inspect 适配子任务及上游非沙盒子任务，可通过 `subset` 和 `stress_test` 选择；Monitor 模型可用 `--model-role monitor=openai/<模型>` 覆盖。
-
-## 查看与记录结果
+## 原始日志与索引
 
 ```bash
 ./run_inspect_view.sh
-# 可覆盖 Inspect View 的默认端口或 host
 ./run_inspect_view.sh --port 5012 --host 127.0.0.1
 python3 scripts/index_eval_logs.py
 ```
 
-Inspect View 默认读取项目 `eval_logs/`，端口为 5010。目录中的 `.eval` 是原始结果，包含配置、题目、消息、评分和模型用量；原始日志保留在服务器，GitHub 保存 [结果索引](eval_logs/README.md) 与 [index.json](eval_logs/index.json)。
+原始 `.eval` 保存在服务器 `eval_logs/`，GitHub 只保存索引。现有 14 份日志来自原集成的 10 样本冒烟测试，按原始配置和 SHA-256 保留；没有在迁移中改写成新包版本的结果。
 
-当前 14 份日志来自 2026-10-30 的 10 样本冒烟运行。部分历史运行使用 high effort，索引保留实际设置。各指标的定义、子集和可报告条件不同，应在相同实验设置下比较。扩大样本数和子任务覆盖范围后再进行完整结果分析。
+本次 mock 运行检查任务构造、模型角色、solver/scorer 调用和日志生成。模型性能、论文方法一致性、两模型全量日志和人工轨迹审阅属于后续正式发布检查。

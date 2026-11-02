@@ -1,0 +1,26 @@
+id: monitorbench-preference
+title: 'MonitorBench: preference subset and configurable non-sandbox tasks'
+description: Evaluates CoT monitorability using the MonitorBench non-sandbox adapter. The default is cue_condition.preference under the standard condition; other supported subsets are task arguments and existing community implementations are reused.
+group: Safeguards
+contributors:
+- XWang20
+version: 1-A
+tasks:
+- name: monitorbench
+  dataset_samples: 108
+  task_path: src/cot_monitorability/monitorbench/monitorbench.py
+external_assets:
+- type: direct_url
+  source: https://codeload.github.com/ASTRAL-Group/MonitorBench/tar.gz/b6229e4b8ea9abcec38d61159c9cbd0f577ddf35
+  fetch_method: download_and_verify
+  state: pinned
+  comment: Archive checksum and reference revision are recorded in asset_specs.json.
+- type: direct_url
+  source: https://codeload.github.com/semsorock/inspect-evals-monitor-bench/tar.gz/9452b3ddcc1be81c4322e141dceb6f6c69b49434
+  fetch_method: download_and_verify
+  state: pinned
+  comment: Archive checksum and reference revision are recorded in asset_specs.json.
+metadata:
+  requires:
+    internet: true
+arxiv: https://arxiv.org/abs/2603.28590v2
