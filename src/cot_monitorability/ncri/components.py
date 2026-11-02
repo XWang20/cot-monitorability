@@ -176,7 +176,19 @@ def ncri_scorer() -> Scorer:
         reasoning_text = "\n".join(reasoning_parts).strip()
         raw_text = (msg.text or "") if msg else ""
 
-        prompt_tok = int(getattr(usage_obj, "input_tokens", 0) or 0) if usage_obj else 0
+        # Inspect reports cached input separately from uncached input.
+        prompt_tok = (
+            sum(
+                int(getattr(usage_obj, field, 0) or 0)
+                for field in (
+                    "input_tokens",
+                    "input_tokens_cache_read",
+                    "input_tokens_cache_write",
+                )
+            )
+            if usage_obj
+            else 0
+        )
         comp_tok = int(getattr(usage_obj, "output_tokens", 0) or 0) if usage_obj else 0
         tot_tok = (
             int(getattr(usage_obj, "total_tokens", 0) or (prompt_tok + comp_tok))

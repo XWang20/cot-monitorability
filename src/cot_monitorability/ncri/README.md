@@ -41,6 +41,13 @@ A placement score from a single bank or a limited run is not a full-index estima
 
 ## Changelog
 
+### 3-A
+
+Count cached tokens as input when checking for hidden reasoning. Earlier versions could incorrectly reject cached responses as deliberation.
+
+For compatible backends that ignore the native thinking field, explicitly set the evaluated model's reasoning effort to none with the Inspect CLI.
+
+
 ### 2-A
 
 Preserve configured provider fields when building no-CoT requests. Version 1-A could omit proxy compatibility settings and produce reasoning despite a disable request.

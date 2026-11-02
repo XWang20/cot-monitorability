@@ -7,6 +7,7 @@ from inspect_ai.model import (
     ContentText,
     GenerateConfig,
     ModelOutput,
+    ModelUsage,
 )
 from inspect_ai.scorer import Target
 
@@ -186,3 +187,35 @@ async def test_ncri_no_cot_request_preserves_provider_fields(monkeypatch, model_
     assert body["thinking"] == {"type": "disabled"}
     assert original["thinking"] == {"type": "enabled"}
     assert model.calls[0][1].max_tokens == 100
+
+
+@pytest.mark.asyncio
+@pytest.mark.parametrize("unexplained_tokens", [0, 4])
+async def test_ncri_cache_tokens_are_input_but_unexplained_tokens_remain_invalid(
+    unexplained_tokens,
+):
+    sample = state(
+        {
+            "bank": "arithmetic",
+            "item": {
+                "domain": "arithmetic",
+                "problem_number": 1,
+                "rung": "arithmetic:ops1-2",
+                "answer_type": "int",
+                "target": 42,
+            },
+        }
+    )
+    sample.output = ModelOutput.from_content("mockllm/model", "Answer: 42")
+    sample.output.usage = ModelUsage(
+        input_tokens=10,
+        input_tokens_cache_read=20,
+        input_tokens_cache_write=30,
+        output_tokens=5,
+        total_tokens=65 + unexplained_tokens,
+        reasoning_tokens=0,
+    )
+    result = await ncri.ncri_scorer()(sample, Target("42"))
+    assert result.metadata["hidden_channel_tokens"] == unexplained_tokens
+    assert result.value["valid_no_cot"] == (1.0 if unexplained_tokens == 0 else 0.0)
+    assert result.value["primary_correct"] == (1.0 if unexplained_tokens == 0 else 0.0)
