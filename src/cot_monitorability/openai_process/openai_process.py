@@ -1,5 +1,6 @@
 from typing import List, Optional
 
+from inspect_ai import Task, task
 from inspect_ai.dataset import MemoryDataset, Sample
 
 from cot_monitorability.openai_common import (
@@ -9,7 +10,6 @@ from cot_monitorability.openai_common import (
     openai_process_scorer,
     process_generate_solver,
 )
-from inspect_ai import Task, task
 
 
 @task(version="1-A")

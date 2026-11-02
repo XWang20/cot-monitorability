@@ -55,6 +55,10 @@ extend-exclude = ["src/cot_monitorability/reference"]
 [tool.ruff.lint]
 select = ["E4", "E7", "E9", "F", "I"]
 
+[tool.ruff.lint.isort]
+known-first-party = ["cot_monitorability"]
+known-third-party = ["inspect_ai"]
+
 [tool.mypy]
 python_version = "3.11"
 ignore_missing_imports = true

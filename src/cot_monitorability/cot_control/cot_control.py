@@ -1,11 +1,12 @@
 from typing import Literal, Optional
 
+from inspect_ai import Task, task
+
 from cot_monitorability.cot_control.components import (
     build_cot_control_qa_dataset,
     cot_control_generate,
     cot_control_qa_scorer,
 )
-from inspect_ai import Task, task
 
 
 @task(version="1-A")

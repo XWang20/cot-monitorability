@@ -1,12 +1,13 @@
 from typing import Optional
 
+from inspect_ai import Task, task
+
 from cot_monitorability.ncri.components import (
     R,
     build_ncri_dataset,
     ncri_no_cot_solver,
     ncri_scorer,
 )
-from inspect_ai import Task, task
 
 
 @task(version="1-A")

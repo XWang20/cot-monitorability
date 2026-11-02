@@ -1,5 +1,6 @@
 from typing import Dict, List, Literal, Optional
 
+from inspect_ai import Task, task
 from inspect_ai.dataset import MemoryDataset, Sample
 
 from cot_monitorability.openai_common import (
@@ -10,7 +11,6 @@ from cot_monitorability.openai_common import (
     openai_intervention_scorer,
     paired_intervention_solver,
 )
-from inspect_ai import Task, task
 
 
 @task(version="1-A")

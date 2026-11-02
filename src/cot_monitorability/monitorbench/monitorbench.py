@@ -1,5 +1,7 @@
 from typing import Literal, Optional
 
+from inspect_ai import Task, task
+
 from cot_monitorability.monitorbench.components import (
     _build_monitorbench_dataset,
     ensure_asset,
@@ -13,7 +15,6 @@ from cot_monitorability.monitorbench.components import (
     single_mb_solver,
 )
 from cot_monitorability.versioning import stamp_version
-from inspect_ai import Task, task
 
 
 @task(version="1-A")

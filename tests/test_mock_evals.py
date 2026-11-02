@@ -3,9 +3,8 @@ import json
 import os
 
 import pytest
-from inspect_ai.model import ContentReasoning, ContentText, ModelOutput, get_model
-
 from inspect_ai import eval
+from inspect_ai.model import ContentReasoning, ContentText, ModelOutput, get_model
 
 
 @pytest.mark.dataset_download
