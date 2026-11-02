@@ -56,3 +56,5 @@ uv run python scripts/prepare_registration.py
 生成的 `register/<id>/eval.yaml` 指向本仓库固定 40 字符 commit 的任务源码。格式说明与后续发布条件见 [上游提交准备](docs/UPSTREAM_CONTRIBUTION.md)。NCRI 已记录用户提供的 [LessWrong 原文](https://www.lesswrong.com/posts/eRmzz8J8Qkzqvzrgg/astra-can-do-a-concerning-amount-with-no-chain-of-thought)，arXiv 项保持待填。
 
 `dependencies.lock.json`、`patches/` 和依赖 clone 仍保留为旧服务器环境的复现记录；它们不再是安装新评测包的前提。来源和许可证见 [docs/SOURCES.md](docs/SOURCES.md)、`NOTICE` 与 `licenses/`。
+
+旧 patch 的迁移去向、保留原因及尚未确认的兼容性见 [迁移对应表](docs/MIGRATION_MAP.md)。
