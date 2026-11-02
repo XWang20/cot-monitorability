@@ -6,7 +6,7 @@ Runs frozen reasoning banks using the request, witnesses, grading, and placement
 
 ```bash
 uv run inspect eval cot_monitorability/ncri_bench \
-  --model 'openai/<evaluated-model>' -T banks=arithmetic --limit 10
+  --model 'openai/<your-evaluated-model>' -T banks=arithmetic --limit 10
 ```
 
 The default contains 83 arithmetic samples with 10-shot context. No judge model is required.

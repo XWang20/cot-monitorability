@@ -26,10 +26,10 @@ def runner_env(tmp_path):
     env.pop("REASONING_EFFORT", None)
     env.update(
         PATH=str(tmp_path) + os.pathsep + env["PATH"],
-        OPENAI_BASE_URL="http://127.0.0.1:8000/v1",
-        OPENAI_API_KEY="a",
+        OPENAI_BASE_URL="https://example.test/v1",
+        OPENAI_API_KEY="test-key",
         JUDGE_MODEL="mockllm/judge",
-        COT_USE_LITELLM_COMPAT="auto",
+        COT_USE_LITELLM_COMPAT="1",
     )
     return env
 
@@ -73,7 +73,7 @@ def test_runner_preserves_task_settings_without_model_calls(runner_env, task, ef
 
 
 def test_runner_disables_proxy_fields_for_external_endpoint(runner_env):
-    runner_env["OPENAI_BASE_URL"] = "https://example.test/v1"
+    runner_env["COT_USE_LITELLM_COMPAT"] = "0"
     output = subprocess.check_output(
         [str(ROOT / "scripts/run_eval.sh"), "cot_controllability_qa", "mockllm/actor"],
         env=runner_env,
@@ -92,3 +92,17 @@ def test_runner_rejects_cot_effort_override_for_ncri(runner_env):
     )
     assert result.returncode != 0
     assert "no-CoT" in result.stderr
+
+
+@pytest.mark.parametrize("missing", ["OPENAI_BASE_URL", "OPENAI_API_KEY"])
+def test_runner_requires_connection_configuration(runner_env, missing):
+    runner_env.pop(missing)
+    result = subprocess.run(
+        [str(ROOT / "scripts/run_eval.sh"), "cot_controllability_qa", "mockllm/actor"],
+        env=runner_env,
+        capture_output=True,
+        text=True,
+    )
+    assert result.returncode != 0
+    assert missing in result.stderr
+    assert not result.stdout

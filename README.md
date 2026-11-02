@@ -35,8 +35,8 @@ Configure credentials for your [model provider](https://inspect.aisi.org.uk/mode
 
 ```bash
 uv run inspect eval cot_monitorability/cot_controllability_qa \
-  --model 'openai/<evaluated-model>' \
-  --model-role 'judge=openai/<judge-model>' \
+  --model 'openai/<your-evaluated-model>' \
+  --model-role 'judge=openai/<your-judge-model>' \
   --limit 10 --log-dir eval_logs/cot_control
 ```
 
@@ -44,8 +44,8 @@ Task arguments use `-T`:
 
 ```bash
 uv run inspect eval cot_monitorability/openai_monitorability_intervention \
-  --model 'openai/<evaluated-model>' \
-  --model-role 'monitor=openai/<monitor-model>' \
+  --model 'openai/<your-evaluated-model>' \
+  --model-role 'monitor=openai/<your-monitor-model>' \
   -T dataset=gpqa -T target_reasoning_effort=medium \
   --limit 10 --log-dir eval_logs/intervention
 ```
@@ -54,20 +54,22 @@ Omit `--limit` for all samples. Use `--max-connections` to control concurrency. 
 
 CoT tasks need a provider that exposes reasoning text. Hidden reasoning produces empty traces and changes the interpretation of monitorability scores. Select judge and monitor roles explicitly when comparing models; their prompts and sampling configuration affect the results.
 
-### Local OpenAI-compatible API
+### OpenAI-compatible API
 
-The convenience script configures the local proxy through public Inspect CLI options:
+Provide your endpoint and credentials through environment variables:
 
 ```bash
-export OPENAI_BASE_URL=http://127.0.0.1:8000/v1
-export OPENAI_API_KEY=a  # Replace if the proxy requires authentication.
-export JUDGE_MODEL='openai/<judge-or-monitor-model>'
+export OPENAI_BASE_URL="<your-api-base-url>"
+export OPENAI_API_KEY="<your-api-key>"
+export JUDGE_MODEL='openai/<your-judge-or-monitor-model>'
 
-./scripts/run_eval.sh cot_controllability_qa 'openai/<evaluated-model>' \
+./scripts/run_eval.sh cot_controllability_qa 'openai/<your-evaluated-model>' \
   --limit 10 --max-connections 5
 ```
 
-It takes a task name, model name, then standard Inspect arguments. Default effort comes from the task signature; `REASONING_EFFORT=low` overrides it for CoT tasks. NCRI retains its no-CoT request. The script supplies LiteLLM compatibility fields for localhost:8000; `COT_USE_LITELLM_COMPAT=0` disables them for other compatible services.
+Replace the placeholders with your own configuration. Credentials are read from the environment and should not be committed.
+
+The script takes a task name, model name, then standard Inspect arguments. Default effort comes from the task signature; `REASONING_EFFORT=low` overrides it for CoT tasks. NCRI retains its no-CoT request. Set `COT_USE_LITELLM_COMPAT=1` for proxies that require LiteLLM compatibility fields.
 
 ## Data
 

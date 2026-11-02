@@ -31,7 +31,6 @@ def read_run(path):
         "task": evaluation["task"],
         "task_version": evaluation.get("task_version"),
         "model": evaluation["model"],
-        "model_base_url": evaluation.get("model_base_url"),
         "status": header["status"],
         "created": evaluation.get("created"),
         "started_at": started,

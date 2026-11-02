@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Run a package task against a local OpenAI-compatible proxy.
+# Run a package task against a configured OpenAI-compatible API.
 set -euo pipefail
 ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 cd "${ROOT_DIR}"
@@ -10,13 +10,10 @@ fi
 TASK="$1"
 MODEL="$2"
 shift 2
-export OPENAI_BASE_URL="${OPENAI_BASE_URL:-http://127.0.0.1:8000/v1}"
-export OPENAI_API_KEY="${OPENAI_API_KEY:-a}"
-COMPAT="${COT_USE_LITELLM_COMPAT:-auto}"
-if [[ "${COMPAT}" == auto ]]; then
-  COMPAT=0
-  if [[ "${OPENAI_BASE_URL}" == *127.0.0.1:8000* || "${OPENAI_BASE_URL}" == *localhost:8000* ]]; then COMPAT=1; fi
-fi
+: "${OPENAI_BASE_URL:?Set OPENAI_BASE_URL to your API endpoint}"
+: "${OPENAI_API_KEY:?Set OPENAI_API_KEY to your API credential}"
+export OPENAI_BASE_URL OPENAI_API_KEY
+COMPAT="${COT_USE_LITELLM_COMPAT:-0}"
 
 # Reading the factory signature does not construct datasets or call a model.
 export COT_RUNNER_COMPAT="${COMPAT}" COT_RUNNER_MODEL="${MODEL}"

@@ -6,8 +6,8 @@ Scores the legibility and coverage of a reasoning trace with a judge prompt base
 
 ```bash
 uv run inspect eval cot_monitorability/cot_immediacy_2510 \
-  --model 'openai/<evaluated-model>' \
-  --model-role 'judge=openai/<judge-model>' --limit 10
+  --model 'openai/<your-evaluated-model>' \
+  --model-role 'judge=openai/<your-judge-model>' --limit 10
 ```
 
 The default is 445 GPQA samples, including incorrect answers.

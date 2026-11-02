@@ -6,8 +6,8 @@ Tests whether a model follows constraints on its chain of thought while answerin
 
 ```bash
 uv run inspect eval cot_monitorability/cot_controllability_qa \
-  --model 'openai/<evaluated-model>' \
-  --model-role 'judge=openai/<judge-model>' \
+  --model 'openai/<your-evaluated-model>' \
+  --model-role 'judge=openai/<your-judge-model>' \
   -T dataset=gpqa -T modes=word_suppression --limit 10
 ```
 

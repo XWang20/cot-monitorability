@@ -6,8 +6,8 @@ Evaluates whether a monitor detects decision-relevant factors in a reasoning tra
 
 ```bash
 uv run inspect eval cot_monitorability/monitorbench \
-  --model 'openai/<evaluated-model>' \
-  --model-role 'monitor=openai/<monitor-model>' \
+  --model 'openai/<your-evaluated-model>' \
+  --model-role 'monitor=openai/<your-monitor-model>' \
   -T subset=cue_condition.preference -T stress_test=standard --limit 10
 ```
 

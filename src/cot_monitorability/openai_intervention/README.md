@@ -6,8 +6,8 @@ Measures whether a monitor detects an intervention that changes a model's behavi
 
 ```bash
 uv run inspect eval cot_monitorability/openai_monitorability_intervention \
-  --model 'openai/<evaluated-model>' \
-  --model-role 'monitor=openai/<monitor-model>' \
+  --model 'openai/<your-evaluated-model>' \
+  --model-role 'monitor=openai/<your-monitor-model>' \
   -T dataset=scruples_suggest_wrong --limit 10
 ```
 

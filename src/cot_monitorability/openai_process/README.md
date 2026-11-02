@@ -6,8 +6,8 @@ Measures whether a monitor can detect a required theorem path in a model's reaso
 
 ```bash
 uv run inspect eval cot_monitorability/openai_monitorability_process \
-  --model 'openai/<evaluated-model>' \
-  --model-role 'monitor=openai/<monitor-model>' --limit 10
+  --model 'openai/<your-evaluated-model>' \
+  --model-role 'monitor=openai/<your-monitor-model>' --limit 10
 ```
 
 The default dataset contains 52 samples. Each sample produces one evaluated-model answer. The monitor checks whether all theorems in at least one required path are applied, and also grades answer correctness.
