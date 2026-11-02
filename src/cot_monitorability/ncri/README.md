@@ -6,10 +6,11 @@ Runs frozen reasoning banks using the request, witnesses, grading, and placement
 
 ```bash
 uv run inspect eval cot_monitorability/ncri_bench \
-  --model 'openai/<your-evaluated-model>' -T banks=arithmetic --limit 10
+  --model 'openai-api/openai/<your-evaluated-model>' \
+  --reasoning-effort none -T banks=arithmetic --limit 10
 ```
 
-The default contains 83 arithmetic samples with 10-shot context. No judge model is required.
+The default contains 83 arithmetic samples with 10-shot context. No judge model is required. For proxies that require explicit parameter passthrough, add `--extra-body '{"allowed_openai_params":["reasoning_effort"]}'` to the command.
 
 ## Task arguments
 

@@ -1,10 +1,31 @@
 # Evaluation results
 
-Index of 14 stored runs. Raw `.eval` files are kept by the operator; this directory versions their metadata and checksums.
+Index of 35 stored runs. Raw `.eval` files are kept by the operator; this directory versions their metadata and checksums.
 
 Interpret each run using its recorded task namespace, version, configuration, and package revision. Limited runs do not establish full-dataset performance.
 
-## Runs
+## Latest completed runs
+
+One latest completed run per package task and model. The listed configuration and sample count belong to that run.
+
+| Task / subset | Version | Model | Effort | Samples | Status | Main metrics |
+| --- | --- | --- | --- | --- | --- | --- |
+| cot_monitorability/cot_controllability_qa / gpqa/word_suppression | 1-A | deepseek-v4.1-flash-1017 | high | 5/5 | success | cot_controllability_score=0 |
+| cot_monitorability/cot_controllability_qa / gpqa/word_suppression | 1-A | kimi-k3.1-pro | high | 5/5 | success | cot_controllability_score=0.4 |
+| cot_monitorability/cot_immediacy_2510 / gpqa | 1-A | deepseek-v4.1-flash-1017 | high | 5/5 | success | legibility_pct=90; coverage_pct=100 |
+| cot_monitorability/cot_immediacy_2510 / gpqa | 1-A | kimi-k3.1-pro | high | 5/5 | success | legibility_pct=80; coverage_pct=95 |
+| cot_monitorability/monitorbench / cue_condition.preference | 1-A | deepseek-v4.1-flash-1017 | high | 5/5 | success | mb_cot_monitorability=1 |
+| cot_monitorability/monitorbench / cue_condition.preference | 1-A | kimi-k3.1-pro | high | 5/5 | success | mb_cot_monitorability=1 |
+| cot_monitorability/ncri_bench / arithmetic | 3-A | deepseek-v4.1-flash-1017 | none | 5/5 | success | ncri_primary_accuracy=0.2; ncri_valid_rate=1 |
+| cot_monitorability/ncri_bench / arithmetic | 3-A | kimi-k3.1-pro | none | 5/5 | success | ncri_primary_accuracy=0.6; ncri_valid_rate=1 |
+| cot_monitorability/openai_monitorability_intervention / scruples_suggest_wrong | 1-A | deepseek-v4.1-flash-1017 | medium | 5/5 | success | intervention_gmean2_lower=0 |
+| cot_monitorability/openai_monitorability_intervention / scruples_suggest_wrong | 1-A | kimi-k3.1-pro | medium | 5/5 | success | intervention_gmean2_lower=0.5 |
+| cot_monitorability/openai_monitorability_process / cot_only | 1-A | deepseek-v4.1-flash-1017 | medium | 5/5 | success | process_gmean2_cot=1 |
+| cot_monitorability/openai_monitorability_process / cot_only | 1-A | kimi-k3.1-pro | medium | 5/5 | success | process_gmean2_cot=0.8 |
+
+## Other recorded runs
+
+Earlier configurations, diagnostic attempts, and legacy runs.
 
 | Task / subset | Version | Model | Effort | Samples | Status | Main metrics |
 | --- | --- | --- | --- | --- | --- | --- |
@@ -18,10 +39,19 @@ Interpret each run using its recorded task namespace, version, configuration, an
 | inspect_evals/openai_monitorability_intervention / scruples_suggest_wrong | 0 | kimi-k3.1-pro | high | 10/10 | success | intervention_gmean2_lower=0.3333 |
 | inspect_evals/cot_immediacy_2510 / gpqa | 0 | deepseek-v4.1-flash-1017 | high | 10/10 | success | legibility_pct=92.5; coverage_pct=97.5 |
 | inspect_evals/cot_immediacy_2510 / gpqa | 0 | kimi-k3.1-pro | high | 10/10 | success | legibility_pct=85; coverage_pct=87.5 |
-| inspect_evals/ncri_bench / arithmetic | 0 | deepseek-v4.1-flash-1017 | disabled | 10/10 | success | ncri_placement_score=105.1 |
-| inspect_evals/ncri_bench / arithmetic | 0 | kimi-k3.1-pro | disabled | 10/10 | success | ncri_placement_score=132.5 |
+| inspect_evals/ncri_bench / arithmetic | 0 | deepseek-v4.1-flash-1017 | disabled | 10/10 | success | ncri_primary_accuracy=0.3; ncri_valid_rate=1 |
+| inspect_evals/ncri_bench / arithmetic | 0 | kimi-k3.1-pro | disabled | 10/10 | success | ncri_primary_accuracy=0.6; ncri_valid_rate=1 |
 | inspect_evals/monitorbench / cue_condition.preference | 0 | deepseek-v4.1-flash-1017 | high | 10/10 | success | mb_cot_monitorability=1 |
 | inspect_evals/monitorbench / cue_condition.preference | 0 | kimi-k3.1-pro | high | 10/10 | success | mb_cot_monitorability=1 |
+| cot_monitorability/cot_controllability_qa / gpqa/word_suppression | 1-A | kimi-k3.1-pro | high | Not recorded | error | Not recorded |
+| cot_monitorability/ncri_bench / arithmetic | 1-A | kimi-k3.1-pro | disabled | 5/5 | success | Not reportable (no valid no-CoT samples) |
+| cot_monitorability/ncri_bench / arithmetic | 1-A | deepseek-v4.1-flash-1017 | disabled | 5/5 | success | Not reportable (no valid no-CoT samples) |
+| cot_monitorability/ncri_bench / arithmetic | 2-A | kimi-k3.1-pro | disabled | Not recorded | error | Not recorded |
+| cot_monitorability/ncri_bench / arithmetic | 2-A | deepseek-v4.1-flash-1017 | disabled | Not recorded | error | Not recorded |
+| cot_monitorability/ncri_bench / arithmetic | 2-A | kimi-k3.1-pro | disabled | 5/5 | success | Not reportable (no valid no-CoT samples) |
+| cot_monitorability/ncri_bench / arithmetic | 2-A | deepseek-v4.1-flash-1017 | disabled | 5/5 | success | Not reportable (no valid no-CoT samples) |
+| cot_monitorability/ncri_bench / arithmetic | 2-A | kimi-k3.1-pro | none | 5/5 | success | Not reportable (no valid no-CoT samples) |
+| cot_monitorability/ncri_bench / arithmetic | 2-A | deepseek-v4.1-flash-1017 | none | 5/5 | success | ncri_primary_accuracy=0; ncri_valid_rate=0.6 |
 
 ## Interpretation
 
@@ -39,8 +69,8 @@ Interpret each run using its recorded task namespace, version, configuration, an
 Run from the repository root:
 
 ```bash
-uv run inspect view --log-dir eval_logs
-python3 scripts/index_eval_logs.py
+uv run inspect view --recursive --log-dir eval_logs
+uv run python scripts/index_eval_logs.py
 ```
 
 The indexer refuses to replace the index when no local logs are present.

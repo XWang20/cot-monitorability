@@ -51,3 +51,31 @@ def test_indexer_reads_native_logs_without_publishing_endpoint(
     assert "model_base_url" not in result
     assert result["sha256"] == checksum
     assert hashlib.sha256(path.read_bytes()).hexdigest() == checksum
+
+
+def test_latest_results_keep_successful_run_after_failed_retry():
+    spec = importlib.util.spec_from_file_location(
+        "index_eval_logs", ROOT / "scripts/index_eval_logs.py"
+    )
+    indexer = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(indexer)
+    base = {"task": "cot_monitorability/ncri_bench", "model": "openai/example"}
+    runs = [
+        {**base, "created": "2026-01-01", "status": "success", "file": "old.eval"},
+        {
+            **base,
+            "model": "openai-api/openai/example",
+            "created": "2026-01-02",
+            "status": "success",
+            "file": "new.eval",
+        },
+        {**base, "created": "2026-01-03", "status": "error", "file": "failed.eval"},
+        {
+            **base,
+            "task": "inspect_evals/ncri_bench",
+            "created": "2026-01-04",
+            "status": "success",
+            "file": "legacy.eval",
+        },
+    ]
+    assert [run["file"] for run in indexer.latest_completed(runs)] == ["new.eval"]

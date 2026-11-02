@@ -78,7 +78,8 @@ def primary_result(run):
         "intervention_gmean2_lower",
         "legibility_pct",
         "coverage_pct",
-        "ncri_placement_score",
+        "ncri_primary_accuracy",
+        "ncri_valid_rate",
         "mb_cot_monitorability",
     )
     return (
@@ -87,18 +88,20 @@ def primary_result(run):
     )
 
 
-def render_markdown(runs):
+def display_model(run):
+    return run["model"].removeprefix("openai/").removeprefix("openai-api/openai/")
+
+
+def latest_completed(runs):
+    latest = {}
+    for run in sorted(runs, key=lambda run: run["created"] or ""):
+        if run["status"] == "success" and run["task"].startswith("cot_monitorability/"):
+            latest[(run["task"], display_model(run))] = run
+    return [latest[key] for key in sorted(latest)]
+
+
+def markdown_table(runs):
     lines = [
-        "# Evaluation results",
-        "",
-        f"Index of {len(runs)} stored runs. Raw `.eval` files are kept by the "
-        "operator; this directory versions their metadata and checksums.",
-        "",
-        "Interpret each run using its recorded task namespace, version, configuration, "
-        "and package revision. Limited runs do not establish full-dataset performance.",
-        "",
-        "## Runs",
-        "",
         "| Task / subset | Version | Model | Effort | Samples | Status | Main metrics |",
         "| --- | --- | --- | --- | --- | --- | --- |",
     ]
@@ -116,7 +119,7 @@ def render_markdown(runs):
         effort = run["reasoning_effort"] or (
             "disabled" if args.get("disable_reasoning") else "Not recorded"
         )
-        model = run["model"].removeprefix("openai/")
+        model = display_model(run)
         task = run["task"]
         version = (
             run["task_version"] if run["task_version"] is not None else "Not recorded"
@@ -131,6 +134,42 @@ def render_markdown(runs):
             f"{samples} | "
             f"{run['status']} | {primary_result(run)} |"
         )
+    return lines
+
+
+def render_markdown(runs):
+    latest = latest_completed(runs)
+    selected = {run["file"] for run in latest}
+    other = [run for run in runs if run["file"] not in selected]
+    lines = [
+        "# Evaluation results",
+        "",
+        f"Index of {len(runs)} stored runs. Raw "
+        + chr(96)
+        + ".eval"
+        + chr(96)
+        + " files are kept by the "
+        "operator; this directory versions their metadata and checksums.",
+        "",
+        "Interpret each run using its recorded task namespace, version, configuration, "
+        "and package revision. Limited runs do not establish full-dataset performance.",
+        "",
+        "## Latest completed runs",
+        "",
+        "One latest completed run per package task and model. The listed configuration "
+        "and sample count belong to that run.",
+        "",
+    ]
+    lines += markdown_table(latest)
+    if other:
+        lines += [
+            "",
+            "## Other recorded runs",
+            "",
+            "Earlier configurations, diagnostic attempts, and legacy runs.",
+            "",
+        ]
+        lines += markdown_table(other)
     lines += [
         "",
         "## Interpretation",
