@@ -95,7 +95,7 @@ uv run inspect view --recursive --log-dir eval_logs
 
 On a remote server, forward the View port through SSH. The [results index](eval_logs/README.md) lists stored runs and their configurations; [index.json](eval_logs/index.json) includes metrics and file checksums. Raw logs are kept by the operator and ignored by Git. Rebuild the index after a run with `uv run python scripts/index_eval_logs.py`.
 
-The indexed runs use 10-sample subsets of an earlier implementation. They are useful for inspecting those runs, but do not establish full-dataset performance for the current tasks. Scores from different benchmarks measure different quantities and should be reported separately.
+Limited runs check the evaluation pipeline. Report model performance with the dataset, task version, configuration, and sample count. Scores from different benchmarks measure different quantities and should be reported separately.
 
 ## Repository layout
 
