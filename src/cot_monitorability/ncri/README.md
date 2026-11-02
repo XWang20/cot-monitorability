@@ -21,7 +21,7 @@ The default contains 83 arithmetic samples with 10-shot context. No judge model 
 | `no_prefill` | false | Omit the assistant answer prefill |
 | `no_delib_system_v2` | false | Add the upstream no-deliberation system instruction |
 | `disable_reasoning` | true | Request reasoning to be disabled |
-| `effort` | None | Optional upstream reasoning request override |
+| `effort` | None | Explicit request override; takes precedence over disable_reasoning |
 | `limit_per_bank` | None | Limit each bank before evaluation |
 
 The request uses upstream bank-specific output limits and prefill. Disabling reasoning is provider-dependent: the adapter retains native `thinking` fields for the supported local Kimi/DeepSeek models and an OpenAI-compatible `reasoning` field otherwise. Verify that the selected backend honors the request. A provider that ignores it cannot establish a no-CoT result.
@@ -34,6 +34,17 @@ uv run python -m cot_monitorability.reference.nocot.fetch_gpqa
 
 Check which banks were loaded before comparing `all_ncri` runs.
 
+## Positive control
+
+Verify that the backend's reasoning counter responds when thinking is enabled:
+
+```bash
+./scripts/run_eval.sh ncri_bench 'openai-api/openai/<your-evaluated-model>' \
+  -T disable_reasoning=false -T effort=high --limit 1
+```
+
+The runner stores this control under the ignored operator directory, outside the evaluation result list. Check the reported reasoning tokens; its no-CoT accuracy is not a benchmark result. Explicit effort overrides disable_reasoning when supplied.
+
 ## Scoring
 
 Logs record `ncri_primary_accuracy`, `ncri_valid_rate`, and the frozen `ncri_placement_score`. Placement aggregates scorable, non-annexed items by rung and uses the upstream calibration. It returns zero when there are no placement counts or calibration fails.
@@ -41,6 +52,11 @@ Logs record `ncri_primary_accuracy`, `ncri_valid_rate`, and the frozen `ncri_pla
 A placement score from a single bank or a limited run is not a full-index estimate. Compare bank coverage, prompting, reasoning settings, and generation validity.
 
 ## Changelog
+
+### 4-A
+
+Honor explicit effort and positive-control settings for supported Kimi and DeepSeek models instead of forcing those requests into no-CoT mode. The default no-CoT protocol is unchanged.
+
 
 ### 3-A
 

@@ -79,3 +79,40 @@ def test_latest_results_keep_successful_run_after_failed_retry():
         },
     ]
     assert [run["file"] for run in indexer.latest_completed(runs)] == ["new.eval"]
+
+
+def test_latest_results_preserve_separate_effort_settings():
+    spec = importlib.util.spec_from_file_location(
+        "index_eval_logs", ROOT / "scripts/index_eval_logs.py"
+    )
+    indexer = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(indexer)
+    base = {
+        "task": "cot_monitorability/cot_controllability_qa",
+        "model": "openai/example",
+        "status": "success",
+    }
+    runs = [
+        {
+            **base,
+            "created": "2026-01-01",
+            "reasoning_effort": "low",
+            "file": "low.eval",
+        },
+        {
+            **base,
+            "created": "2026-01-02",
+            "reasoning_effort": "high",
+            "file": "high.eval",
+        },
+        {
+            **base,
+            "created": "2026-01-03",
+            "reasoning_effort": "low",
+            "file": "low-new.eval",
+        },
+    ]
+    assert {r["file"] for r in indexer.latest_completed(runs)} == {
+        "low-new.eval",
+        "high.eval",
+    }

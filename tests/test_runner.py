@@ -41,7 +41,7 @@ def runner_env(tmp_path):
         ("openai_monitorability_process", "medium"),
         ("openai_monitorability_intervention", "medium"),
         ("cot_immediacy_2510", "high"),
-        ("ncri_bench", None),
+        ("ncri_bench", "none"),
         ("monitorbench", "high"),
     ],
 )
@@ -56,18 +56,18 @@ def test_runner_preserves_task_settings_without_model_calls(runner_env, task, ef
     assert args[:3] == ["inspect", "eval", f"cot_monitorability/{task}"]
     assert args[-2:] == ["--limit", "1"]
     body = json.loads(args[args.index("--extra-body") + 1])
-    if effort:
+    if effort != "none":
         assert body["reasoning"]["effort"] == effort
         assert f"target_reasoning_effort={effort}" in args
     else:
-        assert "--reasoning-effort" not in args
+        assert args[args.index("--reasoning-effort") + 1] == "none"
         assert "reasoning" not in body
     roles = [
         json.loads(args[i + 1].split("=", 1)[1])
         for i, arg in enumerate(args)
         if arg == "--model-role"
     ]
-    assert len(roles) == 2
+    assert len(roles) == (0 if task == "ncri_bench" else 2)
     assert all(role["model"] == "mockllm/judge" for role in roles)
     assert all(role["extra_body"]["reasoning"]["effort"] == "high" for role in roles)
 
@@ -106,3 +106,75 @@ def test_runner_requires_connection_configuration(runner_env, missing):
     assert result.returncode != 0
     assert missing in result.stderr
     assert not result.stdout
+
+
+@pytest.mark.parametrize(
+    "override", [["--reasoning-effort", "low"], ["-T", "target_reasoning_effort=low"]]
+)
+def test_runner_keeps_actor_overrides_and_proxy_effort_in_sync(runner_env, override):
+    runner_env["REASONING_EFFORT"] = "high"
+    output = subprocess.check_output(
+        [
+            str(ROOT / "scripts/run_eval.sh"),
+            "cot_controllability_qa",
+            "mockllm/actor",
+            *override,
+        ],
+        env=runner_env,
+        text=True,
+    )
+    args = json.loads(output)
+    assert args[args.index("--reasoning-effort") + 1] == "low"
+    assert "target_reasoning_effort=low" in args
+    body = json.loads(args[args.index("--extra-body") + 1])
+    assert body["reasoning"]["effort"] == "low"
+    roles = [
+        json.loads(args[i + 1].split("=", 1)[1])
+        for i, arg in enumerate(args)
+        if arg == "--model-role"
+    ]
+    assert all(role["reasoning_effort"] == "high" for role in roles)
+
+
+def test_runner_rejects_conflicting_explicit_efforts(runner_env):
+    result = subprocess.run(
+        [
+            str(ROOT / "scripts/run_eval.sh"),
+            "cot_controllability_qa",
+            "mockllm/actor",
+            "--reasoning-effort",
+            "high",
+            "-T",
+            "target_reasoning_effort=low",
+        ],
+        env=runner_env,
+        text=True,
+        capture_output=True,
+    )
+    assert result.returncode != 0
+    assert "Conflicting" in result.stderr
+    assert not result.stdout
+
+
+def test_runner_keeps_ncri_positive_controls_outside_results(runner_env):
+    output = subprocess.check_output(
+        [
+            str(ROOT / "scripts/run_eval.sh"),
+            "ncri_bench",
+            "mockllm/actor",
+            "-T",
+            "disable_reasoning=false",
+            "-T",
+            "effort=high",
+            "--limit",
+            "1",
+        ],
+        env=runner_env,
+        text=True,
+    )
+    args = json.loads(output)
+    assert args[args.index("--reasoning-effort") + 1] == "high"
+    assert "/tmp/controls/" in args[args.index("--log-dir") + 1]
+    assert "positive-control" in args
+    assert "--model-role" not in args
+    assert not any(arg.startswith("target_reasoning_effort=") for arg in args)

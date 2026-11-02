@@ -6,7 +6,7 @@ Interpret each run using its recorded task namespace, version, configuration, an
 
 ## Latest completed runs
 
-One latest completed run per package task and model. The listed configuration and sample count belong to that run.
+One latest completed run per package task, model, and effort. The listed configuration and sample count belong to that run.
 
 | Task / subset | Version | Model | Effort | Samples | Status | Main metrics |
 | --- | --- | --- | --- | --- | --- | --- |

@@ -96,7 +96,13 @@ def latest_completed(runs):
     latest = {}
     for run in sorted(runs, key=lambda run: run["created"] or ""):
         if run["status"] == "success" and run["task"].startswith("cot_monitorability/"):
-            latest[(run["task"], display_model(run))] = run
+            latest[
+                (
+                    run["task"],
+                    display_model(run),
+                    run.get("reasoning_effort") or "default",
+                )
+            ] = run
     return [latest[key] for key in sorted(latest)]
 
 
@@ -156,7 +162,7 @@ def render_markdown(runs):
         "",
         "## Latest completed runs",
         "",
-        "One latest completed run per package task and model. The listed configuration "
+        "One latest completed run per package task, model, and effort. The listed configuration "
         "and sample count belong to that run.",
         "",
     ]

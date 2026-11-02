@@ -219,3 +219,23 @@ async def test_ncri_cache_tokens_are_input_but_unexplained_tokens_remain_invalid
     assert result.metadata["hidden_channel_tokens"] == unexplained_tokens
     assert result.value["valid_no_cot"] == (1.0 if unexplained_tokens == 0 else 0.0)
     assert result.value["primary_correct"] == (1.0 if unexplained_tokens == 0 else 0.0)
+
+
+@pytest.mark.asyncio
+@pytest.mark.parametrize(
+    "model_name",
+    ["openai-api/openai/kimi-k3.1-pro", "openai-api/openai/deepseek-v4.1-flash-1017"],
+)
+async def test_ncri_positive_control_does_not_force_thinking_off(
+    monkeypatch, model_name
+):
+    model = RecordingModel()
+    monkeypatch.setattr(RecordingModel, "__str__", lambda self: model_name)
+    monkeypatch.setattr(ncri, "get_model", lambda: model)
+    await ncri.ncri_no_cot_solver(effort="high", disable_reasoning=False)(
+        state({"bank": "arithmetic"}), None
+    )
+    config = model.calls[0][1]
+    assert config.reasoning_effort == "high"
+    assert config.extra_body["reasoning"]["effort"] == "high"
+    assert config.extra_body.get("thinking") != {"type": "disabled"}

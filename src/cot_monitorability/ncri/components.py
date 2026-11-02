@@ -62,28 +62,30 @@ def ncri_no_cot_solver(
         m_name = str(model)
         # Route deepseek-v4.1-flash to its -nt alias; for deepseek-v4.1-flash-1017 and kimi-k3.1-pro,
         # use thinking: {"type": "disabled"} with temperature=None to cleanly disable reasoning.
-        if m_name.endswith("deepseek-v4.1-flash"):
+        if disable_reasoning and not effort and m_name.endswith("deepseek-v4.1-flash"):
             model = get_model(f"{m_name}-nt")
 
         max_tok = R.OFFICIAL_MAX_TOKENS.get(bank, R.MAX_TOKENS)
         extra_body: Dict[str, Any] = dict(model.config.extra_body or {})
         temp: Optional[float] = 0.0
-        if (
-            "kimi-k3.1-pro" in m_name.lower()
-            or "deepseek-v4.1-flash-1017" in m_name.lower()
-        ):
-            extra_body["thinking"] = {"type": "disabled"}
-            temp = None
-        elif effort:
+        if effort:
             extra_body["reasoning"] = {"effort": effort}
         elif disable_reasoning:
-            extra_body["reasoning"] = {"enabled": False}
+            if (
+                "kimi-k3.1-pro" in m_name.lower()
+                or "deepseek-v4.1-flash-1017" in m_name.lower()
+            ):
+                extra_body["thinking"] = {"type": "disabled"}
+                temp = None
+            else:
+                extra_body["reasoning"] = {"enabled": False}
 
         out = await model.generate(
             state.messages,
             config=GenerateConfig(
                 temperature=temp,
                 max_tokens=max_tok,
+                reasoning_effort=effort,
                 extra_body=extra_body if extra_body else None,
             ),
         )

@@ -18,16 +18,16 @@ The package uses the public [Inspect AI](https://inspect.aisi.org.uk/) SDK. Inst
 
 Each task's README describes its method, parameters, scoring, and limitations.
 
-| Task | Default configuration | Samples | Documentation |
-| --- | --- | ---: | --- |
-| `cot_controllability_qa` | GPQA, word suppression | 427 | [CoT-Control](src/cot_monitorability/cot_control/README.md) |
-| `openai_monitorability_process` | Theorem detection, CoT only | 52 | [Process](src/cot_monitorability/openai_process/README.md) |
-| `openai_monitorability_intervention` | Scruples, suggest wrong | 150 pairs | [Intervention](src/cot_monitorability/openai_intervention/README.md) |
-| `cot_immediacy_2510` | GPQA, all answers | 445 | [Immediacy](src/cot_monitorability/immediacy/README.md) |
-| `ncri_bench` | Arithmetic, 10-shot, reasoning disabled | 83 | [NCRI](src/cot_monitorability/ncri/README.md) |
-| `monitorbench` | Preference, standard condition | 108 pairs | [MonitorBench](src/cot_monitorability/monitorbench/README.md) |
+| Task | Default configuration | Actor effort | Judge / monitor effort | Samples | Documentation |
+| --- | --- | --- | --- | ---: | --- |
+| `cot_controllability_qa` | GPQA, word suppression | high | high | 427 | [CoT-Control](src/cot_monitorability/cot_control/README.md) |
+| `openai_monitorability_process` | Theorem detection, CoT only | medium | high | 52 | [Process](src/cot_monitorability/openai_process/README.md) |
+| `openai_monitorability_intervention` | Scruples, suggest wrong | medium | high | 150 pairs | [Intervention](src/cot_monitorability/openai_intervention/README.md) |
+| `cot_immediacy_2510` | GPQA, all answers | high | high | 445 | [Immediacy](src/cot_monitorability/immediacy/README.md) |
+| `ncri_bench` | Arithmetic, 10-shot, reasoning disabled | none | — | 83 | [NCRI](src/cot_monitorability/ncri/README.md) |
+| `monitorbench` | Preference, standard condition | high | high | 108 pairs | [MonitorBench](src/cot_monitorability/monitorbench/README.md) |
 
-Counts are for the default configuration. Dataset, mode, and subset arguments can change them.
+Counts are for the default configuration. Dataset, mode, and subset arguments can change them. Effort names are backend controls, not fixed token budgets; compare runs using their recorded reasoning lengths.
 
 ## Running an evaluation
 
@@ -69,7 +69,18 @@ export JUDGE_MODEL='openai-api/openai/<your-judge-or-monitor-model>'
 
 Replace the placeholders with your own configuration. Credentials are read from the environment and should not be committed.
 
-The script takes a task name, model name, then standard Inspect arguments. Default effort comes from the task signature; `REASONING_EFFORT=low` overrides it for CoT tasks. NCRI retains its no-CoT request. Set `COT_USE_LITELLM_COMPAT=1` for proxies that require LiteLLM compatibility fields.
+The script takes a task name, model name, then standard Inspect arguments. Use `--reasoning-effort` to change the actor setting; the runner synchronizes the task argument and proxy configuration while keeping scoring roles at high. Default effort comes from the task signature; `REASONING_EFFORT=low` overrides it for CoT tasks. NCRI retains its no-CoT request. Set `COT_USE_LITELLM_COMPAT=1` for proxies that require LiteLLM compatibility fields.
+
+To compare effort levels on the same task:
+
+```bash
+for effort in low medium high; do
+  ./scripts/run_eval.sh cot_controllability_qa 'openai-api/openai/<your-evaluated-model>' \
+    --reasoning-effort "$effort" --limit 5
+done
+```
+
+The result index keeps effort levels separate. NCRI's default run stays at none; positive controls are configured separately and stored outside the result directory.
 
 ## Data
 
