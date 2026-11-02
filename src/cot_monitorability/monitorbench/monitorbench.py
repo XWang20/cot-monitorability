@@ -1,4 +1,3 @@
-# Task implementation migrated from the local Inspect integration; see NOTICE.
 from typing import Literal, Optional
 
 from cot_monitorability.monitorbench.components import (

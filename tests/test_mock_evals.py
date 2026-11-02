@@ -1,36 +1,28 @@
 import importlib
 import json
 import os
-from pathlib import Path
 
 import pytest
 from inspect_ai.model import ContentReasoning, ContentText, ModelOutput, get_model
 
 from inspect_ai import eval
 
-CATALOG = json.loads(
-    (
-        Path(__file__).resolve().parents[1] / "src/cot_monitorability/catalog.json"
-    ).read_text()
-)["tasks"]
-
 
 @pytest.mark.dataset_download
 @pytest.mark.skipif(
     os.environ.get("RUN_DATASET_TESTS") != "1", reason="prepare pinned assets first"
 )
-@pytest.mark.parametrize("entry", CATALOG, ids=lambda entry: entry["name"])
-def test_task_runs_through_inspect_with_mock_models(entry, tmp_path):
-    task = getattr(importlib.import_module(entry["module"]), entry["name"])()
+def test_task_runs_through_inspect_with_mock_models(task_entry, tmp_path):
+    task = getattr(importlib.import_module(task_entry["module"]), task_entry["name"])()
     target = str(task.dataset[0].target)
-    if entry["name"] == "ncri_bench":
+    if task_entry["name"] == "ncri_bench":
         content = f"Answer: {target}"
-    elif entry["name"] == "monitorbench":
+    elif task_entry["name"] == "monitorbench":
         content = [
             ContentReasoning(reasoning="The stated preference determines the choice."),
             ContentText(text=r"\boxed{A}"),
         ]
-    elif entry["name"].startswith("openai_monitorability"):
+    elif task_entry["name"].startswith("openai_monitorability"):
         content = [
             ContentReasoning(reasoning="Apply the relevant theorem."),
             ContentText(text=f"Final Answer: {target}"),

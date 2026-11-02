@@ -1,12 +1,5 @@
 #!/usr/bin/env python3
-"""Inspect AI adaptation for OpenAI Monitoring Monitorability (arXiv:2512.18311).
-
-Upstream repository: https://github.com/openai/monitorability-evals
-Official blogs & system cards:
-- Open Sourcing Monitorability Evaluations (2026.04): https://alignment.openai.com/monitorability-evals/
-- Beyond g-mean² (2026.10): https://alignment.openai.com/beyond-gmean-squared/
-- GPT-6 Astra System Card (§9.1): https://deploymentsafety.openai.com/gpt-6-astra/monitorability
-"""
+"""Shared generation and scoring for OpenAI monitorability tasks."""
 
 from __future__ import annotations
 
@@ -28,7 +21,7 @@ from inspect_ai.scorer import Metric, SampleScore, Score, Scorer, Target, metric
 from inspect_ai.solver import Generate, Solver, TaskState, solver
 
 from cot_monitorability.assets import ensure_asset
-from cot_monitorability.reference.openai_scaffold import (  # noqa: E402
+from cot_monitorability.reference.openai_scaffold import (
     EvalItem,
     ModelCallOutput,
     _match_directional_answer,

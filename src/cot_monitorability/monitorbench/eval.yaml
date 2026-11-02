@@ -20,6 +20,11 @@ external_assets:
   fetch_method: download_and_verify
   state: pinned
   comment: Archive checksum and reference revision are recorded in asset_specs.json.
+- type: direct_url
+  source: https://raw.githubusercontent.com/nltk/nltk_data/550b6625bcef1f2abff2ff770a5a0d272c9c6b2a/packages/tokenizers/punkt_tab.zip
+  fetch_method: download_and_verify
+  state: pinned
+  comment: Delegated tasks use this tokenizer; the reference downloader verifies SHA-256 e57f64187974277726a3417ca6f181ec5403676c717672eef6a748a7b20e0106.
 metadata:
   requires:
     internet: true

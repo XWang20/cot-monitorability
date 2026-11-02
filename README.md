@@ -1,60 +1,112 @@
-# CoT Monitorability — Inspect Tasks
+# CoT Monitorability
 
-本仓库提供可安装的独立 Inspect 评测包，包含 6 类思维链可监控性任务。任务源码直接位于 `src/cot_monitorability/`，每个任务有 `eval.yaml`、README 和 `1-A` 版本。
+Inspect AI tasks for studying chain-of-thought control, monitorability, and reasoning without CoT.
 
-**历史结果入口：[eval_logs/](eval_logs/README.md)**。14 份原始 `.eval` 保留在服务器，GitHub 保存索引和 SHA-256。这些日志对应原本地集成，不作为新包 `1-A` 的全量模型报告。
+## Installation
 
-## 安装与运行
-
-```bash
-uv sync --locked --group dev --group test
-
-# 包入口
-uv run inspect eval cot_monitorability/cot_controllability_qa --model openai/<模型> --limit 10
-
-# 与 Register Source URL 对应的源码入口
-uv run inspect eval src/cot_monitorability/cot_control/cot_control.py@cot_controllability_qa --model openai/<模型> --limit 10
-```
-
-第一次构造任务时，数据资产按固定 commit 和 SHA-256 下载到缓存。可在导入任务前设置绝对路径 `COT_MONITORABILITY_CACHE_DIR`；预取后设置 `COT_MONITORABILITY_OFFLINE=1` 可禁止下载。运行不要求存在服务器原来的 `repos/` 或修改版 `inspect_evals` clone。
-
-| 任务 | 源码目录 | 默认 effort | 默认样本数 |
-| --- | --- | --- | --- |
-| `cot_controllability_qa` | [cot_control](src/cot_monitorability/cot_control) | high | 427 |
-| `openai_monitorability_process` | [openai_process](src/cot_monitorability/openai_process) | medium | 52 |
-| `openai_monitorability_intervention` | [openai_intervention](src/cot_monitorability/openai_intervention) | medium | 150 |
-| `cot_immediacy_2510` | [immediacy](src/cot_monitorability/immediacy) | high | 445 |
-| `ncri_bench` | [ncri](src/cot_monitorability/ncri) | 无 CoT | 83 |
-| `monitorbench` | [monitorbench](src/cot_monitorability/monitorbench) | high | 108 |
-
-样本数对应任务默认参数；切换模式、数据集或子任务会改变数量。Judge/Monitor 使用 Inspect Model Roles，可通过 `--model-role judge=...` 或 `--model-role monitor=...` 覆盖。
-
-## 本机代理与结果
-
-服务器启动脚本默认使用 `http://127.0.0.1:8000/v1`，将代理兼容参数留在运行配置中。
+Requires Python 3.11–3.13 and [uv](https://docs.astral.sh/uv/).
 
 ```bash
-./run_inspect_bench.sh 1 openai/deepseek-v4.1-flash-1017 10 5 auto
-./run_inspect_bench.sh 1 openai/kimi-k3.1-pro 10 5 high
-./run_inspect_bench.sh 1 openai/deepseek-v4.1-flash-1017 10 5 sweep
-./run_inspect_view.sh
-python3 scripts/index_eval_logs.py
+git clone https://github.com/XWang20/cot-monitorability.git
+cd cot-monitorability
+uv sync --locked
 ```
 
-## 检查与登记格式
+The package uses the public [Inspect AI](https://inspect.aisi.org.uk/) SDK. Installation with `pip install .` is also supported.
+
+## Evaluations
+
+Each task's README describes its method, parameters, scoring, and limitations.
+
+| Task | Default configuration | Samples | Documentation |
+| --- | --- | ---: | --- |
+| `cot_controllability_qa` | GPQA, word suppression | 427 | [CoT-Control](src/cot_monitorability/cot_control/README.md) |
+| `openai_monitorability_process` | Theorem detection, CoT only | 52 | [Process](src/cot_monitorability/openai_process/README.md) |
+| `openai_monitorability_intervention` | Scruples, suggest wrong | 150 pairs | [Intervention](src/cot_monitorability/openai_intervention/README.md) |
+| `cot_immediacy_2510` | GPQA, all answers | 445 | [Immediacy](src/cot_monitorability/immediacy/README.md) |
+| `ncri_bench` | Arithmetic, 10-shot, reasoning disabled | 83 | [NCRI](src/cot_monitorability/ncri/README.md) |
+| `monitorbench` | Preference, standard condition | 108 pairs | [MonitorBench](src/cot_monitorability/monitorbench/README.md) |
+
+Counts are for the default configuration. Dataset, mode, and subset arguments can change them.
+
+## Running an evaluation
+
+Configure credentials for your [model provider](https://inspect.aisi.org.uk/models.html). Specify the evaluated model with `--model` and the scoring model with `--model-role judge=...` or `--model-role monitor=...`.
 
 ```bash
-uv run ruff check src/cot_monitorability tests scripts/prepare_registration.py
-uv run ruff format --check src/cot_monitorability tests scripts/prepare_registration.py
-uv run pytest tests
-uv build
-
-# 从已提交的源码生成本地登记格式，不发送 issue、不调用 Register
-uv run python scripts/prepare_registration.py
+uv run inspect eval cot_monitorability/cot_controllability_qa \
+  --model 'openai/<evaluated-model>' \
+  --model-role 'judge=openai/<judge-model>' \
+  --limit 10 --log-dir eval_logs/cot_control
 ```
 
-生成的 `register/<id>/eval.yaml` 指向本仓库固定 40 字符 commit 的任务源码。格式说明与后续发布条件见 [上游提交准备](docs/UPSTREAM_CONTRIBUTION.md)。NCRI 已记录用户提供的 [LessWrong 原文](https://www.lesswrong.com/posts/eRmzz8J8Qkzqvzrgg/astra-can-do-a-concerning-amount-with-no-chain-of-thought)，arXiv 项保持待填。
+Task arguments use `-T`:
 
-`dependencies.lock.json`、`patches/` 和依赖 clone 仍保留为旧服务器环境的复现记录；它们不再是安装新评测包的前提。来源和许可证见 [docs/SOURCES.md](docs/SOURCES.md)、`NOTICE` 与 `licenses/`。
+```bash
+uv run inspect eval cot_monitorability/openai_monitorability_intervention \
+  --model 'openai/<evaluated-model>' \
+  --model-role 'monitor=openai/<monitor-model>' \
+  -T dataset=gpqa -T target_reasoning_effort=medium \
+  --limit 10 --log-dir eval_logs/intervention
+```
 
-旧 patch 的迁移去向、保留原因及尚未确认的兼容性见 [迁移对应表](docs/MIGRATION_MAP.md)。
+Omit `--limit` for all samples. Use `--max-connections` to control concurrency. Tasks also run directly from source, for example `inspect eval src/cot_monitorability/ncri/ncri.py@ncri_bench`.
+
+CoT tasks need a provider that exposes reasoning text. Hidden reasoning produces empty traces and changes the interpretation of monitorability scores. Select judge and monitor roles explicitly when comparing models; their prompts and sampling configuration affect the results.
+
+### Local OpenAI-compatible API
+
+The convenience script configures the local proxy through public Inspect CLI options:
+
+```bash
+export OPENAI_BASE_URL=http://127.0.0.1:8000/v1
+export OPENAI_API_KEY=a  # Replace if the proxy requires authentication.
+export JUDGE_MODEL='openai/<judge-or-monitor-model>'
+
+./scripts/run_eval.sh cot_controllability_qa 'openai/<evaluated-model>' \
+  --limit 10 --max-connections 5
+```
+
+It takes a task name, model name, then standard Inspect arguments. Default effort comes from the task signature; `REASONING_EFFORT=low` overrides it for CoT tasks. NCRI retains its no-CoT request. The script supplies LiteLLM compatibility fields for localhost:8000; `COT_USE_LITELLM_COMPAT=0` disables them for other compatible services.
+
+## Data
+
+The first task construction downloads the required source archives. [asset_specs.json](src/cot_monitorability/asset_specs.json) records immutable upstream commits and archive SHA-256 values. Archives and cached files are verified before use.
+
+```bash
+# Download all required archives in advance.
+uv run python -m cot_monitorability.assets
+
+# Prevent source archive downloads after prefetching.
+export COT_MONITORABILITY_OFFLINE=1
+```
+
+Set `COT_MONITORABILITY_CACHE_DIR` to an absolute path before importing tasks to select a different cache. Optional gated datasets have additional requirements described in the task documentation.
+
+## Results
+
+Inspect writes prompts, model responses, sample scores, and aggregate metrics to `.eval` files. Open them with:
+
+```bash
+uv run inspect view --log-dir eval_logs
+```
+
+On a remote server, forward the View port through SSH. The [results index](eval_logs/README.md) lists stored runs and their configurations; [index.json](eval_logs/index.json) includes metrics and file checksums. Raw logs are kept by the operator and ignored by Git. Rebuild the index after a run with `python3 scripts/index_eval_logs.py`.
+
+The indexed runs use 10-sample subsets of an earlier implementation. They are useful for inspecting those runs, but do not establish full-dataset performance for the current tasks. Scores from different benchmarks measure different quantities and should be reported separately.
+
+## Repository layout
+
+```text
+src/cot_monitorability/  Task implementations, metadata, and reference code
+tests/                  Scoring, asset integrity, and mocked evaluation tests
+scripts/                Local API runner and result indexing
+eval_logs/              Result index; raw logs are ignored
+licenses/               Third-party license and attribution notices
+```
+
+See [CONTRIBUTING.md](CONTRIBUTING.md) for development, dependency updates, and the Inspect Evals submission process.
+
+## License
+
+Integration code is MIT licensed. Included reference code has MIT and Apache-2.0 terms; dataset licenses and canaries remain applicable. [NOTICE](NOTICE) identifies sources and modifications, and [licenses/](licenses/) contains their license texts.

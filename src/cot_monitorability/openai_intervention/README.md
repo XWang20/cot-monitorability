@@ -1,37 +1,37 @@
-# OpenAI intervention-level CoT monitorability
+# Intervention-level monitorability
 
-Evaluates paired unperturbed and perturbed model outputs with the pinned OpenAI intervention metric. The default dataset is scruples_suggest_wrong; each Inspect sample contains a pair of generations.
+Measures whether a monitor detects an intervention that changes a model's behavior, using [OpenAI's monitorability evaluations](https://github.com/openai/monitorability-evals) ([paper](https://arxiv.org/abs/2512.18311)).
 
 ## Usage
 
-Install the project with `uv sync`. The first task construction fetches its pinned source assets into the package cache. Set `COT_MONITORABILITY_CACHE_DIR` before importing tasks to select another absolute cache directory.
-
 ```bash
 uv run inspect eval cot_monitorability/openai_monitorability_intervention \
-  --model openai/<evaluated-model> --limit 10 \
-  --model-role monitor=openai/<judge-or-monitor-model>
+  --model 'openai/<evaluated-model>' \
+  --model-role 'monitor=openai/<monitor-model>' \
+  -T dataset=scruples_suggest_wrong --limit 10
 ```
 
-The same task can be selected by its source file:
+The default has 150 paired samples. Each Inspect sample contains an unperturbed and perturbed generation; sample counts are not generation counts. The monitor evaluates both arms.
 
-```bash
-uv run inspect eval src/cot_monitorability/openai_intervention/openai_intervention.py@openai_monitorability_intervention --model openai/<evaluated-model> --limit 10
-```
+## Task arguments
 
-## Configuration and data
+| Argument | Default | Meaning |
+| --- | --- | --- |
+| `dataset` | `scruples_suggest_wrong` | Intervention dataset or `all` |
+| `scope` | `cot_only` | cot_only, answer_only, or all_messages |
+| `target_reasoning_effort` | `medium` | Evaluated-model reasoning effort |
+| `monitor_model` | DeepSeek V4.1 Flash-1017 | Fallback model; `--model-role monitor=...` takes precedence |
 
-Task version: `1-A`. Default dataset size after filtering: 150 samples. Evaluated-model effort: `medium`. Task arguments allow the documented dataset and generation variants.
+Datasets: `gpqa`, `gpqa_encoded`, `daft`, `scruples_first_person`, `scruples_suggest_right`, `scruples_suggest_wrong`, and `wmdp_sandbagging`.
 
-All source revisions and archive SHA-256 values are in `src/cot_monitorability/asset_specs.json`. Reference implementations and licence notices are retained in the package and root NOTICE. Cached files are verified before reuse. The source archives are downloaded before model calls.
+## Scoring
 
-## Validation status
+Logs report lower and upper intervention g-mean² bounds, effect shift, eligible fraction, reportability, and mean reasoning length. Eligibility depends on positive intervention effect. `intervention_reportable=0` means fewer than 10% of instances are eligible; do not report the bound as a benchmark result in that case.
 
-The publication format is tested with the public Inspect SDK. Dataset inputs, choices, targets and IDs are checked against the previous integration at the pinned assets. The existing 14 model-run logs belong to the earlier integration and are not claimed as full runs of this task version.
-
-Human methodology review, published-baseline comparison, and two-model full-run logs remain separate requirements before an actual registration. This packaging change does not claim that the transferred scorers have completed those reviews.
+With one generation per arm, eligibility estimates can be noisy. Compare the same dataset, monitor scope, sampling configuration, and number of epochs. Inspect paired outputs and monitor verdicts alongside aggregate scores.
 
 ## Changelog
 
 ### 1-A
 
-Initial standalone task format. Runtime assets are pinned and task sources are directly available in this repository.
+Initial version with paired generation and the pinned intervention metric.

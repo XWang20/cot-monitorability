@@ -414,7 +414,6 @@ dependencies = [
     { name = "filelock" },
     { name = "httpx" },
     { name = "inspect-ai" },
-    { name = "jsonschema" },
     { name = "nltk" },
     { name = "numpy", version = "2.4.6", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.12'" },
     { name = "numpy", version = "2.5.4", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.12'" },
@@ -433,11 +432,9 @@ dev = [
     { name = "build" },
     { name = "inspect-evals-lint" },
     { name = "mypy" },
-    { name = "ruff" },
-]
-test = [
     { name = "pytest" },
     { name = "pytest-asyncio" },
+    { name = "ruff" },
 ]
 
 [package.metadata]
@@ -445,7 +442,6 @@ requires-dist = [
     { name = "filelock", specifier = ">=3.15" },
     { name = "httpx", specifier = ">=0.27" },
     { name = "inspect-ai", specifier = ">=0.3.287" },
-    { name = "jsonschema", specifier = ">=4.0" },
     { name = "nltk", specifier = "==3.9.1" },
     { name = "numpy", specifier = ">=1.26" },
     { name = "openai", specifier = ">=3.24.0" },
@@ -463,11 +459,9 @@ dev = [
     { name = "build" },
     { name = "inspect-evals-lint" },
     { name = "mypy", specifier = ">=1.13" },
-    { name = "ruff", specifier = ">=0.13" },
-]
-test = [
     { name = "pytest", specifier = ">=8" },
     { name = "pytest-asyncio", specifier = ">=0.24" },
+    { name = "ruff", specifier = ">=0.13" },
 ]
 
 [[package]]

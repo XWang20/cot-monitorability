@@ -1,4 +1,3 @@
-# Task implementation migrated from the local Inspect integration; see NOTICE.
 from typing import List, Optional
 
 from inspect_ai.dataset import MemoryDataset, Sample

@@ -9,7 +9,7 @@ tasks:
 - name: ncri_bench
   dataset_samples: 83
   task_path: src/cot_monitorability/ncri/ncri.py
-  comment: 'Original methodology: https://www.lesswrong.com/posts/eRmzz8J8Qkzqvzrgg/astra-can-do-a-concerning-amount-with-no-chain-of-thought; no verified arXiv paper URL is supplied.'
+  comment: 'Methodology: https://www.lesswrong.com/posts/eRmzz8J8Qkzqvzrgg/astra-can-do-a-concerning-amount-with-no-chain-of-thought'
 external_assets:
 - type: direct_url
   source: https://codeload.github.com/neelnanda-io/nocot-bench/tar.gz/7e6ef5f128b32467723cf27600d1555a4bf1e80c

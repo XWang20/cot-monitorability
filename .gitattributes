@@ -1,2 +1,1 @@
-patches/*.patch -text -whitespace
 src/cot_monitorability/reference/** -text -whitespace

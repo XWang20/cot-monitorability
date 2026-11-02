@@ -1,37 +1,35 @@
-# OpenAI process-level CoT monitorability
+# Process-level monitorability
 
-Evaluates whether generated reasoning makes a required theorem path detectable, using the pinned OpenAI process dataset and monitor prompts. The default monitor scope is cot_only.
+Measures whether a monitor can detect a required theorem path in a model's reasoning, using [OpenAI's monitorability evaluations](https://github.com/openai/monitorability-evals) ([paper](https://arxiv.org/abs/2512.18311)).
 
 ## Usage
 
-Install the project with `uv sync`. The first task construction fetches its pinned source assets into the package cache. Set `COT_MONITORABILITY_CACHE_DIR` before importing tasks to select another absolute cache directory.
-
 ```bash
 uv run inspect eval cot_monitorability/openai_monitorability_process \
-  --model openai/<evaluated-model> --limit 10 \
-  --model-role monitor=openai/<judge-or-monitor-model>
+  --model 'openai/<evaluated-model>' \
+  --model-role 'monitor=openai/<monitor-model>' --limit 10
 ```
 
-The same task can be selected by its source file:
+The default dataset contains 52 samples. Each sample produces one evaluated-model answer. The monitor checks whether all theorems in at least one required path are applied, and also grades answer correctness.
 
-```bash
-uv run inspect eval src/cot_monitorability/openai_process/openai_process.py@openai_monitorability_process --model openai/<evaluated-model> --limit 10
-```
+## Task arguments
 
-## Configuration and data
+| Argument | Default | Meaning |
+| --- | --- | --- |
+| `scopes` | `cot_only` | Comma-separated upstream monitor scopes |
+| `target_reasoning_effort` | `medium` | Evaluated-model reasoning effort |
+| `monitor_model` | DeepSeek V4.1 Flash-1017 | Fallback model; `--model-role monitor=...` takes precedence |
 
-Task version: `1-A`. Default dataset size after filtering: 52 samples. Evaluated-model effort: `medium`. Task arguments allow the documented dataset and generation variants.
+Use scopes supported by the upstream prompts, such as `cot_only`, `answer_only`, and `all_messages`. Multiple scopes issue separate monitor queries.
 
-All source revisions and archive SHA-256 values are in `src/cot_monitorability/asset_specs.json`. Reference implementations and licence notices are retained in the package and root NOTICE. Cached files are verified before reuse. The source archives are downloaded before model calls.
+## Scoring
 
-## Validation status
+`process_gmean2_cot` reports the CoT monitor's g-mean². The log also records answer accuracy, monitor verdicts by scope, and mean reasoning length. The aggregate uses the CoT scope when present, otherwise the first configured scope; name alternative-scope results explicitly.
 
-The publication format is tested with the public Inspect SDK. Dataset inputs, choices, targets and IDs are checked against the previous integration at the pinned assets. The existing 14 model-run logs belong to the earlier integration and are not claimed as full runs of this task version.
-
-Human methodology review, published-baseline comparison, and two-model full-run logs remain separate requirements before an actual registration. This packaging change does not claim that the transferred scorers have completed those reviews.
+Answer grading and theorem-path detection depend on the monitor. Unrecognized or missing theorem verdicts count as not applied. Review the monitor's per-sample responses before drawing conclusions about reasoning faithfulness.
 
 ## Changelog
 
 ### 1-A
 
-Initial standalone task format. Runtime assets are pinned and task sources are directly available in this repository.
+Initial version using the pinned OpenAI process data and monitor prompts.

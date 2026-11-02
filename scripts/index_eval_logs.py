@@ -21,12 +21,15 @@ def read_run(path):
     finished = stats.get("completed_at")
     elapsed = None
     if started and finished:
-        elapsed = (datetime.fromisoformat(finished) - datetime.fromisoformat(started)).total_seconds()
+        elapsed = (
+            datetime.fromisoformat(finished) - datetime.fromisoformat(started)
+        ).total_seconds()
     return {
         "file": str(path.relative_to(ROOT)),
         "sha256": hashlib.sha256(path.read_bytes()).hexdigest(),
         "bytes": path.stat().st_size,
         "task": evaluation["task"],
+        "task_version": evaluation.get("task_version"),
         "model": evaluation["model"],
         "model_base_url": evaluation.get("model_base_url"),
         "status": header["status"],
@@ -34,16 +37,22 @@ def read_run(path):
         "started_at": started,
         "completed_at": finished,
         "elapsed_seconds": elapsed,
-        "reasoning_effort": evaluation.get("model_generate_config", {}).get("reasoning_effort"),
+        "reasoning_effort": evaluation.get("model_generate_config", {}).get(
+            "reasoning_effort"
+        ),
         "task_args": evaluation.get("task_args", {}),
-        "eval_config": {key: evaluation.get("config", {}).get(key) for key in ("limit", "epochs")},
+        "eval_config": {
+            key: evaluation.get("config", {}).get(key) for key in ("limit", "epochs")
+        },
         "completed_samples": results.get("completed_samples"),
         "total_samples": results.get("total_samples"),
         "scores": [
             {
                 "scorer": score["name"],
                 "scored_samples": score.get("scored_samples"),
-                "metrics": {key: item["value"] for key, item in score.get("metrics", {}).items()},
+                "metrics": {
+                    key: item["value"] for key, item in score.get("metrics", {}).items()
+                },
             }
             for score in results.get("scores", [])
         ],
@@ -54,46 +63,91 @@ def read_run(path):
 
 
 def primary_result(run):
-    metrics = {key: value for score in run["scores"] for key, value in score["metrics"].items()}
-    if run["task"].endswith("openai_monitorability_intervention") and metrics.get("intervention_reportable") == 0:
-        return "不可报告（eligible fraction 未达 10%）"
+    metrics = {
+        key: value for score in run["scores"] for key, value in score["metrics"].items()
+    }
+    if metrics.get("intervention_reportable") == 0:
+        return "Not reportable (eligible fraction below 10%)"
     names = (
-        "cot_controllability_score", "process_gmean2_cot", "intervention_gmean2_lower",
-        "legibility_pct", "coverage_pct", "ncri_placement_score", "mb_cot_monitorability",
+        "cot_controllability_score",
+        "process_gmean2_cot",
+        "intervention_gmean2_lower",
+        "legibility_pct",
+        "coverage_pct",
+        "ncri_placement_score",
+        "mb_cot_monitorability",
     )
-    return "; ".join(f"{name}={metrics[name]:.4g}" for name in names if name in metrics) or "未记录"
+    return (
+        "; ".join(f"{name}={metrics[name]:.4g}" for name in names if name in metrics)
+        or "Not recorded"
+    )
 
 
 def render_markdown(runs):
     lines = [
-        "# Inspect 评测结果索引", "",
-        f"当前索引包含 {len(runs)} 份历史评测日志，覆盖 {len({run['task'] for run in runs})} 类基准。",
-        "原始 `.eval` 保存在服务器项目的 `eval_logs/` 下；GitHub 保存本索引和 `index.json`。", "",
-        "```bash", "./run_inspect_view.sh", "```", "",
-        "## 已记录的运行", "",
-        "| 任务 / 子集 | 模型 | 实际 effort | 完成样本 | 状态 | 主要指标 |",
-        "| --- | --- | --- | --- | --- | --- |",
+        "# Evaluation results",
+        "",
+        f"Index of {len(runs)} stored runs. Raw `.eval` files are kept by the "
+        "operator; this directory versions their metadata and checksums.",
+        "",
+        "Interpret each run using its recorded task namespace, version, configuration, "
+        "and package revision. Limited runs do not establish full-dataset performance.",
+        "",
+        "## Runs",
+        "",
+        "| Task / subset | Version | Model | Effort | Samples | Status | Main metrics |",
+        "| --- | --- | --- | --- | --- | --- | --- |",
     ]
     for run in runs:
         args = run["task_args"]
-        subset = args.get("dataset") or args.get("banks") or args.get("subset") or args.get("scopes") or ""
+        subset = (
+            args.get("dataset")
+            or args.get("banks")
+            or args.get("subset")
+            or args.get("scopes")
+            or ""
+        )
         if args.get("modes"):
             subset += "/" + args["modes"]
-        effort = run["reasoning_effort"] or ("disabled" if args.get("disable_reasoning") else "未记录")
+        effort = run["reasoning_effort"] or (
+            "disabled" if args.get("disable_reasoning") else "Not recorded"
+        )
         model = run["model"].removeprefix("openai/")
-        task = run["task"].removeprefix("inspect_evals/")
-        lines.append(f"| {task} / {subset} | {model} | {effort} | {run['completed_samples']}/{run['total_samples']} | {run['status']} | {primary_result(run)} |")
+        task = run["task"]
+        version = (
+            run["task_version"] if run["task_version"] is not None else "Not recorded"
+        )
+        lines.append(
+            f"| {task} / {subset} | {version} | {model} | {effort} | "
+            f"{run['completed_samples']}/{run['total_samples']} | "
+            f"{run['status']} | {primary_result(run)} |"
+        )
     lines += [
-        "", "## 数据说明", "",
-        "- 创建日期（UTC）：" + ", ".join(sorted({run["created"][:10] for run in runs if run["created"]})) + "。完成样本数与任务配置逐份记录在表格和 JSON 中。干预基准的一个样本包含一对生成。",
-        "- 部分数据集存在两组运行。索引逐份保留，不将重复或不同子集的样本合并。",
-        "- 当前启动脚本为 Process / Intervention 默认选择 medium。实际 effort 以每份日志的生成配置为准，不根据当前默认值推断。",
-        "- NCRI 的任务参数指定 disable_reasoning；各任务的 mean CoT token 指标、模型用量和配置保存在 index.json。",
-        "- 指标定义因基准而异，结果不合并成统一排行榜。干预指标未达可报告阈值时标为不可报告；原始数值保留在 JSON。",
-        "- 固定长度窗口的 -1 等无有效样本标记保留原值，不解释为负分。",
-        "- 历史日志的部分汇总指标由原会话在 2026-10-30 根据已有样本补齐；本脚本只读取 header，不修改日志。",
-        "- file、SHA-256、时间、子集、完整指标和来源信息见 [index.json](index.json)。原始日志路径以服务器项目目录为基准。", "",
-        "```bash", "python3 scripts/index_eval_logs.py", "```", "",
+        "",
+        "## Interpretation",
+        "",
+        "- Counts refer to Inspect samples. Intervention samples contain paired generations.",
+        "- Runs, subsets, and repetitions are listed separately; their samples are not pooled.",
+        "- Effort comes from stored generation configuration or explicit no-CoT task settings.",
+        "- Metrics measure different quantities across tasks. Do not combine them into a ranking.",
+        "- A -1 value can denote an empty eligible window rather than a negative score.",
+        "- Some historical aggregate metrics were reconstructed from stored sample scores "
+        "on 2026-10-30. The indexer reads headers and does not modify logs.",
+        "",
+        "[index.json](index.json) contains file paths, SHA-256, task and package "
+        "versions, timing, model usage, task arguments, and all recorded metrics.",
+        "",
+        "## Inspecting and indexing logs",
+        "",
+        "Run from the repository root:",
+        "",
+        "```bash",
+        "uv run inspect view --log-dir eval_logs",
+        "python3 scripts/index_eval_logs.py",
+        "```",
+        "",
+        "The indexer refuses to replace the index when no local logs are present.",
+        "",
     ]
     return "\n".join(lines)
 
@@ -101,10 +155,21 @@ def render_markdown(runs):
 def main():
     runs = [read_run(path) for path in sorted(LOG_DIR.rglob("*.eval"))]
     if not runs:
-        raise SystemExit("No local .eval files found; refusing to replace the published index with an empty index.")
+        raise SystemExit(
+            "No local .eval files found; refusing to replace the existing index."
+        )
     LOG_DIR.mkdir(exist_ok=True)
-    (LOG_DIR / "index.json").write_text(json.dumps({"schema_version": 1, "runs": runs}, ensure_ascii=False, indent=2, allow_nan=False) + "\n")
-    (LOG_DIR / "README.md").write_text(render_markdown(runs))
+    (LOG_DIR / "index.json").write_text(
+        json.dumps(
+            {"schema_version": 1, "runs": runs},
+            ensure_ascii=False,
+            indent=2,
+            allow_nan=False,
+        )
+        + "\n",
+        encoding="utf-8",
+    )
+    (LOG_DIR / "README.md").write_text(render_markdown(runs), encoding="utf-8")
     print(f"Indexed {len(runs)} Inspect logs without changing the original files.")
 
 

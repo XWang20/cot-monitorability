@@ -39,7 +39,7 @@ from inspect_ai.solver import Generate, Solver, TaskState, solver
 from cot_monitorability.assets import asset_path, ensure_asset
 
 # Import the 5 tasks from semsorock/inspect-evals-monitor-bench
-from cot_monitorability.reference.monitor_bench import (  # noqa: E402
+from cot_monitorability.reference.monitor_bench import (
     dual_objectives_steganography as mb_dual_objectives_steganography,
 )
 from cot_monitorability.reference.monitor_bench import (
@@ -54,11 +54,11 @@ from cot_monitorability.reference.monitor_bench import (
 from cot_monitorability.reference.monitor_bench import (
     goal_sandbag_safety as mb_goal_sandbag_safety,
 )
-from cot_monitorability.reference.monitor_bench.extraction import (  # noqa: E402
+from cot_monitorability.reference.monitor_bench.extraction import (
     extract_choice,
     extract_cot_action,
 )
-from cot_monitorability.reference.monitor_bench.tasks.goal_sandbag.math.eval import (  # noqa: E402
+from cot_monitorability.reference.monitor_bench.tasks.goal_sandbag.math.eval import (
     SANDBAG_DIRECT_CONCEAL_PROMPT,
     SANDBAG_GENERAL_PROMPT,
     SANDBAG_MONITOR_AWARE_AUGMENT_PROMPT,

@@ -8,19 +8,15 @@ import pytest
 import yaml
 
 ROOT = Path(__file__).resolve().parents[1]
-CATALOG = json.loads((ROOT / "src/cot_monitorability/catalog.json").read_text())[
-    "tasks"
-]
 
 
-@pytest.mark.parametrize("entry", CATALOG, ids=lambda entry: entry["name"])
-def test_task_sources_and_metadata_are_direct(entry):
-    path = ROOT / entry["task_path"]
+def test_task_sources_and_metadata_are_direct(task_entry):
+    path = ROOT / task_entry["task_path"]
     nodes = ast.parse(path.read_text()).body
     function = next(
         node
         for node in nodes
-        if isinstance(node, ast.FunctionDef) and node.name == entry["name"]
+        if isinstance(node, ast.FunctionDef) and node.name == task_entry["name"]
     )
     assert any(
         isinstance(d, (ast.Name, ast.Call))
@@ -32,9 +28,9 @@ def test_task_sources_and_metadata_are_direct(entry):
         for n in ast.walk(function)
     )
     metadata = yaml.safe_load((path.parent / "eval.yaml").read_text())
-    assert metadata["version"] == entry["version"] == "1-A"
-    assert metadata["tasks"][0]["name"] == entry["name"]
-    assert metadata["tasks"][0]["dataset_samples"] == entry["dataset_samples"]
+    assert metadata["version"] == task_entry["version"] == "1-A"
+    assert metadata["tasks"][0]["name"] == task_entry["name"]
+    assert metadata["tasks"][0]["dataset_samples"] == task_entry["dataset_samples"]
     assert (path.parent / "__init__.py").is_file()
     assert (path.parent / "README.md").is_file()
     assert "sys.path" not in path.read_text()
@@ -45,12 +41,11 @@ def test_task_sources_and_metadata_are_direct(entry):
     os.environ.get("RUN_DATASET_TESTS") != "1",
     reason="prepare pinned assets and enable RUN_DATASET_TESTS",
 )
-@pytest.mark.parametrize("entry", CATALOG, ids=lambda entry: entry["name"])
-def test_default_task_constructs_offline(entry):
-    factory = getattr(importlib.import_module(entry["module"]), entry["name"])
+def test_default_task_constructs_offline(task_entry):
+    factory = getattr(importlib.import_module(task_entry["module"]), task_entry["name"])
     task = factory()
     assert task.version == "1-A"
-    assert len(task.dataset) == entry["dataset_samples"]
+    assert len(task.dataset) == task_entry["dataset_samples"]
     assert task.scorer is not None
 
 
@@ -66,11 +61,10 @@ def test_source_archives_are_pinned():
 @pytest.mark.skipif(
     os.environ.get("RUN_DATASET_TESTS") != "1", reason="prepare pinned assets first"
 )
-@pytest.mark.parametrize("entry", CATALOG, ids=lambda entry: entry["name"])
-def test_migrated_dataset_matches_legacy_inputs_and_targets(entry):
+def test_pinned_dataset_matches_fingerprint(task_entry):
     import hashlib
 
-    factory = getattr(importlib.import_module(entry["module"]), entry["name"])
+    factory = getattr(importlib.import_module(task_entry["module"]), task_entry["name"])
     task = factory()
     samples = [
         s.model_dump(include={"id", "input", "target", "choices"}, mode="json")
@@ -80,7 +74,7 @@ def test_migrated_dataset_matches_legacy_inputs_and_targets(entry):
         samples, sort_keys=True, ensure_ascii=False, separators=(",", ":")
     ).encode()
     baseline = json.loads(
-        (ROOT / "tests/fixtures/legacy_dataset_fingerprints.json").read_text()
-    )[entry["name"]]
+        (ROOT / "tests/fixtures/dataset_fingerprints.json").read_text()
+    )[task_entry["name"]]
     assert len(samples) == baseline["samples"]
     assert hashlib.sha256(encoded).hexdigest() == baseline["sha256"]

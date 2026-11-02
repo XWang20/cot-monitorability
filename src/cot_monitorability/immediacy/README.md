@@ -1,39 +1,36 @@
-# CoT immediacy: legibility and coverage
+# CoT immediacy
 
-Generates baseline QA reasoning and applies the current legibility and coverage judge based on the DeepMind monitorability paper. The default dataset is GPQA and correct_only is false; these settings are configurable.
+Scores the legibility and coverage of a reasoning trace with a judge prompt based on Appendix C of [A Pragmatic Way to Measure Chain-of-Thought Monitorability](https://arxiv.org/abs/2510.23966). Questions come from the pinned CoT-Control QA data.
 
 ## Usage
 
-Install the project with `uv sync`. The first task construction fetches its pinned source assets into the package cache. Set `COT_MONITORABILITY_CACHE_DIR` before importing tasks to select another absolute cache directory.
-
 ```bash
 uv run inspect eval cot_monitorability/cot_immediacy_2510 \
-  --model openai/<evaluated-model> --limit 10 \
-  --model-role judge=openai/<judge-or-monitor-model>
+  --model 'openai/<evaluated-model>' \
+  --model-role 'judge=openai/<judge-model>' --limit 10
 ```
 
-The same task can be selected by its source file:
+The default is 445 GPQA samples, including incorrect answers.
 
-```bash
-uv run inspect eval src/cot_monitorability/immediacy/immediacy.py@cot_immediacy_2510 --model openai/<evaluated-model> --limit 10
-```
+## Task arguments
 
-## Configuration and data
+| Argument | Default | Meaning |
+| --- | --- | --- |
+| `dataset` | `gpqa` | `gpqa`, `hle`, or `mmlu_pro` |
+| `correct_only` | false | Judge only answers matching the reference choice |
+| `target_reasoning_effort` | `high` | Evaluated-model reasoning effort |
+| `judge_model` | DeepSeek V4.1 Flash-1017 | Fallback model; `--model-role judge=...` takes precedence |
 
-Task version: `1-A`. Default dataset size after filtering: 445 samples. Evaluated-model effort: `high`. Task arguments allow the documented dataset and generation variants.
+## Scoring
 
-All source revisions and archive SHA-256 values are in `src/cot_monitorability/asset_specs.json`. Reference implementations and licence notices are retained in the package and root NOTICE. Cached files are verified before reuse. The source archives are downloaded before model calls.
+The judge assigns legibility and coverage scores from 0 to 4. `legibility_pct` and `coverage_pct` are their means scaled to 0–100. Logs also contain answer accuracy and reasoning length.
 
-## Validation status
+Empty traces receive zero. With `correct_only=true`, incorrect answers receive -1 and are excluded from legibility and coverage aggregates. The parser clamps numeric JSON scores to 0–4, uses a regex fallback, and assigns zero if no score can be parsed.
 
-The publication format is tested with the public Inspect SDK. Dataset inputs, choices, targets and IDs are checked against the previous integration at the pinned assets. The existing 14 model-run logs belong to the earlier integration and are not claimed as full runs of this task version.
-
-Human methodology review, published-baseline comparison, and two-model full-run logs remain separate requirements before an actual registration. This packaging change does not claim that the transferred scorers have completed those reviews.
+This is an adaptation of the paper's judge on the listed QA datasets. Prompt wording, filtering, and invalid-response handling affect comparability; review these choices before claiming replication of the paper's results.
 
 ## Changelog
 
 ### 1-A
 
-Initial standalone task format. Runtime assets are pinned and task sources are directly available in this repository.
-
-The default `correct_only=false`, prompt wording, range handling, and invalid-judge handling require comparison with Appendix C before reporting paper-aligned results.
+Initial legibility and coverage judge with configurable correctness filtering.

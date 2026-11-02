@@ -22,9 +22,9 @@ from inspect_ai.scorer import Metric, SampleScore, Score, Scorer, Target, metric
 from inspect_ai.solver import Generate, Solver, TaskState, solver
 
 from cot_monitorability.assets import asset_path, ensure_asset
-from cot_monitorability.reference.nocot import grade as G  # noqa: E402
-from cot_monitorability.reference.nocot import place as P  # noqa: E402
-from cot_monitorability.reference.nocot import run as R  # noqa: E402
+from cot_monitorability.reference.nocot import grade as G
+from cot_monitorability.reference.nocot import place as P
+from cot_monitorability.reference.nocot import run as R
 
 REPO_ROOT = asset_path("ncri")
 

@@ -1,4 +1,3 @@
-# Task implementation migrated from the local Inspect integration; see NOTICE.
 from typing import Optional
 
 from cot_monitorability.ncri.components import (

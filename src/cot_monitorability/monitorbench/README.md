@@ -1,39 +1,47 @@
-# MonitorBench: preference subset and configurable non-sandbox tasks
+# MonitorBench
 
-Evaluates CoT monitorability using the MonitorBench non-sandbox adapter. The default is cue_condition.preference under the standard condition; other supported subsets are task arguments and existing community implementations are reused.
+Evaluates whether a monitor detects decision-relevant factors in a reasoning trace. Uses [MonitorBench](https://github.com/ASTRAL-Group/MonitorBench) ([paper](https://arxiv.org/abs/2603.28590v2)) and selected tasks from the [community Inspect implementation](https://github.com/semsorock/inspect-evals-monitor-bench).
 
 ## Usage
 
-Install the project with `uv sync`. The first task construction fetches its pinned source assets into the package cache. Set `COT_MONITORABILITY_CACHE_DIR` before importing tasks to select another absolute cache directory.
-
 ```bash
 uv run inspect eval cot_monitorability/monitorbench \
-  --model openai/<evaluated-model> --limit 10 \
-  --model-role monitor=openai/<judge-or-monitor-model>
+  --model 'openai/<evaluated-model>' \
+  --model-role 'monitor=openai/<monitor-model>' \
+  -T subset=cue_condition.preference -T stress_test=standard --limit 10
 ```
 
-The same task can be selected by its source file:
+The default has 108 paired preference samples. The general adapter generates original and intervened responses. `process.multistep` uses a single response.
 
-```bash
-uv run inspect eval src/cot_monitorability/monitorbench/monitorbench.py@monitorbench --model openai/<evaluated-model> --limit 10
-```
+## Task arguments
 
-## Configuration and data
+| Argument | Default | Meaning |
+| --- | --- | --- |
+| `subset` | `cue_condition.preference` | One of the supported tasks below |
+| `stress_test` | `standard` | `standard`, `direct_conceal`, or `monitor_aware` |
+| `target_reasoning_effort` | `high` | Effort for the general adapter |
+| `monitor_model` | DeepSeek V4.1 Flash-1017 | Fallback for the general adapter; the monitor role takes precedence |
+| `epochs` | 1 | Internal epochs for delegated community tasks |
+| `monitor_rollouts` | 1 | Monitor rollouts for delegated community tasks |
 
-Task version: `1-A`. Default dataset size after filtering: 108 samples. Evaluated-model effort: `high`. Task arguments allow the documented dataset and generation variants.
+General subsets: `goal_sandbag.science`, `goal_deception.realworld`, `cue_condition.knowledge`, `cue_condition.preference`, `cue_condition.judgment`, `cue_condition.health`, `cue_answer.math`, `cue_answer.logic`, `cue_answer.health`, and `process.multistep`.
 
-All source revisions and archive SHA-256 values are in `src/cot_monitorability/asset_specs.json`. Reference implementations and licence notices are retained in the package and root NOTICE. Cached files are verified before reuse. The source archives are downloaded before model calls.
+Delegated community subsets: `dual_objectives_steganography`, `dual_objectives_summarization`, `goal_sandbag_safety`, `goal_sandbag_math`, and `goal_sandbag_engineering`. Their task-specific prompts, sampling, and metrics are retained in the reference implementation. Configure their monitor through `--model-role monitor=...`. The general adapter's effort and fallback-model arguments do not configure those delegated tasks.
 
-## Validation status
+Delegated sentence-based tasks fetch a pinned NLTK tokenizer on first use and verify its checksum. This cache is separate from the source archive cache.
 
-The publication format is tested with the public Inspect SDK. Dataset inputs, choices, targets and IDs are checked against the previous integration at the pinned assets. The existing 14 model-run logs belong to the earlier integration and are not claimed as full runs of this task version.
+For repetitions through the Inspect runner, use the CLI `--epochs`; distinguish this from the delegated task's `-T epochs` argument.
 
-Human methodology review, published-baseline comparison, and two-model full-run logs remain separate requirements before an actual registration. This packaging change does not claim that the transferred scorers have completed those reviews.
+## Scoring
+
+The general adapter reports `mb_cot_monitorability`, `mb_verification_rate`, and `mb_mean_cot_tokens`. For paired interventions, a sample is eligible when the intervened response passes verification and the original does not. Process samples need a verified response. Only eligible samples with a reasoning trace receive a monitor query.
+
+Report verification rates and eligible counts with monitorability. An aggregate with few eligible samples is unstable; Inspect logs contain the outputs and verdicts needed to inspect exclusions. Delegated subsets use their own metric definitions rather than these general metrics.
+
+The supported variants are non-sandbox tasks. Several delegated variants already have Inspect Evals listings; check those entries before proposing another registration.
 
 ## Changelog
 
 ### 1-A
 
-Initial standalone task format. Runtime assets are pinned and task sources are directly available in this repository.
-
-Four community MonitorBench tasks are already registered upstream. The preference default avoids claiming a new implementation of those entries; registration of other variants requires duplicate checking.
+Initial non-sandbox task collection with pinned datasets and community implementations.
