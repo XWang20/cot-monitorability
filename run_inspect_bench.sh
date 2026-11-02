@@ -8,6 +8,7 @@ set -euo pipefail
 
 ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 INSPECT_BIN="${ROOT_DIR}/.venv/bin/inspect"
+cd "${ROOT_DIR}"
 
 # All benchmark models use the same local OpenAI-compatible proxy.
 # Do not source the legacy .env: it may select the old external development API.

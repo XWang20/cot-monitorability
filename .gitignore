@@ -31,6 +31,9 @@ uv.lock
 repos/
 inspect_evals/
 inspect_ai/
-eval_logs/
+# Keep raw Inspect logs on the server; version the results index.
+eval_logs/*
+!eval_logs/README.md
+!eval_logs/index.json
 *.log
 /tmp/

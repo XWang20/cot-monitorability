@@ -1,101 +1,49 @@
-# Repository and dependency management
+# 仓库与依赖管理
 
-This project combines a CoT-Control-based application with seven independent
-source repositories. The application owns the launcher, configuration, docs,
-`dependencies.lock.json`, and `patches/`. Dependency clones and generated logs
-remain ignored by the application Git repository.
+主仓库维护 6 类 Inspect 基准集成的启动入口、结果索引和依赖快照。主仓库从自己的初始提交开始，作者关联 `XWang20`。
 
-## Source of truth
+## 评测结果
 
-Each entry in `dependencies.lock.json` records the source URL, exact upstream
-commit, and a SHA-256-checked patch containing the current local source changes.
-The recorded `checkout_head` is provenance; restoration uses `base_commit`
-plus the patch, so local commits do not need to be pushed to seven separate forks.
-The Inspect patches use publicly accessible official upstream commits as their
-bases and preserve the existing imported fork changes, including compatibility,
-refusal, and benchmark extensions. They are not limited to the CoT adapters. Upstream history and license files
-remain in the independent clones.
+原始 `.eval` 位于服务器 `eval_logs/` 下。GitHub 只保存 `eval_logs/README.md` 和 `eval_logs/index.json`。
+索引记录运行配置、完整汇总指标和原始日志 SHA-256；脚本只读取日志 header，不修改原始文件。
 
-This preserves source trees, not virtual environments, credentials, generated
-results, or original local commit sequences. Keep `.env` private and archive
-evaluation results separately. NCRI item banks are shipped in the upstream's
-password-protected archive. The lock also records its upstream checksum and the
-hashes of the required extracted files; restore verifies and extracts them,
-including the upstream canary. Plaintext banks stay ignored in the dependency.
+```bash
+python3 scripts/index_eval_logs.py
+```
 
-## Daily workflow
+在没有本机原始 `.eval` 的新 checkout 中，索引脚本会拒绝生成空索引。已有 GitHub 索引仍可直接查看。
+旧平台源码和 CSV 输出已从活跃目录移除，服务器的 `tmp/` 下保留本次清理备份。
 
-Check whether all seven dependency source trees match the recorded state:
+## 固定依赖源码
+
+`dependencies.lock.json` 为 7 个独立 clone 记录公开 HTTPS 来源、上游 commit、补丁及 SHA-256。
+`checkout_head` 记录原本地来源；恢复使用固定 `base_commit` 加补丁。依赖 clone 保留各自上游历史。
+Inspect 补丁包含现有 fork 的兼容性和基准扩展，以保留当前运行代码。
 
 ```bash
 python3 scripts/dependency_repos.py check
-```
-
-After editing dependency sources, commit or stage any new files in the relevant
-dependency repository, then update and review the application snapshot:
-
-```bash
 python3 scripts/dependency_repos.py snapshot
-git diff -- dependencies.lock.json patches/
 ```
 
-`snapshot` keeps the already-pinned upstream base and clone URL. It records tracked staged and
-unstaged changes, but refuses untracked source files. Commit the lock, patches,
-and related launcher/docs changes together in the application repository.
-Run `git status` separately in any dependency whose local history you maintain.
+修改依赖后，先在对应 clone 中暂存或提交新增源码文件，再运行 `snapshot`。该命令保存已跟踪的暂存及未暂存改动，保留已有固定来源和基准 commit，并拒绝遗漏未跟踪的源码。
+评审锁文件与补丁后，将它们和对应文档、启动脚本一起提交到主仓库。
 
-## Restoring a new checkout
-
-From a fresh application checkout with none of the dependency directories present:
+## 新 checkout 恢复
 
 ```bash
 python3 scripts/dependency_repos.py restore
 python3 scripts/dependency_repos.py check
+python3 -m venv .venv
+.venv/bin/python -m pip install -r requirements.txt
 ```
 
-The restore command clones each recorded URL, checks out its pinned upstream
-commit, verifies the patch checksum, and applies the patch to the index and working
-tree, including newly added adapter files. It refuses existing
-destination directories. NCRI data is prepared from its upstream release archive;
-`python3 scripts/dependency_repos.py prepare-data` can prepare missing data in
-existing clones without replacing changed files. If a clone fails partway through, retain it for
-inspection and retry into a fresh checkout or an empty `--destination` directory.
-The recorded upstream sources are accessible through public HTTPS URLs.
-The inaccessible original Inspect fork URLs are not required for restoration.
+`restore` 拒绝覆盖已有依赖目录。它 clone 固定来源、checkout 固定 commit，并将补丁应用到 index 和工作区。
+NCRI 题库由上游发布压缩包恢复，压缩包和解压文件均校验 SHA-256，并保留 canary。解压题库仍由依赖自己的 Git 忽略规则管理。
+已有 clone 缺少题库时，可运行 `python3 scripts/dependency_repos.py prepare-data`，该命令拒绝覆盖已变更数据。
 
-Install `inspect_ai` and `inspect_evals` from these source directories in editable
-mode in your environment. The current `.venv` already uses editable source paths.
-Adapters resolve benchmark data relative to the project layout, so keep
-`inspect_ai/`, `inspect_evals/`, and `repos/` at the recorded locations.
+更新上游版本时，明确选择新的公开来源与基准 commit，重新应用本地改动、验证，再运行 `snapshot`。主仓库依赖目录位置固定为 `inspect_ai/`、`inspect_evals/` 与 `repos/`。
 
-## Upstream updates and Git remotes
+## Git remotes
 
-An upstream update is explicit: fetch the dependency, choose and record a new
-`base_commit`, rebase/reapply the local changes, rerun relevant checks, and run
-`snapshot`. Review the resulting patch before committing the application snapshot.
-
-The application uses `https://github.com/XWang20/cot-monitorability.git` as
-`origin` and the original `YuehHanChen/CoTControl` repository as `upstream`.
-The application starts from its own initial commit. The upstream remote is kept
-for source comparison; dependency clones retain their independent upstream histories.
-
-If several people later maintain a dependency continuously, a shared fork plus
-a pinned Git submodule can replace its patch entry. Push its custom commit to the
-shared fork before introducing the submodule. A submodule pointing to a local,
-unpublished commit cannot be restored by other contributors.
-
-## Local API
-
-The unified runner defaults to `http://127.0.0.1:8000/v1`. All models, including
-`kimi-k3.1-pro`, use this API through the normal OpenAI-compatible provider.
-There is no model-specific switch to DMXAPI. The runner does not source the
-legacy `.env`; explicitly exported `OPENAI_BASE_URL` and `OPENAI_API_KEY` override
-the defaults (`PROXY_API_KEY` is also accepted as a key fallback).
-
-```bash
-./run_inspect_bench.sh 1 openai/kimi-k3.1-pro 10 5 high
-```
-
-For direct Inspect CLI use, export the same API configuration first. The older
-CSV evaluation utilities still offer their explicit `--provider dmxapi|proxy`
-selection; the unified Inspect runner uses the local proxy by default.
+主仓库的 `origin` 为 `https://github.com/XWang20/cot-monitorability.git`。`upstream` 保留原 CoT-Control 地址供源码对照。
+各基准的原始来源与许可见 [docs/SOURCES.md](docs/SOURCES.md)。
