@@ -4,19 +4,21 @@
 import hashlib
 import json
 import pathlib
-import zipfile
 from datetime import datetime
+
+from inspect_ai.log import read_eval_log
 
 ROOT = pathlib.Path(__file__).resolve().parents[1]
 LOG_DIR = ROOT / "eval_logs"
 
 
 def read_run(path):
-    with zipfile.ZipFile(path) as archive:
-        header = json.loads(archive.read("header.json"))
+    header = read_eval_log(str(path), header_only=True).model_dump(
+        mode="json", exclude_none=True
+    )
     evaluation = header["eval"]
-    results = header.get("results", {})
-    stats = header.get("stats", {})
+    results = header.get("results") or {}
+    stats = header.get("stats") or {}
     started = stats.get("started_at")
     finished = stats.get("completed_at")
     elapsed = None
@@ -30,6 +32,7 @@ def read_run(path):
         "bytes": path.stat().st_size,
         "task": evaluation["task"],
         "task_version": evaluation.get("task_version"),
+        "tags": evaluation.get("tags") or [],
         "model": evaluation["model"],
         "status": header["status"],
         "created": evaluation.get("created"),
@@ -65,6 +68,8 @@ def primary_result(run):
     metrics = {
         key: value for score in run["scores"] for key, value in score["metrics"].items()
     }
+    if metrics.get("ncri_valid_rate") == 0:
+        return "Not reportable (no valid no-CoT samples)"
     if metrics.get("intervention_reportable") == 0:
         return "Not reportable (eligible fraction below 10%)"
     names = (
@@ -116,9 +121,14 @@ def render_markdown(runs):
         version = (
             run["task_version"] if run["task_version"] is not None else "Not recorded"
         )
+        samples = (
+            f"{run['completed_samples']}/{run['total_samples']}"
+            if run["completed_samples"] is not None and run["total_samples"] is not None
+            else "Not recorded"
+        )
         lines.append(
             f"| {task} / {subset} | {version} | {model} | {effort} | "
-            f"{run['completed_samples']}/{run['total_samples']} | "
+            f"{samples} | "
             f"{run['status']} | {primary_result(run)} |"
         )
     lines += [
@@ -141,8 +151,8 @@ def render_markdown(runs):
         "Run from the repository root:",
         "",
         "```bash",
-        "uv run inspect view --log-dir eval_logs",
-        "python3 scripts/index_eval_logs.py",
+        "uv run inspect view --recursive --log-dir eval_logs",
+        "uv run python scripts/index_eval_logs.py",
         "```",
         "",
         "The indexer refuses to replace the index when no local logs are present.",

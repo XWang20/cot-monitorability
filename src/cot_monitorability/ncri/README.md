@@ -41,6 +41,11 @@ A placement score from a single bank or a limited run is not a full-index estima
 
 ## Changelog
 
+### 2-A
+
+Preserve configured provider fields when building no-CoT requests. Version 1-A could omit proxy compatibility settings and produce reasoning despite a disable request.
+
+
 ### 1-A
 
 Initial frozen-bank evaluation with upstream witnesses and placement.

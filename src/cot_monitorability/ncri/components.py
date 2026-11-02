@@ -66,7 +66,7 @@ def ncri_no_cot_solver(
             model = get_model(f"{m_name}-nt")
 
         max_tok = R.OFFICIAL_MAX_TOKENS.get(bank, R.MAX_TOKENS)
-        extra_body: Dict[str, Any] = {}
+        extra_body: Dict[str, Any] = dict(model.config.extra_body or {})
         temp: Optional[float] = 0.0
         if (
             "kimi-k3.1-pro" in m_name.lower()

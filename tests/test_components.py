@@ -163,3 +163,26 @@ async def test_monitorbench_eligibility_requires_verification_gain(monkeypatch):
     assert result.value["cot_score"] == -1
     assert result.value["verified_original"] == 1
     assert model.calls == []
+
+
+@pytest.mark.asyncio
+@pytest.mark.parametrize(
+    "model_name", ["openai/kimi-k3.1-pro", "openai/deepseek-v4.1-flash-1017"]
+)
+async def test_ncri_no_cot_request_preserves_provider_fields(monkeypatch, model_name):
+    model = RecordingModel()
+    original = {
+        "allowed_openai_params": ["thinking"],
+        "thinking": {"type": "enabled"},
+    }
+    model.config.extra_body = original
+    monkeypatch.setattr(RecordingModel, "__str__", lambda self: model_name)
+    monkeypatch.setattr(ncri, "get_model", lambda: model)
+
+    await ncri.ncri_no_cot_solver()(state({"bank": "arithmetic"}), None)
+
+    body = model.calls[0][1].extra_body
+    assert body["allowed_openai_params"] == ["thinking"]
+    assert body["thinking"] == {"type": "disabled"}
+    assert original["thinking"] == {"type": "enabled"}
+    assert model.calls[0][1].max_tokens == 100

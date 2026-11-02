@@ -56,14 +56,14 @@ CoT tasks need a provider that exposes reasoning text. Hidden reasoning produces
 
 ### OpenAI-compatible API
 
-Provide your endpoint and credentials through environment variables:
+Use Inspect's native `openai-api` provider for compatible endpoints. The `openai` service prefix below reads the `OPENAI_*` environment variables:
 
 ```bash
 export OPENAI_BASE_URL="<your-api-base-url>"
 export OPENAI_API_KEY="<your-api-key>"
-export JUDGE_MODEL='openai/<your-judge-or-monitor-model>'
+export JUDGE_MODEL='openai-api/openai/<your-judge-or-monitor-model>'
 
-./scripts/run_eval.sh cot_controllability_qa 'openai/<your-evaluated-model>' \
+./scripts/run_eval.sh cot_controllability_qa 'openai-api/openai/<your-evaluated-model>' \
   --limit 10 --max-connections 5
 ```
 
@@ -90,10 +90,10 @@ Set `COT_MONITORABILITY_CACHE_DIR` to an absolute path before importing tasks to
 Inspect writes prompts, model responses, sample scores, and aggregate metrics to `.eval` files. Open them with:
 
 ```bash
-uv run inspect view --log-dir eval_logs
+uv run inspect view --recursive --log-dir eval_logs
 ```
 
-On a remote server, forward the View port through SSH. The [results index](eval_logs/README.md) lists stored runs and their configurations; [index.json](eval_logs/index.json) includes metrics and file checksums. Raw logs are kept by the operator and ignored by Git. Rebuild the index after a run with `python3 scripts/index_eval_logs.py`.
+On a remote server, forward the View port through SSH. The [results index](eval_logs/README.md) lists stored runs and their configurations; [index.json](eval_logs/index.json) includes metrics and file checksums. Raw logs are kept by the operator and ignored by Git. Rebuild the index after a run with `uv run python scripts/index_eval_logs.py`.
 
 The indexed runs use 10-sample subsets of an earlier implementation. They are useful for inspecting those runs, but do not establish full-dataset performance for the current tasks. Scores from different benchmarks measure different quantities and should be reported separately.
 

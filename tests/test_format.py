@@ -28,7 +28,7 @@ def test_task_sources_and_metadata_are_direct(task_entry):
         for n in ast.walk(function)
     )
     metadata = yaml.safe_load((path.parent / "eval.yaml").read_text())
-    assert metadata["version"] == task_entry["version"] == "1-A"
+    assert metadata["version"] == task_entry["version"]
     assert metadata["tasks"][0]["name"] == task_entry["name"]
     assert metadata["tasks"][0]["dataset_samples"] == task_entry["dataset_samples"]
     assert (path.parent / "__init__.py").is_file()
@@ -44,7 +44,7 @@ def test_task_sources_and_metadata_are_direct(task_entry):
 def test_default_task_constructs_offline(task_entry):
     factory = getattr(importlib.import_module(task_entry["module"]), task_entry["name"])
     task = factory()
-    assert task.version == "1-A"
+    assert task.version == task_entry["version"]
     assert len(task.dataset) == task_entry["dataset_samples"]
     assert task.scorer is not None
 
