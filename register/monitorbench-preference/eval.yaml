@@ -1,0 +1,17 @@
+id: monitorbench-preference
+full_title: 'MonitorBench: preference subset and configurable non-sandbox tasks'
+common_title: 'MonitorBench: preference subset and configurable non-sandbox tasks'
+description: Evaluates CoT monitorability using the MonitorBench non-sandbox adapter. The default is cue_condition.preference under the standard condition; other supported subsets are task arguments and existing community implementations are reused.
+contributors:
+- XWang20
+tasks:
+- name: monitorbench
+  task_path: src/cot_monitorability/monitorbench/monitorbench.py
+  dataset_samples: 108
+source:
+  repository_url: https://github.com/XWang20/cot-monitorability
+  repository_commit: b07b231705416dc10108caf7cab634e0056ba377
+  maintainers:
+  - XWang20
+  comment: Standalone task version 1-A. This is a format draft, not a registration submission.
+arxiv: https://arxiv.org/abs/2603.28590v2

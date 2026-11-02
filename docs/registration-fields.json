@@ -1,0 +1,42 @@
+{
+  "source_commit": "b07b231705416dc10108caf7cab634e0056ba377",
+  "submitted": false,
+  "forms": [
+    {
+      "task": "cot_controllability_qa",
+      "arxiv_url": "https://arxiv.org/abs/2603.05706",
+      "source_url": "https://github.com/XWang20/cot-monitorability/blob/b07b231705416dc10108caf7cab634e0056ba377/src/cot_monitorability/cot_control/cot_control.py#L13",
+      "methodology_url": null
+    },
+    {
+      "task": "openai_monitorability_process",
+      "arxiv_url": "https://arxiv.org/abs/2512.18311",
+      "source_url": "https://github.com/XWang20/cot-monitorability/blob/b07b231705416dc10108caf7cab634e0056ba377/src/cot_monitorability/openai_process/openai_process.py#L17",
+      "methodology_url": null
+    },
+    {
+      "task": "openai_monitorability_intervention",
+      "arxiv_url": "https://arxiv.org/abs/2512.18311",
+      "source_url": "https://github.com/XWang20/cot-monitorability/blob/b07b231705416dc10108caf7cab634e0056ba377/src/cot_monitorability/openai_intervention/openai_intervention.py#L18",
+      "methodology_url": null
+    },
+    {
+      "task": "cot_immediacy_2510",
+      "arxiv_url": "https://arxiv.org/abs/2510.23966",
+      "source_url": "https://github.com/XWang20/cot-monitorability/blob/b07b231705416dc10108caf7cab634e0056ba377/src/cot_monitorability/immediacy/immediacy.py#L13",
+      "methodology_url": null
+    },
+    {
+      "task": "ncri_bench",
+      "arxiv_url": null,
+      "source_url": "https://github.com/XWang20/cot-monitorability/blob/b07b231705416dc10108caf7cab634e0056ba377/src/cot_monitorability/ncri/ncri.py#L14",
+      "methodology_url": "https://www.lesswrong.com/posts/eRmzz8J8Qkzqvzrgg/astra-can-do-a-concerning-amount-with-no-chain-of-thought"
+    },
+    {
+      "task": "monitorbench",
+      "arxiv_url": "https://arxiv.org/abs/2603.28590v2",
+      "source_url": "https://github.com/XWang20/cot-monitorability/blob/b07b231705416dc10108caf7cab634e0056ba377/src/cot_monitorability/monitorbench/monitorbench.py#L21",
+      "methodology_url": null
+    }
+  ]
+}
