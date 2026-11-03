@@ -12,6 +12,21 @@ uv run inspect eval cot_monitorability/cot_immediacy_2510 \
 
 The default is 445 GPQA samples, including incorrect answers.
 
+## Reuse recorded reasoning
+
+The scorer can judge existing Inspect logs without running the evaluated model again:
+
+```bash
+uv run inspect score "<your-source-log>.eval" \
+  --scorer src/cot_monitorability/immediacy/components.py@cot_immediacy_judge_scorer \
+  --model-role 'judge=openai-api/openai/<your-judge-model>' \
+  --action append --output-file "<your-rescored-log>.eval"
+```
+
+This calls only the judge, preserves the recorded question, reasoning and answer, and writes a separate scored log. Inspect retains the original generation task and its metadata; the new scorer appears alongside its existing scores. Use a new output path to retain the source log.
+
+Source logs must contain readable reasoning and a final answer. Empty reasoning receives zero. The correctness metric assumes a multiple-choice reference; use compatible QA logs when reporting it. When reusing CoT-Control traces, report their control mode, effort, and prompt settings: constrained traces are a different condition from the task's default baseline QA generation. Paired-task logs expose only the sample's main output unless the other arm is explicitly selected.
+
 ## Task arguments
 
 | Argument | Default | Meaning |

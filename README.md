@@ -108,6 +108,23 @@ On a remote server, forward the View port through SSH. The [results index](eval_
 
 Limited runs check the evaluation pipeline. Report model performance with the dataset, task version, configuration, and sample count. Scores from different benchmarks measure different quantities and should be reported separately.
 
+### Runs and retries
+
+Inspect View groups logs by task. A `.eval` file records one task/model/configuration evaluation, including its samples, epochs, and scoring-model calls. One `inspect eval` invocation can produce several files when it evaluates multiple tasks or models. Independent reruns create new files.
+
+For a resumable task/model matrix, use native `inspect eval-set` with a dedicated experiment log directory. Reuse the same directory and plan to skip completed evaluations and recover interrupted ones. `inspect eval-retry "<your-failed-log>.eval"` retries a trusted failed log and reuses eligible completed samples. Changes to prompts, data, effort, or model settings should be recorded as a new experiment; scoring-only changes can reuse outputs through `inspect score`.
+
+For one benchmark and two evaluated models:
+
+```bash
+uv run inspect eval-set cot_monitorability/cot_controllability_qa \
+  --model 'openai-api/openai/<your-model-a>,openai-api/openai/<your-model-b>' \
+  --model-role 'judge=openai-api/openai/<your-judge-model>' \
+  --limit 5 --retry-attempts 2 --log-dir 'eval_logs/<your-experiment-id>'
+```
+
+The repository currently groups directories by benchmark and indexes the latest completed run for each task/model/effort. Inspect's `run_id` groups an invocation, `task_id` identifies its logical task, and `eval_id` distinguishes attempts; eval sets also record an `eval_set_id`. Keep these identities and original logs when comparing retries.
+
 ## Repository layout
 
 ```text

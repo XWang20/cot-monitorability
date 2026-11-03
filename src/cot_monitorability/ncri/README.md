@@ -34,6 +34,12 @@ uv run python -m cot_monitorability.reference.nocot.fetch_gpqa
 
 Check which banks were loaded before comparing `all_ncri` runs.
 
+## Assistant prefill
+
+The final assistant message in the request is the upstream `Answer:` prefill. It is input supplied to encourage an immediate answer. Inspect displays it followed by a separate assistant message containing the backend's response; this is one generation, not two.
+
+Validity measures compliance with the no-CoT protocol. A valid numeric answer can still be wrong; accuracy is reported separately.
+
 ## Positive control
 
 Verify that the backend's reasoning counter responds when thinking is enabled:
