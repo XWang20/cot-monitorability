@@ -48,7 +48,7 @@ def fingerprint(input_value, target, metadata):
 
 
 def valid_generation(output):
-    if output is None or output.stop_reason != "stop":
+    if output is None or not output.choices or output.stop_reason != "stop":
         return False
     try:
         text = full_reasoning(output.message)
@@ -321,6 +321,7 @@ def restore_reused_history(log_dir):
                         if isinstance(event, ModelEvent)
                         and event.role is None
                         and event.output
+                        and event.output.choices
                         and event.error is None
                         and event.output.message.model_dump(mode="json")
                         == sample.output.message.model_dump(mode="json")

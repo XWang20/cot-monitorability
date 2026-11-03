@@ -379,3 +379,7 @@ def test_frozen_selection_preserves_ids_order_inputs_and_targets_across_models()
     samples[1].target = "C"
     with pytest.raises(ValueError, match="inputs or targets changed"):
         experiment.select_frozen_samples(samples, selection)
+
+
+def test_empty_timeout_output_is_not_reusable():
+    assert not experiment.valid_generation(ModelOutput(model="mockllm/actor"))
