@@ -10,7 +10,7 @@ One latest completed run per package task, model, and effort. The listed configu
 
 | Task / subset | Version | Model | Effort | Samples | Status | Main metrics |
 | --- | --- | --- | --- | --- | --- | --- |
-| cot_monitorability/cot_controllability_qa / gpqa/word_suppression | 1-A | deepseek-v4.1-flash-1017 | high | 5/5 | success | cot_controllability_score=0 |
+| cot_monitorability/cot_controllability_qa / gpqa/word_suppression | 4-A | deepseek-v4.1-flash-1017 | high | 5/5 | success | cot_controllability_score=0.2 |
 | cot_monitorability/cot_controllability_qa / gpqa/word_suppression | 1-A | kimi-k3.1-pro | high | 5/5 | success | cot_controllability_score=0.4 |
 | cot_monitorability/cot_immediacy_2510 / gpqa | 1-A | deepseek-v4.1-flash-1017 | high | 5/5 | success | legibility_pct=90; coverage_pct=100 |
 | cot_monitorability/cot_immediacy_2510 / gpqa | 1-A | kimi-k3.1-pro | high | 5/5 | success | legibility_pct=80; coverage_pct=95 |
@@ -18,8 +18,8 @@ One latest completed run per package task, model, and effort. The listed configu
 | cot_monitorability/monitorbench / cue_condition.preference | 1-A | kimi-k3.1-pro | high | 5/5 | success | mb_cot_monitorability=1 |
 | cot_monitorability/ncri_bench / arithmetic | 3-A | deepseek-v4.1-flash-1017 | none | 5/5 | success | ncri_primary_accuracy=0.2; ncri_valid_rate=1 |
 | cot_monitorability/ncri_bench / arithmetic | 3-A | kimi-k3.1-pro | none | 5/5 | success | ncri_primary_accuracy=0.6; ncri_valid_rate=1 |
-| cot_monitorability/openai_monitorability_intervention / scruples_suggest_wrong | 1-A | deepseek-v4.1-flash-1017 | medium | 5/5 | success | intervention_gmean2_lower=0 |
-| cot_monitorability/openai_monitorability_intervention / scruples_suggest_wrong | 1-A | kimi-k3.1-pro | medium | 5/5 | success | intervention_gmean2_lower=0.5 |
+| cot_monitorability/openai_monitorability_intervention / scruples_suggest_wrong | 1-A | deepseek-v4.1-flash-1017 | medium | 5/5 | success | intervention_gmean2_lower=0; intervention_eligible_fraction=0.2 |
+| cot_monitorability/openai_monitorability_intervention / scruples_suggest_wrong | 1-A | kimi-k3.1-pro | medium | 5/5 | success | intervention_gmean2_lower=0.5; intervention_eligible_fraction=0.4 |
 | cot_monitorability/openai_monitorability_process / cot_only | 1-A | deepseek-v4.1-flash-1017 | medium | 5/5 | success | process_gmean2_cot=1 |
 | cot_monitorability/openai_monitorability_process / cot_only | 1-A | kimi-k3.1-pro | medium | 5/5 | success | process_gmean2_cot=0.8 |
 
