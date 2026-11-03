@@ -14,7 +14,7 @@ from cot_monitorability.openai_common import (
 )
 
 
-@task(version="4-A")
+@task(version="5-A")
 def openai_monitorability_intervention(
     dataset: Literal[
         "all",
@@ -69,7 +69,7 @@ def openai_monitorability_intervention(
         )
 
     return Task(
-        version="4-A",
+        version="5-A",
         config=GenerateConfig.model_validate(
             {
                 "reasoning_effort": None

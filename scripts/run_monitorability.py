@@ -22,6 +22,11 @@ from inspect_ai.solver import chain, solver
 from openai import DefaultAsyncHttpxClient
 
 from cot_monitorability.experiment_costs import RequestBudget
+from cot_monitorability.generation_reuse import (
+    ACTIVE_REUSE,
+    GenerationReuse,
+    reuse_completed_generation,
+)
 from cot_monitorability.ncri.ncri import ncri_bench
 from cot_monitorability.openai_intervention.openai_intervention import (
     openai_monitorability_intervention,
@@ -41,6 +46,11 @@ def canonical(model):
 
 def sample_hash(sample):
     payload = sample.model_dump(mode="json", exclude={"metadata"})
+    if isinstance(payload.get("input"), list):
+        payload["input"] = [
+            {k: v for k, v in message.items() if k != "id"}
+            for message in payload["input"]
+        ]
     payload["protocol"] = {
         key: value
         for key, value in sample.metadata.items()
@@ -123,7 +133,10 @@ def build_tasks(config, manifest):
         key = "process/physics/" + scope
         freeze_dataset(task, key, manifest, config["samples_per_condition"])
         task.solver = chain(
-            identify_condition(key), task.solver, require_complete_actor()
+            identify_condition(key),
+            reuse_completed_generation(),
+            task.solver,
+            require_complete_actor(),
         )
         tasks["cot" if scope == "cot_only" else "scopes"].append(task)
         for dataset in config["intervention_datasets"]:
@@ -133,14 +146,19 @@ def build_tasks(config, manifest):
             key = "intervention/" + dataset + "/" + scope
             freeze_dataset(task, key, manifest, config["samples_per_condition"])
             task.solver = chain(
-                identify_condition(key), task.solver, require_complete_actor()
+                identify_condition(key),
+                reuse_completed_generation(),
+                task.solver,
+                require_complete_actor(),
             )
             tasks["cot" if scope == "cot_only" else "scopes"].append(task)
     for bank in config["ncri_banks"]:
         task = ncri_bench(banks=bank, k_shot=10, disable_reasoning=True)
         key = "ncri/" + bank + "/no_cot_10shot"
         freeze_dataset(task, key, manifest, config["samples_per_condition"])
-        task.solver = chain(identify_condition(key), task.solver)
+        task.solver = chain(
+            identify_condition(key), reuse_completed_generation(), task.solver
+        )
         tasks["ncri"].append(task)
     return tasks
 
@@ -227,6 +245,7 @@ class Experiment:
             else {}
         )
         self.history = []
+        self.reuse = GenerationReuse()
         self.current = {}
         self.stop = threading.Event()
         self.report_lock = threading.Lock()
@@ -361,6 +380,8 @@ class Experiment:
             "preflight": preflight,
         }
         destination = (self.state / "preflight" if preflight else self.logs) / kind
+        self.reuse.load([self.state / "preflight", self.logs])
+        ACTIVE_REUSE.set(self.reuse)
         actor = self.model(specification, "actor", effort)
         roles = (
             {}
@@ -403,6 +424,7 @@ class Experiment:
         for header in headers:
             path = by_id[header.eval.eval_id]
             paths.append(path)
+            self.reuse.restore(path)
         audit = audit_logs(paths, kind)
         self.history.append(
             {

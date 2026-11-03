@@ -114,7 +114,7 @@ uv run python scripts/run_monitorability.py \
   --state-dir 'tmp/experiments/<your-experiment-id>'
 ```
 
-The configuration runs process and intervention evaluations in all three monitor scopes, plus the available NCRI banks. Each condition uses the same first 50 samples across models; smaller banks use all available samples. CoT actors use high effort, and NCRI uses none with its default 10-shot protocol. Native Inspect caching shares actor outputs across monitor scopes and reuses preflight results.
+The configuration runs process and intervention evaluations in all three monitor scopes, plus the available NCRI banks. Each condition uses the same first 50 samples across models; smaller banks use all available samples. CoT actors use high effort, and NCRI uses none with its default 10-shot protocol. Complete recorded generations and native Inspect caching share actor outputs across monitor scopes and reuse preflight results. Truncated cache entries are not treated as valid recorded generations.
 
 Models run in configuration order. Each model must pass a five-sample preflight and its full run before the next model starts. Missing reasoning counters, nonzero NCRI reasoning, truncated outputs, and scoring errors stop the experiment. Model compliance failures remain in the scores. Immediacy is excluded from this configuration.
 

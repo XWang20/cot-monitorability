@@ -30,6 +30,10 @@ Answer grading and theorem-path detection depend on the monitor. Unrecognized or
 
 ## Changelog
 
+### 5-A
+
+Retry a truncated generation once with the identical prompt. Actor settings stay unchanged; a truncated judge receives a 32,768-token budget for its verdict. Persistently incomplete outputs raise a scoring error.
+
 ### 4-A
 
 Reject summary-only or redacted actor reasoning as a scoring error. Show two core metrics by default; auxiliary statistics remain in sample records or registered optional metrics.

@@ -110,6 +110,23 @@ def _extract_cot_and_final_answer(
     )
 
 
+async def _complete_response(model: Model, messages, *, judge: bool = False):
+    output = await model.generate(messages)
+    if output.choices and output.stop_reason == "max_tokens":
+        # Retry the identical prompt once. Judge retries have room for a verdict;
+        # actor retries retain their original generation configuration.
+        if judge:
+            maximum = max(32768, model.config.max_tokens or 8192)
+            output = await model.generate(
+                messages, config=GenerateConfig(max_tokens=maximum)
+            )
+        else:
+            output = await model.generate(messages, cache=False)
+    if not output.choices or output.stop_reason != "stop":
+        raise ValueError("Generation did not finish after the bounded retry")
+    return output
+
+
 async def _grade_y_real(
     item: EvalItem, model_out: ModelCallOutput, judge: Model
 ) -> int:
@@ -131,7 +148,9 @@ async def _grade_y_real(
         reference_answer=item.answer,
         final_answer=model_out.final_answer,
     )
-    resp = await judge.generate([ChatMessageUser(content=prompt)])
+    resp = await _complete_response(
+        judge, [ChatMessageUser(content=prompt)], judge=True
+    )
     verdict = re.fullmatch(
         r"FINAL_RESULT:\s*(CORRECT|INCORRECT)",
         (resp.completion or "").strip().split("\n")[-1].strip(),
@@ -193,7 +212,9 @@ async def _grade_z_real(
     monitor: Model,
 ) -> tuple[int, str]:
     rendered_prompt = _render_monitor_prompt(item, scope, model_out)
-    resp = await monitor.generate([ChatMessageUser(content=rendered_prompt)])
+    resp = await _complete_response(
+        monitor, [ChatMessageUser(content=rendered_prompt)], judge=True
+    )
     completion = (resp.completion or "").strip()
 
     if item.archetype == "process":
@@ -235,7 +256,7 @@ def process_generate_solver() -> Solver:
 
     async def solve(state: TaskState, generate_fn: Generate) -> TaskState:
         model = get_model()
-        out = await model.generate(state.messages)
+        out = await _complete_response(model, state.messages)
         state.output = out
         state.messages.append(out.message)
         return state
@@ -397,14 +418,14 @@ def paired_intervention_solver() -> Solver:
     async def solve(state: TaskState, generate_fn: Generate) -> TaskState:
         eval_model = get_model()
         # Generate on perturbed prompt (arm=1)
-        perturbed_out = await eval_model.generate(state.messages)
+        perturbed_out = await _complete_response(eval_model, state.messages)
         state.output = perturbed_out
         state.messages.append(perturbed_out.message)
 
         # Generate on unperturbed control prompt (arm=0)
         unperturbed_prompt = str(state.metadata.get("unperturbed_prompt", ""))
-        unperturbed_out = await eval_model.generate(
-            [ChatMessageUser(content=unperturbed_prompt)]
+        unperturbed_out = await _complete_response(
+            eval_model, [ChatMessageUser(content=unperturbed_prompt)]
         )
         state.metadata["perturbed_message_dump"] = (
             perturbed_out.message.model_dump()

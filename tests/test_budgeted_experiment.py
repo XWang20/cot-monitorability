@@ -3,7 +3,7 @@ import importlib.util
 from pathlib import Path
 
 import pytest
-from inspect_ai import Task
+from inspect_ai import Task, eval
 from inspect_ai.dataset import Sample
 from inspect_ai.log import read_eval_log
 from inspect_ai.model import ContentReasoning, ContentText, ModelOutput, get_model
@@ -147,3 +147,137 @@ async def test_all_zero_usage_is_unmetered_and_keeps_the_reservation(tmp_path):
     )
     assert budget.snapshot()["responses"][0]["cost"] is None
     assert budget.snapshot()["outstanding_reservations"] == 2
+
+
+def test_frozen_messages_ignore_generated_message_ids():
+    from inspect_ai.model import ChatMessageUser
+
+    manifest = {}
+    first = Task(
+        dataset=[
+            Sample(
+                id="q", input=[ChatMessageUser(content="Q")], target="A", metadata={}
+            )
+        ]
+    )
+    second = Task(
+        dataset=[
+            Sample(
+                id="q", input=[ChatMessageUser(content="Q")], target="A", metadata={}
+            )
+        ]
+    )
+    runner.freeze_dataset(first, "messages", manifest, 50)
+    runner.freeze_dataset(second, "messages", manifest, 50)
+    assert manifest["messages"]["selected"] == 1
+
+
+@pytest.mark.asyncio
+@pytest.mark.parametrize("judge", [False, True])
+async def test_bounded_retry_keeps_prompt_and_actor_settings(judge):
+    from inspect_ai.model import GenerateConfig
+
+    from cot_monitorability.openai_common import _complete_response
+
+    class Fake:
+        config = GenerateConfig(
+            max_tokens=8192 if judge else 65536, reasoning_effort="high"
+        )
+
+        def __init__(self):
+            self.calls = []
+
+        async def generate(self, messages, **options):
+            self.calls.append((messages, options))
+            output = ModelOutput.from_content("fake", "A")
+            if len(self.calls) == 1:
+                output.choices[0].stop_reason = "max_tokens"
+            return output
+
+    model = Fake()
+    result = await _complete_response(model, ["same prompt"], judge=judge)
+    assert result.stop_reason == "stop"
+    assert model.calls[0][0] == model.calls[1][0]
+    if judge:
+        assert model.calls[1][1]["config"].max_tokens == 32768
+    else:
+        assert model.calls[1][1] == {"cache": False}
+
+
+def test_recorded_pair_reuses_both_actor_outputs_and_restores_tokens(
+    tmp_path, monkeypatch
+):
+    from inspect_ai.model import ModelUsage
+    from inspect_ai.solver import chain
+
+    from cot_monitorability.generation_reuse import (
+        ACTIVE_REUSE,
+        GenerationReuse,
+        reuse_completed_generation,
+    )
+    from cot_monitorability.openai_common import paired_intervention_solver
+
+    outputs = []
+    for text in ["PERTURBED", "CONTROL"]:
+        out = ModelOutput.from_content(
+            "mockllm/pair", [ContentReasoning(reasoning=text), ContentText(text="A")]
+        )
+        out.usage = ModelUsage(
+            input_tokens=3, output_tokens=5, total_tokens=8, reasoning_tokens=4
+        )
+        outputs.append(out)
+    actor = get_model("mockllm/pair", custom_outputs=outputs, memoize=False)
+
+    def sample():
+        return Sample(
+            id="pair",
+            input="PERTURBED QUESTION",
+            target="A",
+            metadata={"unperturbed_prompt": "CONTROL QUESTION"},
+        )
+
+    eval(
+        Task(
+            dataset=[sample()], solver=paired_intervention_solver(), scorer=includes()
+        ),
+        model=actor,
+        display="none",
+        log_dir=str(tmp_path / "source"),
+    )
+    cache = GenerationReuse()
+    cache.load([tmp_path / "source"])
+    token = ACTIVE_REUSE.set(cache)
+
+    async def forbidden(*args, **kwargs):
+        raise AssertionError("Complete recorded pairs must not call either actor arm")
+
+    monkeypatch.setattr(actor, "generate", forbidden)
+    try:
+        eval(
+            Task(
+                dataset=[sample()],
+                solver=chain(reuse_completed_generation(), generate()),
+                scorer=includes(),
+            ),
+            model=actor,
+            display="none",
+            log_dir=str(tmp_path / "reused"),
+        )
+    finally:
+        ACTIVE_REUSE.reset(token)
+    path = next((tmp_path / "reused").glob("*.eval"))
+    cache.restore(path)
+    result = read_eval_log(path)
+    assert result.samples[0].output.message.content[0].reasoning == "PERTURBED"
+    assert (
+        result.samples[0].metadata["unperturbed_message_dump"]["content"][0][
+            "reasoning"
+        ]
+        == "CONTROL"
+    )
+    assert result.samples[0].model_usage[result.eval.model].reasoning_tokens == 8
+    before = result.stats.model_usage[result.eval.model].total_tokens
+    cache.restore(path)
+    assert (
+        read_eval_log(path).stats.model_usage[result.eval.model].total_tokens == before
+    )

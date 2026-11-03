@@ -4,7 +4,7 @@ description: Evaluates whether generated reasoning makes a required theorem path
 group: Safeguards
 contributors:
 - XWang20
-version: 4-A
+version: 5-A
 tasks:
 - name: openai_monitorability_process
   dataset_samples: 52
