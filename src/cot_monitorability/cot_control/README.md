@@ -6,8 +6,8 @@ Tests whether a model follows constraints on its chain of thought while answerin
 
 ```bash
 uv run inspect eval cot_monitorability/cot_controllability_qa \
-  --model 'openai/<your-evaluated-model>' \
-  --model-role 'judge=openai/<your-judge-model>' \
+  --model 'openai-api/openai/<your-evaluated-model>' \
+  --model-role 'judge=openai-api/openai/<your-judge-model>' \
   -T dataset=gpqa -T modes=word_suppression --limit 10
 ```
 
@@ -44,6 +44,12 @@ Baseline compliance is marked -1 and excluded from compliance aggregates. Missin
 The T/F judge parser accepts some non-verdict text containing "T". The regression suite records this known issue. Inspect judge responses when using `ignore_question` or meta-discussion scoring.
 
 ## Changelog
+
+### 2-A
+
+Use the OpenAI-compatible provider for the fallback scoring model so configured sampling parameters are sent without OpenAI model-family rewrites.
+
+Use native Inspect task configuration for actor effort; CLI settings override the task default.
 
 ### 1-A
 

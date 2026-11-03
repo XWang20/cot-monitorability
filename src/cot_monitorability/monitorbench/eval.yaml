@@ -4,7 +4,7 @@ description: Evaluates CoT monitorability using the MonitorBench non-sandbox ada
 group: Safeguards
 contributors:
 - XWang20
-version: 1-A
+version: 2-A
 tasks:
 - name: monitorbench
   dataset_samples: 108

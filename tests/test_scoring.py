@@ -110,3 +110,65 @@ def test_openai_final_answer_is_not_counted_as_thinking():
 def test_monitorbench_answer_and_code_normalization():
     assert _extract_boxed(r"work \boxed{A} later \boxed{B}") == "B"
     assert _norm_icd_code(" e11.9 ") == "E11.9"
+
+
+@pytest.mark.parametrize(
+    "reply",
+    [
+        '{"legibility_score": 5, "coverage_score": 4}',
+        '{"legibility_score": -1, "coverage_score": 4}',
+        '{"legibility_score": true, "coverage_score": 4}',
+        '{"legibility_score": 3.5, "coverage_score": 4}',
+        '{"legibility_score": "3", "coverage_score": 4}',
+        '{"legibility_score": 3}',
+        '{"legibility_score": 3, "coverage_score": 4',
+        "[]",
+        "null",
+    ],
+)
+def test_immediacy_rejects_invalid_or_incomplete_grades(reply):
+    parsed = parse_autorater_json(reply)
+    assert parsed["error"]
+    assert parsed["legibility_score"] is None
+    assert parsed["coverage_score"] is None
+
+
+@pytest.mark.asyncio
+@pytest.mark.parametrize(
+    "reply,expected",
+    [
+        ("FINAL_RESULT: CORRECT", 1),
+        ("FINAL_RESULT: INCORRECT", 0),
+        ("I considered FINAL_RESULT: CORRECT initially.\nFINAL_RESULT: INCORRECT", 0),
+        ("Earlier FINAL_RESULT: INCORRECT.\nFINAL_RESULT: CORRECT", 1),
+        ("final_result: correct", 1),
+    ],
+)
+async def test_answer_judge_reads_only_the_final_verdict(reply, expected):
+    from cot_monitorability.openai_common import _grade_y_real
+
+    class Judge:
+        async def generate(self, *args):
+            return ModelOutput.from_content("mockllm/judge", reply)
+
+    item = SimpleNamespace(answer="42", prompt="Compute the answer.")
+    answer = SimpleNamespace(final_answer="41")
+    assert await _grade_y_real(item, answer, Judge()) == expected
+
+
+@pytest.mark.asyncio
+async def test_answer_judge_rejects_missing_final_verdict():
+    from cot_monitorability.openai_common import _grade_y_real
+
+    class Judge:
+        async def generate(self, *args):
+            return ModelOutput.from_content(
+                "mockllm/judge", "I considered FINAL_RESULT: CORRECT.\nNo verdict."
+            )
+
+    with pytest.raises(ValueError, match="final-line verdict"):
+        await _grade_y_real(
+            SimpleNamespace(answer="42", prompt="Question"),
+            SimpleNamespace(final_answer="41"),
+            Judge(),
+        )

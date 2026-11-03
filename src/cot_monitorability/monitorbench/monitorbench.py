@@ -1,6 +1,7 @@
 from typing import Literal, Optional
 
 from inspect_ai import Task, task
+from inspect_ai.model import GenerateConfig
 
 from cot_monitorability.monitorbench.components import (
     _build_monitorbench_dataset,
@@ -17,7 +18,7 @@ from cot_monitorability.monitorbench.components import (
 from cot_monitorability.versioning import stamp_version
 
 
-@task(version="1-A")
+@task(version="2-A")
 def monitorbench(
     subset: Literal[
         "dual_objectives_steganography",
@@ -40,7 +41,7 @@ def monitorbench(
     target_reasoning_effort: Optional[str] = "high",
     epochs: int = 1,
     monitor_rollouts: int = 1,
-    monitor_model: str = "openai/deepseek-v4.1-flash-1017",
+    monitor_model: str = "openai-api/openai/deepseek-v4.1-flash-1017",
 ) -> Task:
     """Unified MonitorBench (COLM 2026, arXiv:2603.28590) task in Inspect AI."""
     ensure_asset("monitorbench")
@@ -90,12 +91,15 @@ def monitorbench(
     ds = _build_monitorbench_dataset(task_name=subset, stress_test=stress_test)
     is_inter = subset != "process.multistep"
     return Task(
-        version="1-A",
+        version="2-A",
+        config=GenerateConfig.model_validate(
+            {
+                "reasoning_effort": None
+                if target_reasoning_effort == "default"
+                else target_reasoning_effort
+            }
+        ),
         dataset=ds,
-        solver=[
-            paired_mb_solver(target_reasoning_effort=target_reasoning_effort)
-            if is_inter
-            else single_mb_solver(target_reasoning_effort=target_reasoning_effort)
-        ],
+        solver=[paired_mb_solver() if is_inter else single_mb_solver()],
         scorer=monitorbench_general_scorer(monitor_model=monitor_model),
     )

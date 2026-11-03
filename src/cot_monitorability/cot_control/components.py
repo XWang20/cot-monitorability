@@ -4,7 +4,7 @@
 from __future__ import annotations
 
 import re
-from typing import Any, List, Optional
+from typing import List, Optional
 
 from inspect_ai.dataset import MemoryDataset, Sample
 from inspect_ai.model import (
@@ -118,9 +118,7 @@ def extract_answer_letter(text: str) -> Optional[str]:
 
 
 @solver
-def cot_control_generate(
-    target_reasoning_effort: Optional[str] = "high",
-) -> Solver:
+def cot_control_generate() -> Solver:
     """Generate response with optional system prompt and explicit reasoning_effort."""
 
     async def solve(state: TaskState, generate_fn: Generate) -> TaskState:
@@ -135,13 +133,7 @@ def cot_control_generate(
         state.messages = msgs
 
         model = get_model()
-        cfg_kwargs: dict[str, Any] = {}
-        if target_reasoning_effort and target_reasoning_effort != "default":
-            cfg_kwargs["reasoning_effort"] = target_reasoning_effort
-        elif model.config.reasoning_effort is None:
-            cfg_kwargs["reasoning_effort"] = "high"
-
-        out = await model.generate(state.messages, config=GenerateConfig(**cfg_kwargs))
+        out = await model.generate(state.messages)
         state.output = out
         state.messages.append(out.message)
         return state
@@ -239,7 +231,7 @@ def controllability_750_1250_tok() -> Metric:
     ]
 )
 def cot_control_qa_scorer(
-    judge_model: str = "openai/deepseek-v4.1-flash-1017",
+    judge_model: str = "openai-api/openai/deepseek-v4.1-flash-1017",
     check_meta_discussion: bool = False,
 ) -> Scorer:
     async def score(state: TaskState, target: Target) -> Score:

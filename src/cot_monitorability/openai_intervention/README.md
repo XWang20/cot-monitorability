@@ -6,8 +6,8 @@ Measures whether a monitor detects an intervention that changes a model's behavi
 
 ```bash
 uv run inspect eval cot_monitorability/openai_monitorability_intervention \
-  --model 'openai/<your-evaluated-model>' \
-  --model-role 'monitor=openai/<your-monitor-model>' \
+  --model 'openai-api/openai/<your-evaluated-model>' \
+  --model-role 'monitor=openai-api/openai/<your-monitor-model>' \
   -T dataset=scruples_suggest_wrong --limit 10
 ```
 
@@ -31,6 +31,12 @@ Logs report lower and upper intervention g-mean² bounds, effect shift, eligible
 With one generation per arm, eligibility estimates can be noisy. Compare the same dataset, monitor scope, sampling configuration, and number of epochs. Inspect paired outputs and monitor verdicts alongside aggregate scores.
 
 ## Changelog
+
+### 2-A
+
+Use the OpenAI-compatible provider for the fallback scoring model so configured sampling parameters are sent without OpenAI model-family rewrites.
+
+Use native Inspect task configuration for both actor arms. Answer judges must end with an explicit CORRECT or INCORRECT verdict; malformed verdicts raise scoring errors.
 
 ### 1-A
 

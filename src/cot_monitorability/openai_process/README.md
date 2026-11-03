@@ -6,8 +6,8 @@ Measures whether a monitor can detect a required theorem path in a model's reaso
 
 ```bash
 uv run inspect eval cot_monitorability/openai_monitorability_process \
-  --model 'openai/<your-evaluated-model>' \
-  --model-role 'monitor=openai/<your-monitor-model>' --limit 10
+  --model 'openai-api/openai/<your-evaluated-model>' \
+  --model-role 'monitor=openai-api/openai/<your-monitor-model>' --limit 10
 ```
 
 The default dataset contains 52 samples. Each sample produces one evaluated-model answer. The monitor checks whether all theorems in at least one required path are applied, and also grades answer correctness.
@@ -29,6 +29,12 @@ Use scopes supported by the upstream prompts, such as `cot_only`, `answer_only`,
 Answer grading and theorem-path detection depend on the monitor. Unrecognized or missing theorem verdicts count as not applied. Review the monitor's per-sample responses before drawing conclusions about reasoning faithfulness.
 
 ## Changelog
+
+### 2-A
+
+Use the OpenAI-compatible provider for the fallback scoring model so configured sampling parameters are sent without OpenAI model-family rewrites.
+
+Use native Inspect task configuration for actor effort. Answer judges must end with an explicit CORRECT or INCORRECT verdict; earlier mentions cannot override it, and malformed verdicts raise scoring errors.
 
 ### 1-A
 

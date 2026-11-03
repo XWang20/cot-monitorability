@@ -53,11 +53,17 @@ The runner stores this control under the ignored operator directory, outside the
 
 ## Scoring
 
+Missing reasoning-token evidence or absent/all-zero usage is BLIND and cannot certify no-CoT. Such samples remain in the primary accuracy denominator as failures. The score displays unknown reasoning tokens as -1; metadata retains the missing value and witness verdict.
+
 Logs record `ncri_primary_accuracy`, `ncri_valid_rate`, and the frozen `ncri_placement_score`. Placement aggregates scorable, non-annexed items by rung and uses the upstream calibration. It returns zero when there are no placement counts or calibration fails.
 
 A placement score from a single bank or a limited run is not a full-index estimate. Compare bank coverage, prompting, reasoning settings, and generation validity.
 
 ## Changelog
+
+### 5-A
+
+Preserve absent reasoning counters and usage blocks. Blind samples are invalid and scored wrong in the primary reading; missing counters are displayed as -1 rather than a measured zero.
 
 ### 4-A
 

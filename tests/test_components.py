@@ -45,7 +45,7 @@ def state(metadata=None):
 
 
 @pytest.mark.asyncio
-async def test_controllability_solver_preserves_system_prompt_and_effort_override(
+async def test_controllability_solver_preserves_system_prompt_and_native_config(
     monkeypatch,
 ):
     model = RecordingModel()
@@ -53,9 +53,9 @@ async def test_controllability_solver_preserves_system_prompt_and_effort_overrid
     sample = state(
         {"system_prompt": "system constraint", "user_prompt": "user question"}
     )
-    await control.cot_control_generate(target_reasoning_effort="low")(sample, None)
+    await control.cot_control_generate()(sample, None)
     assert model.calls[0][0] == ["system constraint", "user question"]
-    assert model.calls[0][1].reasoning_effort == "low"
+    assert model.calls[0][1] is None
 
 
 @pytest.mark.asyncio
@@ -69,13 +69,11 @@ async def test_controllability_scorer_keeps_accuracy_and_compliance_separate():
 
 
 @pytest.mark.asyncio
-async def test_immediacy_solver_allows_effort_override(monkeypatch):
+async def test_immediacy_solver_uses_native_config(monkeypatch):
     model = RecordingModel()
     monkeypatch.setattr(immediacy, "get_model", lambda: model)
-    await immediacy.immediacy_generate_solver(target_reasoning_effort="medium")(
-        state(), None
-    )
-    assert model.calls[0][1].reasoning_effort == "medium"
+    await immediacy.immediacy_generate_solver()(state(), None)
+    assert model.calls[0][1] is None
 
 
 @pytest.mark.asyncio
@@ -127,11 +125,11 @@ async def test_monitorbench_paired_solver_retains_both_generations(monkeypatch):
     model = RecordingModel()
     monkeypatch.setattr(monitorbench, "get_model", lambda: model)
     sample = state({"original_prompt": "original question"})
-    await monitorbench.paired_mb_solver(target_reasoning_effort="low")(sample, None)
+    await monitorbench.paired_mb_solver()(sample, None)
     assert len(model.calls) == 2
     assert model.calls[1][0] == ["original question"]
     assert sample.metadata["original_message_dump"]
-    assert all(config.reasoning_effort == "low" for _, config in model.calls)
+    assert all(config is None for _, config in model.calls)
 
 
 @pytest.mark.asyncio
@@ -239,3 +237,42 @@ async def test_ncri_positive_control_does_not_force_thinking_off(
     assert config.reasoning_effort == "high"
     assert config.extra_body["reasoning"]["effort"] == "high"
     assert config.extra_body.get("thinking") != {"type": "disabled"}
+
+
+@pytest.mark.asyncio
+@pytest.mark.parametrize(
+    "evidence", ["missing_counter", "missing_usage", "zero_usage", "zero_counter"]
+)
+async def test_ncri_requires_observed_no_cot_evidence(evidence):
+    sample = state(
+        {
+            "bank": "arithmetic",
+            "item": {
+                "domain": "arithmetic",
+                "problem_number": 1,
+                "rung": "arithmetic:ops1-2",
+                "answer_type": "int",
+                "target": 42,
+            },
+        }
+    )
+    sample.output = ModelOutput.from_content("mockllm/model", "Answer: 42")
+    if evidence != "missing_usage":
+        zero_usage = evidence == "zero_usage"
+        sample.output.usage = ModelUsage(
+            input_tokens=0 if zero_usage else 10,
+            output_tokens=0 if zero_usage else 5,
+            total_tokens=0 if zero_usage else 15,
+            reasoning_tokens=None if evidence == "missing_counter" else 0,
+        )
+    result = await ncri.ncri_scorer()(sample, Target("42"))
+    witnessed = evidence == "zero_counter"
+    assert result.value["valid_no_cot"] == float(witnessed)
+    assert result.value["primary_correct"] == float(witnessed)
+    assert result.metadata["witness_verdict"] == ("WITNESSED" if witnessed else "BLIND")
+    assert result.metadata["reasoning_tokens"] == (
+        None if evidence in ("missing_counter", "missing_usage") else 0
+    )
+    assert result.value["reasoning_tokens"] == (
+        -1 if evidence in ("missing_counter", "missing_usage") else 0
+    )

@@ -1,6 +1,7 @@
 from typing import Literal, Optional
 
 from inspect_ai import Task, task
+from inspect_ai.model import GenerateConfig
 
 from cot_monitorability.cot_control.components import (
     build_cot_control_qa_dataset,
@@ -9,7 +10,7 @@ from cot_monitorability.cot_control.components import (
 )
 
 
-@task(version="1-A")
+@task(version="2-A")
 def cot_controllability_qa(
     dataset: Literal["gpqa", "hle", "mmlu_pro", "all"] = "gpqa",
     modes: str = "word_suppression",
@@ -21,12 +22,19 @@ def cot_controllability_qa(
     cot_sys_prompt: bool = False,
     elicit_brevity: bool = False,
     sample_limit_per_mode: Optional[int] = None,
-    judge_model: str = "openai/deepseek-v4.1-flash-1017",
+    judge_model: str = "openai-api/openai/deepseek-v4.1-flash-1017",
     check_meta_discussion: bool = False,
 ) -> Task:
     """CoT-Control-QA (arXiv:2603.05706) main-paper benchmark in Inspect AI."""
     return Task(
-        version="1-A",
+        version="2-A",
+        config=GenerateConfig.model_validate(
+            {
+                "reasoning_effort": None
+                if target_reasoning_effort == "default"
+                else target_reasoning_effort
+            }
+        ),
         dataset=build_cot_control_qa_dataset(
             dataset=dataset,
             modes=modes,
@@ -38,7 +46,7 @@ def cot_controllability_qa(
             elicit_brevity=elicit_brevity,
             sample_limit_per_mode=sample_limit_per_mode,
         ),
-        solver=[cot_control_generate(target_reasoning_effort=target_reasoning_effort)],
+        solver=[cot_control_generate()],
         scorer=cot_control_qa_scorer(
             judge_model=judge_model,
             check_meta_discussion=check_meta_discussion,

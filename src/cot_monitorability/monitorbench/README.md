@@ -6,8 +6,8 @@ Evaluates whether a monitor detects decision-relevant factors in a reasoning tra
 
 ```bash
 uv run inspect eval cot_monitorability/monitorbench \
-  --model 'openai/<your-evaluated-model>' \
-  --model-role 'monitor=openai/<your-monitor-model>' \
+  --model 'openai-api/openai/<your-evaluated-model>' \
+  --model-role 'monitor=openai-api/openai/<your-monitor-model>' \
   -T subset=cue_condition.preference -T stress_test=standard --limit 10
 ```
 
@@ -41,6 +41,12 @@ Report verification rates and eligible counts with monitorability. An aggregate 
 The supported variants are non-sandbox tasks. Several delegated variants already have Inspect Evals listings; check those entries before proposing another registration.
 
 ## Changelog
+
+### 2-A
+
+Use the OpenAI-compatible provider for the fallback scoring model so configured sampling parameters are sent without OpenAI model-family rewrites.
+
+Use native Inspect task configuration for the general adapter's actor effort, including both paired arms; CLI settings override task defaults.
 
 ### 1-A
 

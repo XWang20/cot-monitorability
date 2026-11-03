@@ -15,10 +15,10 @@ MONITOR_MAX_TOKENS = 16768
 
 
 def get_monitor_model() -> Model:
-    """Use the configured monitor, otherwise explicitly reuse the evaluated model."""
+    """Use the configured monitor or the OpenAI-compatible fallback model."""
     # Called lazily by scorers, never during task construction. The location
     # rule does not follow calls into shared helpers.
-    return get_model(role="monitor", default="openai/deepseek-v4.1-flash-1017")
+    return get_model(role="monitor", default="openai-api/openai/deepseek-v4.1-flash-1017")
 
 
 def monitor_role_config(model: Model) -> GenerateConfig:

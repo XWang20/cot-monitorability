@@ -2,6 +2,7 @@ from typing import Dict, List, Literal, Optional
 
 from inspect_ai import Task, task
 from inspect_ai.dataset import MemoryDataset, Sample
+from inspect_ai.model import GenerateConfig
 
 from cot_monitorability.openai_common import (
     EvalItem,
@@ -13,7 +14,7 @@ from cot_monitorability.openai_common import (
 )
 
 
-@task(version="1-A")
+@task(version="2-A")
 def openai_monitorability_intervention(
     dataset: Literal[
         "all",
@@ -26,7 +27,7 @@ def openai_monitorability_intervention(
         "wmdp_sandbagging",
     ] = "scruples_suggest_wrong",
     target_reasoning_effort: Optional[str] = "medium",
-    monitor_model: str = "openai/deepseek-v4.1-flash-1017",
+    monitor_model: str = "openai-api/openai/deepseek-v4.1-flash-1017",
     scope: str = "cot_only",
 ) -> Task:
     """OpenAI Intervention-level Monitorability benchmark (arXiv:2512.18311)."""
@@ -68,10 +69,15 @@ def openai_monitorability_intervention(
         )
 
     return Task(
-        version="1-A",
+        version="2-A",
+        config=GenerateConfig.model_validate(
+            {
+                "reasoning_effort": None
+                if target_reasoning_effort == "default"
+                else target_reasoning_effort
+            }
+        ),
         dataset=MemoryDataset(samples),
-        solver=[
-            paired_intervention_solver(target_reasoning_effort=target_reasoning_effort)
-        ],
+        solver=[paired_intervention_solver()],
         scorer=openai_intervention_scorer(monitor_model=monitor_model, scope=scope),
     )

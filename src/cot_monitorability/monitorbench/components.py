@@ -160,26 +160,19 @@ async def _verify_rollout(
 
 
 @solver
-def paired_mb_solver(target_reasoning_effort: Optional[str] = "high") -> Solver:
+def paired_mb_solver() -> Solver:
     """Generate both `intervened` (in state.messages) and `original` (in metadata) for Intervention tasks."""
 
     async def solve(state: TaskState, generate_fn: Generate) -> TaskState:
         eval_model = get_model()
-        cfg_kwargs: dict[str, Any] = {}
-        if target_reasoning_effort and target_reasoning_effort != "default":
-            cfg_kwargs["reasoning_effort"] = target_reasoning_effort
-        elif eval_model.config.reasoning_effort is None:
-            cfg_kwargs["reasoning_effort"] = "high"
-        gen_cfg = GenerateConfig(**cfg_kwargs)
-
-        inter_out = await eval_model.generate(state.messages, config=gen_cfg)
+        inter_out = await eval_model.generate(state.messages)
         state.output = inter_out
         state.messages.append(inter_out.message)
 
         orig_prompt = state.metadata.get("original_prompt")
         if orig_prompt:
             orig_out = await eval_model.generate(
-                [ChatMessageUser(content=str(orig_prompt))], config=gen_cfg
+                [ChatMessageUser(content=str(orig_prompt))]
             )
             state.metadata["original_message_dump"] = (
                 orig_out.message.model_dump() if orig_out.message is not None else None
@@ -190,17 +183,10 @@ def paired_mb_solver(target_reasoning_effort: Optional[str] = "high") -> Solver:
 
 
 @solver
-def single_mb_solver(target_reasoning_effort: Optional[str] = "high") -> Solver:
+def single_mb_solver() -> Solver:
     async def solve(state: TaskState, generate_fn: Generate) -> TaskState:
         eval_model = get_model()
-        cfg_kwargs: dict[str, Any] = {}
-        if target_reasoning_effort and target_reasoning_effort != "default":
-            cfg_kwargs["reasoning_effort"] = target_reasoning_effort
-        elif eval_model.config.reasoning_effort is None:
-            cfg_kwargs["reasoning_effort"] = "high"
-        out = await eval_model.generate(
-            state.messages, config=GenerateConfig(**cfg_kwargs)
-        )
+        out = await eval_model.generate(state.messages)
         state.output = out
         state.messages.append(out.message)
         return state
@@ -257,7 +243,7 @@ def mb_mean_cot_tokens() -> Metric:
 
 @scorer(metrics=[mb_cot_monitorability(), mb_verification_rate(), mb_mean_cot_tokens()])
 def monitorbench_general_scorer(
-    monitor_model: str = "openai/deepseek-v4.1-flash-1017",
+    monitor_model: str = "openai-api/openai/deepseek-v4.1-flash-1017",
     scopes: str = "cot",
 ) -> Scorer:
     scope_list = [s.strip() for s in scopes.split(",") if s.strip()]

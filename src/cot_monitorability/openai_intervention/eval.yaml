@@ -4,7 +4,7 @@ description: Evaluates paired unperturbed and perturbed model outputs with the p
 group: Safeguards
 contributors:
 - XWang20
-version: 1-A
+version: 2-A
 tasks:
 - name: openai_monitorability_intervention
   dataset_samples: 150

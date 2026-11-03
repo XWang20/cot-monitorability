@@ -35,8 +35,8 @@ Configure credentials for your [model provider](https://inspect.aisi.org.uk/mode
 
 ```bash
 uv run inspect eval cot_monitorability/cot_controllability_qa \
-  --model 'openai/<your-evaluated-model>' \
-  --model-role 'judge=openai/<your-judge-model>' \
+  --model 'openai-api/openai/<your-evaluated-model>' \
+  --model-role 'judge=openai-api/openai/<your-judge-model>' \
   --limit 10 --log-dir eval_logs/cot_control
 ```
 
@@ -44,8 +44,8 @@ Task arguments use `-T`:
 
 ```bash
 uv run inspect eval cot_monitorability/openai_monitorability_intervention \
-  --model 'openai/<your-evaluated-model>' \
-  --model-role 'monitor=openai/<your-monitor-model>' \
+  --model 'openai-api/openai/<your-evaluated-model>' \
+  --model-role 'monitor=openai-api/openai/<your-monitor-model>' \
   -T dataset=gpqa -T target_reasoning_effort=medium \
   --limit 10 --log-dir eval_logs/intervention
 ```
@@ -69,7 +69,9 @@ export JUDGE_MODEL='openai-api/openai/<your-judge-or-monitor-model>'
 
 Replace the placeholders with your own configuration. Credentials are read from the environment and should not be committed.
 
-The script takes a task name, model name, then standard Inspect arguments. Use `--reasoning-effort` to change the actor setting; the runner synchronizes the task argument and proxy configuration while keeping scoring roles at high. Default effort comes from the task signature; `REASONING_EFFORT=low` overrides it for CoT tasks. NCRI retains its no-CoT request. Set `COT_USE_LITELLM_COMPAT=1` for proxies that require LiteLLM compatibility fields.
+For custom OpenAI-compatible endpoints, use `openai-api/openai/<your-model>` for both the evaluated model and scoring roles. The `openai/` provider applies OpenAI-specific model-family rules that can remove sampling parameters for custom aliases.
+
+The script takes a task name, model name, then standard Inspect arguments. Use `--reasoning-effort` to change the actor setting; the runner synchronizes the task argument and proxy configuration while keeping scoring roles at high. Task defaults are stored in native Inspect generation configuration; direct `inspect eval --reasoning-effort low` overrides them. The task argument sets a default, while explicit CLI configuration takes precedence. `REASONING_EFFORT=low` overrides the runner default for CoT tasks. NCRI retains its no-CoT request. Set `COT_USE_LITELLM_COMPAT=1` for proxies that require LiteLLM compatibility fields.
 
 To compare effort levels on the same task:
 
