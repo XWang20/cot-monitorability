@@ -240,3 +240,95 @@ def test_native_eval_set_retains_cost_hooks_across_conditions(tmp_path):
     assert success
     assert len(logs) == 2
     assert len((state_dir / "requests.jsonl").read_text().splitlines()) == 2
+
+
+def test_restoring_reuse_history_keeps_scores_and_does_not_add_a_paid_request(
+    tmp_path, monkeypatch
+):
+    from inspect_ai.event import ModelEvent
+    from inspect_ai.log import read_eval_log
+
+    source_dir = tmp_path / "source"
+    replay_dir = tmp_path / "replay"
+    source_output = ModelOutput.from_content(
+        "mockllm/actor",
+        [
+            ContentReasoning(reasoning="THE COMPLETE TRACE."),
+            ContentText(text="ANSWER: A"),
+        ],
+    )
+    source_output.usage = ModelUsage(
+        input_tokens=10, output_tokens=7, total_tokens=17, reasoning_tokens=4
+    )
+    source_actor = get_model(
+        "mockllm/actor", custom_outputs=[source_output], memoize=False
+    )
+    source_log = eval(
+        Task(
+            dataset=[Sample(id="q1", input="Choose A.", target="A")],
+            solver=generate(),
+            scorer=includes(),
+        ),
+        model=source_actor,
+        display="none",
+        log_dir=str(source_dir),
+    )[0]
+    source_path = next(source_dir.glob("*.eval"))
+    sample = Sample(
+        id="q1",
+        input="Choose A.",
+        target="A",
+        metadata={
+            "dataset": "gpqa",
+            "mode": "uppercase_thinking",
+            "raw_id": 0,
+        },
+    )
+    key = experiment.fingerprint(sample.input, sample.target, sample.metadata)
+    monkeypatch.setattr(
+        experiment,
+        "CACHE",
+        {
+            key: {
+                "output": source_log.samples[0].output.model_dump(mode="json"),
+                "messages": [
+                    message.model_dump(mode="json")
+                    for message in source_log.samples[0].messages
+                ],
+                "source": {
+                    "log": str(source_path),
+                    "sample_id": "q1",
+                    "task_version": "4-A",
+                },
+            }
+        },
+    )
+    monkeypatch.setattr(experiment, "REUSED", [])
+
+    def forbidden(*args):
+        pytest.fail("History restoration must not call the model")
+
+    actor = get_model("mockllm/actor", custom_outputs=forbidden, memoize=False)
+    replay = eval(
+        Task(
+            dataset=[sample],
+            solver=chain(experiment.prepare_sample(), generate()),
+            scorer=includes(),
+        ),
+        model=actor,
+        display="none",
+        log_dir=str(replay_dir),
+    )[0]
+    values = {name: score.value for name, score in replay.samples[0].scores.items()}
+    assert experiment.restore_reused_history(replay_dir) == 1
+    restored = read_eval_log(next(replay_dir.glob("*.eval")), resolve_attachments=True)
+    item = restored.samples[0]
+    assert {name: score.value for name, score in item.scores.items()} == values
+    assert len(item.messages) == 2
+    model_events = [event for event in item.events if isinstance(event, ModelEvent)]
+    assert len(model_events) == 1
+    assert model_events[0].cache == "read"
+    assert model_events[0].metadata["new_actor_request"] is False
+    assert item.model_usage["mockllm/actor"].output_tokens == 7
+    assert item.metadata["new_actor_cost_cny"] == 0
+    assert experiment.restore_reused_history(replay_dir) == 0

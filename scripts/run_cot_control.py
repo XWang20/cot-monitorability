@@ -8,6 +8,7 @@ import hashlib
 import json
 import os
 import threading
+import uuid
 from contextvars import ContextVar
 from datetime import datetime, timezone
 from pathlib import Path
@@ -16,8 +17,9 @@ from zoneinfo import ZoneInfo
 import httpx
 from dotenv import dotenv_values
 from inspect_ai import eval_set
+from inspect_ai.event import ModelEvent
 from inspect_ai.log import read_eval_log, write_eval_log
-from inspect_ai.model import GenerateConfig, ModelOutput, get_model
+from inspect_ai.model import GenerateConfig, ModelOutput, ModelUsage, get_model
 from inspect_ai.solver import chain, solver
 
 from cot_monitorability.cot_control.components import MAIN_PAPER_MODES
@@ -260,6 +262,115 @@ def ledger_hooks(role, state_dir, pricing):
     return {"request": [request_hook], "response": [response_hook]}
 
 
+def restore_reused_history(log_dir):
+    """Restore recorded actor events and tokens without making or billing new requests."""
+    restored = 0
+    for path in sorted(log_dir.rglob("*.eval")):
+        header = read_eval_log(path, header_only=True)
+        if header.status == "started":
+            continue
+        if header.results is None:
+            continue
+        if (header.results.metadata or {}).get("reuse_transcripts_restored"):
+            continue
+        log = read_eval_log(path, resolve_attachments=True)
+        changed = False
+        added_usage = ModelUsage()
+        for sample in log.samples or []:
+            source = sample.metadata.get("reused_generation")
+            if not source or sample.metadata.get("reused_history_restored"):
+                continue
+            if source["log"] == "this_experiment":
+                candidates = [
+                    other for other in log_dir.rglob("*.eval") if other != path
+                ]
+            else:
+                candidates = [ROOT / source["log"]]
+            actor_event = None
+            for candidate in candidates:
+                original = read_eval_log(candidate, resolve_attachments=True)
+                old_sample = next(
+                    (
+                        item
+                        for item in original.samples or []
+                        if item.id == source["sample_id"]
+                    ),
+                    None,
+                )
+                if old_sample is None:
+                    continue
+                actor_event = next(
+                    (
+                        event
+                        for event in reversed(old_sample.events)
+                        if isinstance(event, ModelEvent)
+                        and event.role is None
+                        and event.output
+                        and event.error is None
+                        and event.output.message.model_dump(mode="json")
+                        == sample.output.message.model_dump(mode="json")
+                    ),
+                    None,
+                )
+                if actor_event is not None:
+                    break
+            if actor_event is None:
+                continue
+            event = actor_event.model_copy(
+                deep=True,
+                update={
+                    "uuid": str(uuid.uuid4()),
+                    "span_id": None,
+                    "input_refs": None,
+                    "model": log.eval.model,
+                    "cache": "read",
+                    "metadata": {
+                        **(actor_event.metadata or {}),
+                        "reused_from": source,
+                        "original_model": actor_event.model,
+                        "original_event_uuid": actor_event.uuid,
+                        "new_actor_request": False,
+                    },
+                },
+            )
+            sample.events.insert(0, event)
+            usage = (
+                sample.output.usage.model_copy(deep=True)
+                if sample.output.usage
+                else ModelUsage()
+            )
+            usage.total_cost = None
+            sample.model_usage[log.eval.model] = (
+                sample.model_usage.get(log.eval.model, ModelUsage()) + usage
+            )
+            sample.metadata["reused_history_restored"] = True
+            sample.metadata["new_actor_cost_cny"] = 0
+            added_usage += usage
+            restored += 1
+            changed = True
+        if changed:
+            metadata = dict(log.results.metadata or {})
+            metadata["new_call_model_usage"] = {
+                name: usage.model_dump(mode="json")
+                for name, usage in log.stats.model_usage.items()
+            }
+            metadata["reuse_transcripts_restored"] = all(
+                not item.metadata.get("reused_generation")
+                or item.metadata.get("reused_history_restored")
+                for item in log.samples
+            )
+            metadata["token_usage_includes_reused_generations"] = True
+            metadata["billing_source"] = (
+                "per-request ledger; restoring history does not charge again"
+            )
+            log.results.metadata = metadata
+            log.stats.model_usage[log.eval.model] = (
+                log.stats.model_usage.get(log.eval.model, ModelUsage()) + added_usage
+            )
+            write_eval_log(log, path)
+    return restored
+
+
 def write_report(log_dir, state_dir, pricing, final=None):
     with LEDGER_LOCK:
         lines = (
@@ -482,6 +593,7 @@ def main():
     finally:
         stop.set()
         thread.join(timeout=30)
+        restore_reused_history(args.log_dir)
         report = write_report(args.log_dir, args.state_dir, pricing, final=success)
         with LEDGER_LOCK:
             records = (
@@ -536,6 +648,7 @@ def main():
 def reporter(stop, log_dir, state_dir, pricing):
     while not stop.wait(30):
         try:
+            restore_reused_history(log_dir)
             report = write_report(log_dir, state_dir, pricing)
             print(
                 json.dumps(
