@@ -143,4 +143,6 @@ def test_log_refresh_and_model_pooling_preserve_outputs_without_actor_calls(
     assert merged.results.completed_samples == 2
     assert merged.eval.metadata["aggregation"]["new_model_requests"] == 0
     assert merged.results.metadata["run_cost"]["incremental_cost"] == 0
+    assert merged.eval.task_args["banks"] == "all_ncri"
+    assert merged.eval.task_args_passed == {"banks": "all_ncri"}
     assert [hashlib.sha256(path.read_bytes()).hexdigest() for path in paths] == before

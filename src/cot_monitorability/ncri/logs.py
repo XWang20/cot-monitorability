@@ -131,6 +131,10 @@ def aggregate_ncri_logs(paths, destination):
             len({sample.id for sample in log.samples}) for _, log in sources
         ),
     }
+    # The pooled summary was not produced by a bank run; a stale inherited
+    # `banks` here would make Inspect's eval-set reuse treat the summary as a
+    # completed bank task.
+    merged.eval.task_args_passed = {"banks": "all_ncri"}
     merged.eval.dataset.name = "recorded-ncri-banks"
     merged.eval.dataset.samples = len({s.id for s in samples})
     merged.eval.dataset.sample_ids = list(dict.fromkeys(s.id for s in merged.samples))

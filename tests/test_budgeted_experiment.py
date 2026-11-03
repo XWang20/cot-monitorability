@@ -132,6 +132,26 @@ def test_native_phase_preserves_completed_log_paths_and_cost_metadata(
     assert experiment.history[0]["audit"]["passed"]
 
 
+def test_stage_sample_guard_and_ncri_summary_location(tmp_path):
+    tasks = [
+        Task(
+            dataset=[Sample(id=str(i), input="q", target="A") for i in range(7)],
+            solver=generate(),
+            scorer=includes(),
+        ),
+        Task(
+            dataset=[Sample(id=f"b{i}", input="q", target="A") for i in range(3)],
+            solver=generate(),
+            scorer=includes(),
+        ),
+    ]
+    assert runner.expected_samples(tasks) == 10
+    assert runner.expected_samples(tasks, 5) == 8
+    summary = runner.ncri_summary_path(tmp_path / "logs", "deepseek")
+    assert summary.parent == tmp_path / "logs" / "ncri-index"
+    assert summary.parent.name != "ncri"
+
+
 def test_resume_cannot_silently_change_the_shared_budget(tmp_path):
     RequestBudget(tmp_path, 500, baseline=88, uncertainty=15)
     with pytest.raises(ValueError, match="Budget settings"):

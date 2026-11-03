@@ -176,6 +176,19 @@ def build_tasks(config, manifest):
     return tasks
 
 
+def expected_samples(tasks, preflight_samples=None):
+    """Samples a stage must yield (one epoch), including the preflight limit."""
+    if preflight_samples is None:
+        return sum(len(task.dataset) for task in tasks)
+    return sum(min(preflight_samples, len(task.dataset)) for task in tasks)
+
+
+def ncri_summary_path(log_dir, model_id):
+    """Model-level NCRI summary, kept out of the eval-set run directory."""
+    name = "ncri-index_" + hashlib.sha256(model_id.encode()).hexdigest()[:12] + ".eval"
+    return Path(log_dir) / "ncri-index" / name
+
+
 def audit_logs(paths, kind):
     issues, totals = (
         [],
@@ -484,6 +497,19 @@ class Experiment:
                 log.error = unexpected[0].error
                 write_eval_log(log, path)
         audit = audit_logs(paths, kind)
+        expected = expected_samples(
+            tasks, self.config["preflight_samples"] if preflight else None
+        )
+        if audit["totals"]["samples"] != expected:
+            audit["issues"].append(
+                {
+                    "error": (
+                        f"Audited {audit['totals']['samples']} samples but the "
+                        f"task matrix defines {expected}"
+                    )
+                }
+            )
+            audit["passed"] = False
         self.history.append(
             {
                 **self.current,
@@ -504,11 +530,8 @@ class Experiment:
                 refresh_ncri_metrics(log)
                 write_eval_log(log, path)
             if not preflight:
-                summary = destination / (
-                    "ncri-index_"
-                    + hashlib.sha256(specification["id"].encode()).hexdigest()[:12]
-                    + ".eval"
-                )
+                summary = ncri_summary_path(self.logs, specification["id"])
+                summary.parent.mkdir(parents=True, exist_ok=True)
                 aggregate_ncri_logs(paths, summary)
         return paths
 
