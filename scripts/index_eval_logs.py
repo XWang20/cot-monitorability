@@ -65,6 +65,7 @@ def read_run(path):
             for score in results.get("scores", [])
         ],
         "run_cost": (results.get("metadata") or {}).get("run_cost"),
+        "ncri_placement": (results.get("metadata") or {}).get("ncri_placement"),
         "model_usage": stats.get("model_usage", {}),
         "revision": evaluation.get("revision"),
         "packages": evaluation.get("packages", {}),
@@ -89,14 +90,21 @@ def primary_result(run):
         "intervention_eligible_fraction",
         "legibility_pct",
         "coverage_pct",
-        "ncri_primary_accuracy",
+        "ncri_placement_score",
         "ncri_valid_rate",
         "mb_cot_monitorability",
     )
-    return (
+    result = (
         "; ".join(f"{name}={metrics[name]:.4g}" for name in names if name in metrics)
         or "Not recorded"
     )
+    placement = run.get("ncri_placement")
+    if placement and not placement["ranked"]:
+        result = (
+            f"Partial placement ({placement['coverage_domains']}/{placement['coverage_total']} domains); "
+            + result
+        )
+    return result
 
 
 def display_model(run):

@@ -28,6 +28,7 @@ from cot_monitorability.generation_reuse import (
     GenerationReuse,
     reuse_completed_generation,
 )
+from cot_monitorability.ncri.logs import aggregate_ncri_logs, refresh_ncri_metrics
 from cot_monitorability.ncri.ncri import ncri_bench
 from cot_monitorability.openai_intervention.openai_intervention import (
     openai_monitorability_intervention,
@@ -497,6 +498,18 @@ class Experiment:
                 f"Stage {name} did not pass its validity checks; see status.json"
             )
         self.embed_costs(paths)
+        if kind == "ncri":
+            for path in paths:
+                log = read_eval_log(path, resolve_attachments=True)
+                refresh_ncri_metrics(log)
+                write_eval_log(log, path)
+            if not preflight:
+                summary = destination / (
+                    "ncri-index_"
+                    + hashlib.sha256(specification["id"].encode()).hexdigest()[:12]
+                    + ".eval"
+                )
+                aggregate_ncri_logs(paths, summary)
         return paths
 
     def embed_costs(self, paths):

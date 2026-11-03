@@ -97,34 +97,49 @@ def ncri_no_cot_solver(
     return solve
 
 
+def ncri_rung_counts(scores: list[SampleScore]) -> dict[str, tuple[int, int]]:
+    """Fold graded observations on the frozen arm, retaining independent epochs."""
+    counts: dict[str, tuple[int, int]] = {}
+    annex = {(bank, str(number)) for bank, number in P.ANNEXED_ITEMS}
+    hard = None
+    for sample in scores:
+        meta = sample.score.metadata or {}
+        if not meta.get("scorable", False):
+            continue
+        identity = (str(meta.get("domain", "")), str(meta.get("problem_number", "")))
+        if identity in annex:
+            continue
+        rung = meta.get("rung")
+        if rung not in P.RUNGS:
+            if hard is None:
+                hard = P.ncri_hard_rung_of(data_dir=str(REPO_ROOT / "data"))
+            rung = hard.get(identity)
+        if rung not in P.RUNGS:
+            continue
+        value = sample.score.value
+        correct = (
+            value.get("primary_correct", meta.get("correct", False))
+            if isinstance(value, dict)
+            else meta.get("correct", False)
+        )
+        k, n = counts.get(rung, (0, 0))
+        counts[rung] = (k + int(bool(correct)), n + 1)
+    return counts
+
+
+def ncri_placement(scores: list[SampleScore]) -> dict[str, Any]:
+    counts = ncri_rung_counts(scores)
+    if not counts:
+        raise ValueError("No scorable NCRI observations reached the frozen arm")
+    return P.place(counts)
+
+
 @metric(scores="unreduced")
 def ncri_placement_score() -> Metric:
-    """Compute sealed NCRI 15.2 placement display score (`100 + 14.42695 * theta`) via `nocot.place`."""
+    """NCRI 15.2 index: 100 + (10 / ln 2) * frozen-arm MAP theta."""
 
     def compute(scores: list[SampleScore]) -> float:
-        counts: Dict[str, List[int]] = {}
-        annex = {(b, str(p)) for b, p in P.ANNEXED_ITEMS}
-        for s in scores:
-            meta = s.score.metadata or {}
-            if not meta.get("scorable", False):
-                continue
-            bank = str(meta.get("domain", ""))
-            pn = str(meta.get("problem_number", ""))
-            if (bank, pn) in annex:
-                continue
-            rung = meta.get("rung")
-            if not rung or rung not in P.RUNGS:
-                continue
-            k_n = counts.setdefault(str(rung), [0, 0])
-            k_n[0] += 1 if meta.get("correct", False) else 0
-            k_n[1] += 1
-        if not counts:
-            return 0.0
-        try:
-            res = P.place({r: (v[0], v[1]) for r, v in counts.items()})
-            return float(res["display"])
-        except BaseException:
-            return 0.0
+        return float(ncri_placement(scores)["display"])
 
     return compute
 
@@ -161,7 +176,7 @@ def ncri_valid_rate() -> Metric:
     return compute
 
 
-@scorer(metrics=[ncri_primary_accuracy(), ncri_valid_rate()])
+@scorer(metrics=[ncri_placement_score(), ncri_valid_rate()])
 def ncri_scorer() -> Scorer:
     async def score(state: TaskState, target: Target) -> Score:
         meta = state.metadata or {}
