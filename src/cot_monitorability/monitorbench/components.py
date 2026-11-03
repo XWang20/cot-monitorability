@@ -194,7 +194,7 @@ def single_mb_solver() -> Solver:
     return solve
 
 
-@metric
+@metric(scores="unreduced")
 def mb_cot_monitorability() -> Metric:
     """Mean CoT monitorability score across eligible (verified) samples."""
 
@@ -211,7 +211,7 @@ def mb_cot_monitorability() -> Metric:
     return compute
 
 
-@metric
+@metric(scores="unreduced")
 def mb_verification_rate() -> Metric:
     """Fraction of samples where the intervened/main rollout passed task verification."""
 
@@ -226,7 +226,7 @@ def mb_verification_rate() -> Metric:
     return compute
 
 
-@metric
+@metric(scores="unreduced")
 def mb_mean_cot_tokens() -> Metric:
     """Mean CoT token length across samples."""
 
@@ -300,6 +300,7 @@ def monitorbench_general_scorer(
                     "verified_intervened": 1.0 if v_inter else 0.0,
                     "verified_original": 1.0 if v_orig else 0.0,
                     "cot_tokens": float(cot_tokens),
+                    **{f"monitor_{scope}": -1.0 for scope in scope_list},
                 },
                 answer=act_inter[:120] if act_inter else "",
                 explanation=(

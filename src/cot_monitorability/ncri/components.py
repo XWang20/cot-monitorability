@@ -97,7 +97,7 @@ def ncri_no_cot_solver(
     return solve
 
 
-@metric
+@metric(scores="unreduced")
 def ncri_placement_score() -> Metric:
     """Compute sealed NCRI 15.2 placement display score (`100 + 14.42695 * theta`) via `nocot.place`."""
 
@@ -129,7 +129,7 @@ def ncri_placement_score() -> Metric:
     return compute
 
 
-@metric
+@metric(scores="unreduced")
 def ncri_primary_accuracy() -> Metric:
     """Primary no-CoT accuracy (floor): reasoned rows are scored wrong."""
 
@@ -145,7 +145,7 @@ def ncri_primary_accuracy() -> Metric:
     return compute
 
 
-@metric
+@metric(scores="unreduced")
 def ncri_valid_rate() -> Metric:
     """Fraction of scorable rows certified as clean no-CoT by all 3 witnesses (W1, W2, W3)."""
 
@@ -309,7 +309,9 @@ def build_ncri_dataset(
             samples.append(
                 Sample(
                     id=f"{b_name}__{it.get('problem_number')}",
-                    input=R.user_message(it),
+                    input=_to_inspect_messages(msgs)
+                    if it.get("messages") is not None
+                    else R.user_message(it),
                     target=str(gold),
                     metadata={
                         "bank": b_name,

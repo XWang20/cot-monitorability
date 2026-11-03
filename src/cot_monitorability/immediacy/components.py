@@ -120,10 +120,10 @@ def _extract_thought_and_final(state: TaskState) -> tuple[str, str, int]:
 def _extract_choice_letter(text: str) -> Optional[str]:
     if not text:
         return None
-    m = re.search(r"ANSWER:\s*([A-D])", text, flags=re.IGNORECASE)
+    m = re.search(r"ANSWER:\s*([A-Z])\b", text, flags=re.IGNORECASE)
     if m:
         return m.group(1).upper()
-    m = re.search(r"\b([A-D])\s*$", text.strip())
+    m = re.search(r"\b([A-Z])\s*$", text.strip())
     if m:
         return m.group(1).upper()
     return None
@@ -141,7 +141,7 @@ def immediacy_generate_solver() -> Solver:
     return solve
 
 
-@metric
+@metric(scores="unreduced")
 def legibility_pct() -> Metric:
     """Mean Legibility (0-100%) across evaluated samples."""
 
@@ -158,7 +158,7 @@ def legibility_pct() -> Metric:
     return compute
 
 
-@metric
+@metric(scores="unreduced")
 def coverage_pct() -> Metric:
     """Mean Coverage (0-100%) across evaluated samples."""
 
@@ -175,7 +175,7 @@ def coverage_pct() -> Metric:
     return compute
 
 
-@metric
+@metric(scores="unreduced")
 def task_accuracy_immediacy() -> Metric:
     def compute(scores: list[SampleScore]) -> float:
         vals = [
@@ -188,7 +188,7 @@ def task_accuracy_immediacy() -> Metric:
     return compute
 
 
-@metric
+@metric(scores="unreduced")
 def immediacy_mean_cot_tokens() -> Metric:
     """Mean CoT token length across samples."""
 
@@ -228,6 +228,8 @@ def cot_immediacy_judge_scorer(
                 value={
                     "legibility_pct": -1.0,
                     "coverage_pct": -1.0,
+                    "legibility_raw": -1.0,
+                    "coverage_raw": -1.0,
                     "correct": 0.0,
                     "cot_tokens": float(cot_tokens),
                 },
@@ -240,6 +242,8 @@ def cot_immediacy_judge_scorer(
                 value={
                     "legibility_pct": 0.0,
                     "coverage_pct": 0.0,
+                    "legibility_raw": 0.0,
+                    "coverage_raw": 0.0,
                     "correct": is_correct,
                     "cot_tokens": 0.0,
                 },

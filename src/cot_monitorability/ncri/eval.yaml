@@ -4,7 +4,7 @@ description: Runs the pinned nocot-bench request, witnesses, grading and frozen 
 group: Reasoning
 contributors:
 - XWang20
-version: 5-A
+version: 6-A
 tasks:
 - name: ncri_bench
   dataset_samples: 83

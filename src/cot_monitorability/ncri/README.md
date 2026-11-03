@@ -36,6 +36,8 @@ Check which banks were loaded before comparing `all_ncri` runs.
 
 ## Assistant prefill
 
+Banks with frozen official conversations retain their complete message history in the Inspect sample input and request. These items do not need a separate `problem` field.
+
 The final assistant message in the request is the upstream `Answer:` prefill. It is input supplied to encourage an immediate answer. Inspect displays it followed by a separate assistant message containing the backend's response; this is one generation, not two.
 
 Validity measures compliance with the no-CoT protocol. A valid numeric answer can still be wrong; accuracy is reported separately.
@@ -60,6 +62,10 @@ Logs record `ncri_primary_accuracy`, `ncri_valid_rate`, and the frozen `ncri_pla
 A placement score from a single bank or a limited run is not a full-index estimate. Compare bank coverage, prompting, reasoning settings, and generation validity.
 
 ## Changelog
+
+### 6-A
+
+Support frozen official conversations such as o_gsm1k without requiring a problem field. Compute placement and accuracy from all epoch observations.
 
 ### 5-A
 

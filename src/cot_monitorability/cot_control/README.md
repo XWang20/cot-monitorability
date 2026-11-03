@@ -45,6 +45,10 @@ The T/F judge parser accepts some non-verdict text containing "T". The regressio
 
 ## Changelog
 
+### 3-A
+
+Compute accuracy, compliance and token-window metrics from individual epoch observations before aggregation.
+
 ### 2-A
 
 Use the OpenAI-compatible provider for the fallback scoring model so configured sampling parameters are sent without OpenAI model-family rewrites.

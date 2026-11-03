@@ -42,6 +42,10 @@ The supported variants are non-sandbox tasks. Several delegated variants already
 
 ## Changelog
 
+### 3-A
+
+Keep general-adapter score fields consistent across eligible and ineligible rollouts. Filter individual epoch observations before aggregating monitorability.
+
 ### 2-A
 
 Use the OpenAI-compatible provider for the fallback scoring model so configured sampling parameters are sent without OpenAI model-family rewrites.

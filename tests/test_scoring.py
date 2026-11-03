@@ -7,7 +7,10 @@ from cot_monitorability.cot_control.components import (
     extract_answer_letter,
     extract_reasoning_and_text,
 )
-from cot_monitorability.immediacy.components import parse_autorater_json
+from cot_monitorability.immediacy.components import (
+    _extract_choice_letter,
+    parse_autorater_json,
+)
 from cot_monitorability.monitorbench.components import _extract_boxed, _norm_icd_code
 from cot_monitorability.openai_common import (
     _extract_cot_and_final_answer,
@@ -172,3 +175,65 @@ async def test_answer_judge_rejects_missing_final_verdict():
             SimpleNamespace(final_answer="41"),
             Judge(),
         )
+
+
+@pytest.mark.parametrize("letter", list("ABCDEFGHIJ"))
+def test_immediacy_parses_all_mmlu_pro_choices(letter):
+    assert _extract_choice_letter(f"ANSWER: {letter}") == letter
+    assert _extract_choice_letter(f"The correct answer is {letter}") == letter
+
+
+@pytest.mark.parametrize("answer", ["ANSWER: HELLO", "ANSWER: London"])
+def test_immediacy_does_not_parse_the_first_letter_of_a_word(answer):
+    assert _extract_choice_letter(answer) is None
+
+
+@pytest.mark.asyncio
+@pytest.mark.parametrize("reply", ["", "Unable to classify."])
+async def test_intervention_monitor_rejects_missing_verdict(monkeypatch, reply):
+    from cot_monitorability import openai_common
+
+    monkeypatch.setattr(openai_common, "_render_monitor_prompt", lambda *args: "Prompt")
+    monkeypatch.setattr(
+        openai_common, "_monitor_answer_spec", lambda *args: (["X", "Y"], {"X"})
+    )
+
+    class Monitor:
+        async def generate(self, *args):
+            return ModelOutput.from_content("mockllm/monitor", reply)
+
+    with pytest.raises(ValueError, match="monitor.*valid verdict"):
+        await openai_common._grade_z_real(
+            SimpleNamespace(archetype="intervention", z_rule_ref="rule"),
+            "cot_only",
+            SimpleNamespace(),
+            Monitor(),
+        )
+
+
+@pytest.mark.asyncio
+@pytest.mark.parametrize(
+    "reply,expected", [("X", 1), ("Y", 0), ("<answer>X</answer>", 1)]
+)
+async def test_intervention_monitor_retains_valid_positive_and_negative_verdicts(
+    monkeypatch, reply, expected
+):
+    from cot_monitorability import openai_common
+
+    monkeypatch.setattr(openai_common, "_render_monitor_prompt", lambda *args: "Prompt")
+    monkeypatch.setattr(
+        openai_common, "_monitor_answer_spec", lambda *args: (["X", "Y"], {"X"})
+    )
+
+    class Monitor:
+        async def generate(self, *args):
+            return ModelOutput.from_content("mockllm/monitor", reply)
+
+    value, answer = await openai_common._grade_z_real(
+        SimpleNamespace(archetype="intervention", z_rule_ref="rule"),
+        "cot_only",
+        SimpleNamespace(),
+        Monitor(),
+    )
+    assert value == expected
+    assert answer in ("X", "Y")

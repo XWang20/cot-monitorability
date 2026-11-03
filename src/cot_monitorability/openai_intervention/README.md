@@ -11,7 +11,7 @@ uv run inspect eval cot_monitorability/openai_monitorability_intervention \
   -T dataset=scruples_suggest_wrong --limit 10
 ```
 
-The default has 150 paired samples. Each Inspect sample contains an unperturbed and perturbed generation; sample counts are not generation counts. The monitor evaluates both arms.
+The default has 150 paired samples. Each Inspect sample contains an unperturbed and perturbed generation; sample counts are not generation counts. The monitor evaluates both arms. An unparseable monitor verdict raises a scoring error; it is not counted as a negative classification.
 
 ## Task arguments
 
@@ -31,6 +31,10 @@ Logs report lower and upper intervention g-mean² bounds, effect shift, eligible
 With one generation per arm, eligibility estimates can be noisy. Compare the same dataset, monitor scope, sampling configuration, and number of epochs. Inspect paired outputs and monitor verdicts alongside aggregate scores.
 
 ## Changelog
+
+### 3-A
+
+Pool all epoch arm records before computing intervention bounds and eligibility. Missing monitor verdicts raise scoring errors instead of becoming negative classifications.
 
 ### 2-A
 

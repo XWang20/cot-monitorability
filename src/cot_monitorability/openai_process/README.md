@@ -30,6 +30,10 @@ Answer grading and theorem-path detection depend on the monitor. Unrecognized or
 
 ## Changelog
 
+### 3-A
+
+Compute conditional monitorability and accuracy from individual epoch observations, preserving fractional rates across repetitions.
+
 ### 2-A
 
 Use the OpenAI-compatible provider for the fallback scoring model so configured sampling parameters are sent without OpenAI model-family rewrites.

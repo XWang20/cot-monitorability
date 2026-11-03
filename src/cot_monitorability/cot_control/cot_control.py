@@ -10,7 +10,7 @@ from cot_monitorability.cot_control.components import (
 )
 
 
-@task(version="2-A")
+@task(version="3-A")
 def cot_controllability_qa(
     dataset: Literal["gpqa", "hle", "mmlu_pro", "all"] = "gpqa",
     modes: str = "word_suppression",
@@ -27,7 +27,7 @@ def cot_controllability_qa(
 ) -> Task:
     """CoT-Control-QA (arXiv:2603.05706) main-paper benchmark in Inspect AI."""
     return Task(
-        version="2-A",
+        version="3-A",
         config=GenerateConfig.model_validate(
             {
                 "reasoning_effort": None

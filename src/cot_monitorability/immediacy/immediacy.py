@@ -10,7 +10,7 @@ from cot_monitorability.immediacy.components import (
 )
 
 
-@task(version="2-A")
+@task(version="3-A")
 def cot_immediacy_2510(
     dataset: Literal["gpqa", "hle", "mmlu_pro"] = "gpqa",
     target_reasoning_effort: Optional[str] = "high",
@@ -20,7 +20,7 @@ def cot_immediacy_2510(
     """DeepMind arXiv:2510.23966 CoT Legibility & Coverage Judge benchmark."""
     ds = build_cot_control_qa_dataset(dataset=dataset, modes="baseline")
     return Task(
-        version="2-A",
+        version="3-A",
         config=GenerateConfig.model_validate(
             {
                 "reasoning_effort": None

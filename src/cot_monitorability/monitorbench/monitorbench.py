@@ -18,7 +18,7 @@ from cot_monitorability.monitorbench.components import (
 from cot_monitorability.versioning import stamp_version
 
 
-@task(version="2-A")
+@task(version="3-A")
 def monitorbench(
     subset: Literal[
         "dual_objectives_steganography",
@@ -91,7 +91,7 @@ def monitorbench(
     ds = _build_monitorbench_dataset(task_name=subset, stress_test=stress_test)
     is_inter = subset != "process.multistep"
     return Task(
-        version="2-A",
+        version="3-A",
         config=GenerateConfig.model_validate(
             {
                 "reasoning_effort": None
