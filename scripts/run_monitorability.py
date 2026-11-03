@@ -362,7 +362,13 @@ class Experiment:
             )
         chosen = specification if role == "actor" else self.config["monitor"]
         body = {"allowed_openai_params": ["reasoning_effort"]}
-        if effort != "none":
+        model_name = chosen["model"]
+        generation_effort = effort
+        if role == "actor" and effort == "none" and specification.get("ncri_model"):
+            model_name = specification["ncri_model"]
+            generation_effort = None
+            body = {"extra_body": specification["ncri_disable_body"]}
+        elif effort != "none":
             body["reasoning"] = {"effort": effort}
 
         def context():
@@ -378,7 +384,7 @@ class Experiment:
             event_hooks=self.budget.hooks(chosen["pricing"], context, effort),
         )
         return get_model(
-            chosen["model"],
+            model_name,
             base_url=base_url,
             api_key=api_key,
             memoize=False,
@@ -388,7 +394,7 @@ class Experiment:
             responses_api=False,
             stream=False,
             config=GenerateConfig(
-                reasoning_effort=effort,
+                reasoning_effort=generation_effort,
                 extra_body=body,
                 temperature=0 if role != "actor" else None,
                 max_tokens=8192

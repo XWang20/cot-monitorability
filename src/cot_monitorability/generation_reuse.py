@@ -29,8 +29,12 @@ def generation_key(model, effort, input_value, target, metadata):
             else {k: v for k, v in m.items() if k != "id"}
             for m in input_value
         ]
+    model = model.removeprefix("openai-api/openai/").removeprefix("openai/")
+    if model.endswith("-nt") and effort in (None, "none"):
+        model = model[:-3]
+        effort = "none"
     payload = {
-        "model": model.removeprefix("openai-api/openai/").removeprefix("openai/"),
+        "model": model,
         "effort": effort,
         "input": input_value,
         "target": target,
@@ -52,8 +56,22 @@ class GenerationReuse:
                 log = read_eval_log(path, resolve_attachments=True)
                 for sample in log.samples or []:
                     output = sample.output
-                    if not output or not output.choices or output.stop_reason != "stop":
+                    no_cot = log.eval.task.endswith("ncri_bench")
+                    if (
+                        not output
+                        or not output.choices
+                        or (output.stop_reason != "stop" and not no_cot)
+                    ):
                         continue
+                    if no_cot:
+                        verdict = next(iter(sample.scores.values()), None)
+                        if (
+                            not output.usage
+                            or output.usage.reasoning_tokens != 0
+                            or verdict is None
+                            or verdict.metadata.get("hidden_channel_tokens") != 0
+                        ):
+                            continue
                     try:
                         thought = full_reasoning(output.message)
                         if (
@@ -85,14 +103,16 @@ class GenerationReuse:
                         and e.role is None
                         and e.output
                         and e.output.choices
-                        and e.output.stop_reason == "stop"
+                        and (e.output.stop_reason == "stop" or no_cot)
                         and e.output.message.model_dump(mode="json") in wanted
                     ]
                     if len(events) < len(wanted):
                         continue
                     key = generation_key(
                         log.eval.model,
-                        log.eval.model_generate_config.reasoning_effort,
+                        "none"
+                        if no_cot
+                        else log.eval.model_generate_config.reasoning_effort,
                         sample.input,
                         sample.target,
                         sample.metadata,

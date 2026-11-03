@@ -69,6 +69,13 @@
           "cached_input": 0.016
         },
         "source_url": "https://www.dmxapi.cn/rmb"
+      },
+      "ncri_model": "openai-api/openai/deepseek-v4.1-flash-1017-nt",
+      "ncri_disable_body": {
+        "thinking": {
+          "type": "disabled"
+        },
+        "reasoning_effort": null
       }
     },
     {
@@ -94,6 +101,13 @@
         "source_checked_date": "2026-11-03",
         "cache_creation_per_million": 10.27,
         "cache_creation_1h_per_million": 20.54
+      },
+      "ncri_model": "openai-api/openai/kimi-k3.1-pro-nt",
+      "ncri_disable_body": {
+        "thinking": {
+          "type": "disabled"
+        },
+        "reasoning_effort": "none"
       }
     }
   ],

@@ -183,14 +183,22 @@ class RequestBudget:
                     "This runner budgets non-streaming Chat Completions requests only"
                 )
             body = json.loads(request.content)
-            if body.get(
+            native = body.get("extra_body") or {}
+            native_disabled = (
+                expected_effort == "none"
+                and str(body.get("model", "")).endswith("-nt")
+                and (native.get("thinking") or {}).get("type") == "disabled"
+                and "reasoning_effort" in native
+                and native.get("reasoning_effort") in (None, "none")
+                and body.get("reasoning_effort") is None
+            )
+            standard = body.get(
                 "reasoning_effort"
-            ) != expected_effort or "reasoning_effort" not in body.get(
+            ) == expected_effort and "reasoning_effort" in body.get(
                 "allowed_openai_params", []
-            ):
-                raise ValueError(
-                    "Request reasoning effort or proxy passthrough differs from the protocol"
-                )
+            )
+            if not native_disabled and not standard:
+                raise ValueError("Request reasoning settings differ from the protocol")
             if expected_effort == "none" and (body.get("reasoning") or {}).get(
                 "effort"
             ) not in (None, "none"):

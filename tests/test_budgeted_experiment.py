@@ -346,3 +346,36 @@ def test_known_incomplete_sample_is_explicit_and_does_not_generate(
     )
     assert experiment.history[0]["audit"]["passed"]
     assert experiment.history[0]["audit"]["totals"]["expected_incomplete"] == 1
+
+
+@pytest.mark.asyncio
+async def test_provider_native_no_cot_request_is_reserved_without_flat_effort(tmp_path):
+    import httpx
+
+    budget = RequestBudget(tmp_path, 3)
+    body = {
+        "model": "deepseek-v4.1-flash-1017-nt",
+        "messages": [],
+        "max_tokens": 2,
+        "extra_body": {"thinking": {"type": "disabled"}, "reasoning_effort": None},
+    }
+    request = httpx.Request(
+        "POST", "http://example.test/v1/chat/completions", json=body
+    )
+    await budget.hooks(PRICING, lambda: {"role": "actor"}, "none")["request"][0](
+        request
+    )
+    assert budget.snapshot()["outstanding_reservations"] == 2
+
+
+def test_no_cot_reuse_matches_base_model_and_nonthinking_alias():
+    from cot_monitorability.generation_reuse import generation_key
+
+    common = ("Q", "A", {"ncri_messages": [{"role": "user", "content": "Q"}]})
+    normal = generation_key(
+        "openai-api/openai/deepseek-v4.1-flash-1017", "none", *common
+    )
+    native = generation_key(
+        "openai-api/openai/deepseek-v4.1-flash-1017-nt", None, *common
+    )
+    assert normal == native
