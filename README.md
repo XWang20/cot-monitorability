@@ -102,6 +102,25 @@ Each model runs up to four conditions with sixteen samples per condition (64 sam
 
 Costs are calculated from metered tokens and the configured request-time schedule; they are not a provider invoice. The state directory contains the sample manifest, request ledger and progress report. Use `--sample-manifest <your-shared-selection.json>` to enforce the same ordered inputs and targets across models. The Kimi configuration keeps DeepSeek as the judge and uses the separately recorded DMX RMB rates.
 
+
+### Multi-model experiments
+
+Use one experiment directory for every model and retry:
+
+```bash
+uv run python scripts/run_monitorability.py \
+  --config configs/monitorability_50.json \
+  --log-dir 'eval_logs/<your-experiment-id>' \
+  --state-dir 'tmp/experiments/<your-experiment-id>'
+```
+
+The configuration runs process and intervention evaluations in all three monitor scopes, plus the available NCRI banks. Each condition uses the same first 50 samples across models; smaller banks use all available samples. CoT actors use high effort, and NCRI uses none with its default 10-shot protocol. Native Inspect caching shares actor outputs across monitor scopes and reuses preflight results.
+
+Models run in configuration order. Each model must pass a five-sample preflight and its full run before the next model starts. Missing reasoning counters, nonzero NCRI reasoning, truncated outputs, and scoring errors stop the experiment. Model compliance failures remain in the scores. Immediacy is excluded from this configuration.
+
+The RMB budget reserves maximum-output and uncached-input cost before each API request. Cache hits incur no new request cost. Unmetered requests retain their reservations. Set `--baseline-cost` for prior measured spend and `--uncertainty-reserve` for prior unmetered requests; these settings persist when resuming. The state directory contains the frozen selection, per-request ledger and live status. Prices are recorded estimates, not an invoice.
+
+
 ## Data
 
 The first task construction downloads the required source archives. [asset_specs.json](src/cot_monitorability/asset_specs.json) records immutable upstream commits and archive SHA-256 values. Archives and cached files are verified before use.

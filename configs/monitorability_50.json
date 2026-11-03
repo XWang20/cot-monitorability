@@ -1,0 +1,130 @@
+{
+  "budget_cny": 500,
+  "samples_per_condition": 50,
+  "preflight_samples": 5,
+  "max_tasks": 4,
+  "max_samples": 16,
+  "scopes": [
+    "cot_only",
+    "answer_only",
+    "all_messages"
+  ],
+  "intervention_datasets": [
+    "gpqa",
+    "gpqa_encoded",
+    "daft",
+    "scruples_first_person",
+    "scruples_suggest_right",
+    "scruples_suggest_wrong",
+    "wmdp_sandbagging"
+  ],
+  "ncri_banks": [
+    "arithmetic",
+    "brew",
+    "cemc",
+    "cemc_hard",
+    "cfg",
+    "cfgpatch",
+    "chain",
+    "hops5r2",
+    "modes",
+    "o_gsm1k",
+    "ordertrack",
+    "progpred",
+    "recheck_v2",
+    "recon",
+    "shortpath",
+    "sudoku",
+    "surveyor",
+    "symbolic",
+    "textconstraint"
+  ],
+  "actors": [
+    {
+      "id": "deepseek-v4.1-flash-1017",
+      "model": "openai-api/openai/deepseek-v4.1-flash-1017",
+      "pricing": {
+        "currency": "CNY",
+        "timezone": "Asia/Shanghai",
+        "discount_included": true,
+        "billing_time": "request_start",
+        "weekday_peak_windows": [
+          [
+            "09:00",
+            "12:00"
+          ],
+          [
+            "14:00",
+            "18:00"
+          ]
+        ],
+        "peak_per_million": {
+          "input": 1.58,
+          "output": 6.32,
+          "cached_input": 0.032
+        },
+        "offpeak_per_million": {
+          "input": 0.79,
+          "output": 3.16,
+          "cached_input": 0.016
+        },
+        "source_url": "https://www.dmxapi.cn/rmb"
+      }
+    },
+    {
+      "id": "kimi-k3.1-pro",
+      "model": "openai-api/openai/kimi-k3.1-pro",
+      "pricing": {
+        "currency": "CNY",
+        "timezone": "Asia/Shanghai",
+        "discount_included": true,
+        "billing_time": "request_start",
+        "weekday_peak_windows": [],
+        "peak_per_million": {
+          "input": 10.27,
+          "output": 53.72,
+          "cached_input": 1.027
+        },
+        "offpeak_per_million": {
+          "input": 10.27,
+          "output": 53.72,
+          "cached_input": 1.027
+        },
+        "source_url": "https://www.dmxapi.cn/rmb",
+        "source_checked_date": "2026-11-03",
+        "cache_creation_per_million": 10.27,
+        "cache_creation_1h_per_million": 20.54
+      }
+    }
+  ],
+  "monitor": {
+    "model": "openai-api/openai/deepseek-v4.1-flash-1017",
+    "pricing": {
+      "currency": "CNY",
+      "timezone": "Asia/Shanghai",
+      "discount_included": true,
+      "billing_time": "request_start",
+      "weekday_peak_windows": [
+        [
+          "09:00",
+          "12:00"
+        ],
+        [
+          "14:00",
+          "18:00"
+        ]
+      ],
+      "peak_per_million": {
+        "input": 1.58,
+        "output": 6.32,
+        "cached_input": 0.032
+      },
+      "offpeak_per_million": {
+        "input": 0.79,
+        "output": 3.16,
+        "cached_input": 0.016
+      },
+      "source_url": "https://www.dmxapi.cn/rmb"
+    }
+  }
+}

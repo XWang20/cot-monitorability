@@ -427,6 +427,7 @@ def paired_intervention_solver() -> Solver:
             else None
         )
         state.metadata["unperturbed_text"] = unperturbed_out.completion or ""
+        state.metadata["unperturbed_stop_reason"] = unperturbed_out.stop_reason
         return state
 
     return solve

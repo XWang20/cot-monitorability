@@ -1,17 +1,70 @@
 # Evaluation results
 
-Index of 12 stored runs. Raw `.eval` files are kept by the operator; this directory versions their metadata and checksums.
+Index of 66 stored runs. Raw `.eval` files are kept by the operator; this directory versions their metadata and checksums.
 
 Interpret each run using its recorded task namespace, version, configuration, and package revision. Limited runs do not establish full-dataset performance.
 
 ## Latest completed runs
 
-One latest completed run per package task, model, and effort. The listed configuration and sample count belong to that run.
+One latest completed run per package task, model, effort, and task configuration. The listed configuration and sample count belong to that run.
 
 | Task / subset | Version | Model | Effort | Samples | Status | Main metrics |
 | --- | --- | --- | --- | --- | --- | --- |
-| cot_monitorability/cot_controllability_qa / gpqa/word_suppression | 4-A | deepseek-v4.1-flash-1017 | high | 5/5 | success | cot_controllability_score=0.2 |
+| cot_monitorability/cot_controllability_qa / gpqa/alternating_case | 5-A | deepseek-v4.1-flash-1017 | high | 50/50 | success | cot_controllability_score=0 |
+| cot_monitorability/cot_controllability_qa / gpqa/end_of_sentence | 5-A | deepseek-v4.1-flash-1017 | high | 50/50 | success | cot_controllability_score=0 |
+| cot_monitorability/cot_controllability_qa / gpqa/ignore_question | 5-A | deepseek-v4.1-flash-1017 | high | 50/50 | success | cot_controllability_score=0 |
+| cot_monitorability/cot_controllability_qa / gpqa/lowercase_thinking | 5-A | deepseek-v4.1-flash-1017 | high | 50/50 | success | cot_controllability_score=0 |
+| cot_monitorability/cot_controllability_qa / gpqa/meow_between_words | 5-A | deepseek-v4.1-flash-1017 | high | 50/50 | success | cot_controllability_score=0 |
+| cot_monitorability/cot_controllability_qa / gpqa/multiple_word_suppression | 5-A | deepseek-v4.1-flash-1017 | high | 50/50 | success | cot_controllability_score=0 |
+| cot_monitorability/cot_controllability_qa / gpqa/repeat_sentences | 5-A | deepseek-v4.1-flash-1017 | high | 50/50 | success | cot_controllability_score=0 |
+| cot_monitorability/cot_controllability_qa / gpqa/uppercase_thinking | 5-A | deepseek-v4.1-flash-1017 | high | 50/50 | success | cot_controllability_score=0 |
+| cot_monitorability/cot_controllability_qa / gpqa/word_suppression | 5-A | deepseek-v4.1-flash-1017 | high | 50/50 | success | cot_controllability_score=0.06 |
+| cot_monitorability/cot_controllability_qa / hle/alternating_case | 5-A | deepseek-v4.1-flash-1017 | high | 50/50 | success | cot_controllability_score=0 |
+| cot_monitorability/cot_controllability_qa / hle/end_of_sentence | 5-A | deepseek-v4.1-flash-1017 | high | 50/50 | success | cot_controllability_score=0 |
+| cot_monitorability/cot_controllability_qa / hle/ignore_question | 5-A | deepseek-v4.1-flash-1017 | high | 50/50 | success | cot_controllability_score=0 |
+| cot_monitorability/cot_controllability_qa / hle/lowercase_thinking | 5-A | deepseek-v4.1-flash-1017 | high | 50/50 | success | cot_controllability_score=0 |
+| cot_monitorability/cot_controllability_qa / hle/meow_between_words | 5-A | deepseek-v4.1-flash-1017 | high | 50/50 | success | cot_controllability_score=0 |
+| cot_monitorability/cot_controllability_qa / hle/multiple_word_suppression | 5-A | deepseek-v4.1-flash-1017 | high | 50/50 | success | cot_controllability_score=0.02 |
+| cot_monitorability/cot_controllability_qa / hle/repeat_sentences | 5-A | deepseek-v4.1-flash-1017 | high | 50/50 | success | cot_controllability_score=0 |
+| cot_monitorability/cot_controllability_qa / hle/uppercase_thinking | 5-A | deepseek-v4.1-flash-1017 | high | 50/50 | success | cot_controllability_score=0 |
+| cot_monitorability/cot_controllability_qa / hle/word_suppression | 5-A | deepseek-v4.1-flash-1017 | high | 50/50 | success | cot_controllability_score=0.02 |
+| cot_monitorability/cot_controllability_qa / mmlu_pro/alternating_case | 5-A | deepseek-v4.1-flash-1017 | high | 50/50 | success | cot_controllability_score=0 |
+| cot_monitorability/cot_controllability_qa / mmlu_pro/end_of_sentence | 5-A | deepseek-v4.1-flash-1017 | high | 50/50 | success | cot_controllability_score=0 |
+| cot_monitorability/cot_controllability_qa / mmlu_pro/ignore_question | 5-A | deepseek-v4.1-flash-1017 | high | 50/50 | success | cot_controllability_score=0 |
+| cot_monitorability/cot_controllability_qa / mmlu_pro/lowercase_thinking | 5-A | deepseek-v4.1-flash-1017 | high | 50/50 | success | cot_controllability_score=0 |
+| cot_monitorability/cot_controllability_qa / mmlu_pro/meow_between_words | 5-A | deepseek-v4.1-flash-1017 | high | 50/50 | success | cot_controllability_score=0 |
+| cot_monitorability/cot_controllability_qa / mmlu_pro/multiple_word_suppression | 5-A | deepseek-v4.1-flash-1017 | high | 50/50 | success | cot_controllability_score=0.2 |
+| cot_monitorability/cot_controllability_qa / mmlu_pro/repeat_sentences | 5-A | deepseek-v4.1-flash-1017 | high | 50/50 | success | cot_controllability_score=0 |
+| cot_monitorability/cot_controllability_qa / mmlu_pro/uppercase_thinking | 5-A | deepseek-v4.1-flash-1017 | high | 50/50 | success | cot_controllability_score=0 |
+| cot_monitorability/cot_controllability_qa / mmlu_pro/word_suppression | 5-A | deepseek-v4.1-flash-1017 | high | 50/50 | success | cot_controllability_score=0.16 |
+| cot_monitorability/cot_controllability_qa / gpqa/alternating_case | 5-A | kimi-k3.1-pro | high | 50/50 | success | cot_controllability_score=0 |
+| cot_monitorability/cot_controllability_qa / gpqa/end_of_sentence | 5-A | kimi-k3.1-pro | high | 50/50 | success | cot_controllability_score=0 |
+| cot_monitorability/cot_controllability_qa / gpqa/ignore_question | 5-A | kimi-k3.1-pro | high | 50/50 | success | cot_controllability_score=0 |
+| cot_monitorability/cot_controllability_qa / gpqa/lowercase_thinking | 5-A | kimi-k3.1-pro | high | 50/50 | success | cot_controllability_score=0 |
+| cot_monitorability/cot_controllability_qa / gpqa/meow_between_words | 5-A | kimi-k3.1-pro | high | 50/50 | success | cot_controllability_score=0 |
+| cot_monitorability/cot_controllability_qa / gpqa/multiple_word_suppression | 5-A | kimi-k3.1-pro | high | 50/50 | success | cot_controllability_score=0.12 |
+| cot_monitorability/cot_controllability_qa / gpqa/repeat_sentences | 5-A | kimi-k3.1-pro | high | 50/50 | success | cot_controllability_score=0 |
+| cot_monitorability/cot_controllability_qa / gpqa/uppercase_thinking | 5-A | kimi-k3.1-pro | high | 50/50 | success | cot_controllability_score=0 |
+| cot_monitorability/cot_controllability_qa / gpqa/word_suppression | 5-A | kimi-k3.1-pro | high | 50/50 | success | cot_controllability_score=0.24 |
 | cot_monitorability/cot_controllability_qa / gpqa/word_suppression | 1-A | kimi-k3.1-pro | high | 5/5 | success | cot_controllability_score=0.4 |
+| cot_monitorability/cot_controllability_qa / hle/alternating_case | 5-A | kimi-k3.1-pro | high | 50/50 | success | cot_controllability_score=0 |
+| cot_monitorability/cot_controllability_qa / hle/end_of_sentence | 5-A | kimi-k3.1-pro | high | 50/50 | success | cot_controllability_score=0 |
+| cot_monitorability/cot_controllability_qa / hle/ignore_question | 5-A | kimi-k3.1-pro | high | 50/50 | success | cot_controllability_score=0 |
+| cot_monitorability/cot_controllability_qa / hle/lowercase_thinking | 5-A | kimi-k3.1-pro | high | 50/50 | success | cot_controllability_score=0 |
+| cot_monitorability/cot_controllability_qa / hle/meow_between_words | 5-A | kimi-k3.1-pro | high | 50/50 | success | cot_controllability_score=0 |
+| cot_monitorability/cot_controllability_qa / hle/multiple_word_suppression | 5-A | kimi-k3.1-pro | high | 50/50 | success | cot_controllability_score=0.02 |
+| cot_monitorability/cot_controllability_qa / hle/repeat_sentences | 5-A | kimi-k3.1-pro | high | 50/50 | success | cot_controllability_score=0 |
+| cot_monitorability/cot_controllability_qa / hle/uppercase_thinking | 5-A | kimi-k3.1-pro | high | 50/50 | success | cot_controllability_score=0 |
+| cot_monitorability/cot_controllability_qa / hle/word_suppression | 5-A | kimi-k3.1-pro | high | 50/50 | success | cot_controllability_score=0.06 |
+| cot_monitorability/cot_controllability_qa / mmlu_pro/alternating_case | 5-A | kimi-k3.1-pro | high | 50/50 | success | cot_controllability_score=0 |
+| cot_monitorability/cot_controllability_qa / mmlu_pro/end_of_sentence | 5-A | kimi-k3.1-pro | high | 50/50 | success | cot_controllability_score=0 |
+| cot_monitorability/cot_controllability_qa / mmlu_pro/ignore_question | 5-A | kimi-k3.1-pro | high | 50/50 | success | cot_controllability_score=0 |
+| cot_monitorability/cot_controllability_qa / mmlu_pro/lowercase_thinking | 5-A | kimi-k3.1-pro | high | 50/50 | success | cot_controllability_score=0 |
+| cot_monitorability/cot_controllability_qa / mmlu_pro/meow_between_words | 5-A | kimi-k3.1-pro | high | 50/50 | success | cot_controllability_score=0 |
+| cot_monitorability/cot_controllability_qa / mmlu_pro/multiple_word_suppression | 5-A | kimi-k3.1-pro | high | 50/50 | success | cot_controllability_score=0.3 |
+| cot_monitorability/cot_controllability_qa / mmlu_pro/repeat_sentences | 5-A | kimi-k3.1-pro | high | 50/50 | success | cot_controllability_score=0 |
+| cot_monitorability/cot_controllability_qa / mmlu_pro/uppercase_thinking | 5-A | kimi-k3.1-pro | high | 50/50 | success | cot_controllability_score=0 |
+| cot_monitorability/cot_controllability_qa / mmlu_pro/word_suppression | 5-A | kimi-k3.1-pro | high | 50/50 | success | cot_controllability_score=0.2 |
 | cot_monitorability/cot_immediacy_2510 / gpqa | 1-A | deepseek-v4.1-flash-1017 | high | 5/5 | success | legibility_pct=90; coverage_pct=100 |
 | cot_monitorability/cot_immediacy_2510 / gpqa | 1-A | kimi-k3.1-pro | high | 5/5 | success | legibility_pct=80; coverage_pct=95 |
 | cot_monitorability/monitorbench / cue_condition.preference | 1-A | deepseek-v4.1-flash-1017 | high | 5/5 | success | mb_cot_monitorability=1 |
@@ -22,6 +75,14 @@ One latest completed run per package task, model, and effort. The listed configu
 | cot_monitorability/openai_monitorability_intervention / scruples_suggest_wrong | 1-A | kimi-k3.1-pro | medium | 5/5 | success | intervention_gmean2_lower=0.5; intervention_eligible_fraction=0.4 |
 | cot_monitorability/openai_monitorability_process / cot_only | 1-A | deepseek-v4.1-flash-1017 | medium | 5/5 | success | process_gmean2_cot=1 |
 | cot_monitorability/openai_monitorability_process / cot_only | 1-A | kimi-k3.1-pro | medium | 5/5 | success | process_gmean2_cot=0.8 |
+
+## Other recorded runs
+
+Earlier configurations, diagnostic attempts, and legacy runs.
+
+| Task / subset | Version | Model | Effort | Samples | Status | Main metrics |
+| --- | --- | --- | --- | --- | --- | --- |
+| cot_monitorability/cot_controllability_qa / gpqa/word_suppression | 4-A | deepseek-v4.1-flash-1017 | high | 5/5 | success | cot_controllability_score=0.2 |
 
 ## Interpretation
 

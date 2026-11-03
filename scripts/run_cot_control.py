@@ -12,7 +12,6 @@ import uuid
 from contextvars import ContextVar
 from datetime import datetime, timezone
 from pathlib import Path
-from zoneinfo import ZoneInfo
 
 from dotenv import dotenv_values
 from inspect_ai import eval_set
@@ -24,6 +23,7 @@ from openai import DefaultAsyncHttpxClient
 
 from cot_monitorability.cot_control.components import MAIN_PAPER_MODES
 from cot_monitorability.cot_control.cot_control import cot_controllability_qa
+from cot_monitorability.experiment_costs import estimate_cost
 from cot_monitorability.reasoning import full_reasoning
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -58,46 +58,6 @@ def valid_generation(output):
     return bool(text) or bool(
         usage and usage.reasoning_tokens == 0 and output.completion.strip()
     )
-
-
-def estimate_cost(usage, started_at, pricing):
-    zone = ZoneInfo(pricing["timezone"])
-    local = datetime.fromisoformat(started_at).astimezone(zone)
-    minute = local.strftime("%H:%M")
-    peak = local.weekday() < 5 and any(
-        start <= minute < end for start, end in pricing["weekday_peak_windows"]
-    )
-    rates = pricing["peak_per_million"] if peak else pricing["offpeak_per_million"]
-    if (
-        not usage
-        or usage.get("prompt_tokens") is None
-        or usage.get("completion_tokens") is None
-    ):
-        return {"cost": None, "rates": rates, "period": "peak" if peak else "offpeak"}
-    prompt = int(usage["prompt_tokens"])
-    cached = int(
-        (usage.get("prompt_tokens_details") or {}).get("cached_tokens")
-        or usage.get("prompt_cache_hit_tokens")
-        or 0
-    )
-    output = int(usage["completion_tokens"])
-    uncached = max(0, prompt - cached)
-    cost = (
-        uncached * rates["input"]
-        + cached * rates["cached_input"]
-        + output * rates["output"]
-    ) / 1_000_000
-    return {
-        "cost": cost,
-        "rates": rates,
-        "period": "peak" if peak else "offpeak",
-        "uncached_input_tokens": uncached,
-        "cached_input_tokens": cached,
-        "output_tokens": output,
-        "reasoning_tokens": (usage.get("completion_tokens_details") or {}).get(
-            "reasoning_tokens"
-        ),
-    }
 
 
 def load_reuse(paths, model, effort, wanted):
