@@ -12,6 +12,7 @@ import threading
 from contextvars import ContextVar
 from datetime import datetime, timezone
 from pathlib import Path
+from urllib.parse import urlparse
 
 from dotenv import dotenv_values
 from inspect_ai import eval_set
@@ -38,6 +39,7 @@ from cot_monitorability.reasoning import full_reasoning
 
 ROOT = Path(__file__).resolve().parents[1]
 CONTEXT = ContextVar("monitorability_sample", default={})
+KNOWN_INCOMPLETE = ContextVar("known_incomplete_samples", default=[])
 
 
 def canonical(model):
@@ -85,6 +87,16 @@ def freeze_dataset(task, key, manifest, count):
 def identify_condition(condition: str):
     async def solve(state, generate):
         state.metadata["experiment_condition"] = condition
+        from inspect_ai.model import get_model
+
+        for record in KNOWN_INCOMPLETE.get():
+            if (
+                canonical(str(get_model())) == record["model"]
+                and state.sample_id == record["sample_id"]
+                and state.metadata.get("dataset") == record["dataset"]
+            ):
+                state.metadata["expected_incomplete"] = record
+                raise ValueError(record["reason"])
         CONTEXT.set({"condition": condition, "sample_id": state.sample_id})
         return state
 
@@ -164,7 +176,10 @@ def build_tasks(config, manifest):
 
 
 def audit_logs(paths, kind):
-    issues, totals = [], {"samples": 0, "completed": 0, "no_cot_invalid": 0}
+    issues, totals = (
+        [],
+        {"samples": 0, "completed": 0, "no_cot_invalid": 0, "expected_incomplete": 0},
+    )
     for path in paths:
         log = read_eval_log(path, resolve_attachments=True)
         if log.status != "success":
@@ -172,11 +187,14 @@ def audit_logs(paths, kind):
         for sample in log.samples or []:
             totals["samples"] += 1
             if sample.error:
+                if sample.metadata.get("expected_incomplete"):
+                    totals["expected_incomplete"] += 1
+                    continue
                 issues.append(
                     {
                         "file": str(path),
                         "sample": sample.id,
-                        "error": sample.error.message,
+                        "error": sample.error.message[-1200:],
                     }
                 )
                 continue
@@ -329,6 +347,15 @@ class Experiment:
             or values.get("OPENAI_API_KEY")
             or values.get("PROXY_API_KEY")
         )
+        if self.config.get("connection_profile") == "local-proxy":
+            if urlparse(base_url or "").hostname not in (
+                "localhost",
+                "127.0.0.1",
+                "::1",
+            ):
+                raise ValueError(
+                    "Local proxy profile requires a loopback OPENAI_BASE_URL"
+                )
         if not base_url or not api_key:
             raise ValueError(
                 "Configure OPENAI_BASE_URL and OPENAI_API_KEY in the operator environment"
@@ -364,7 +391,9 @@ class Experiment:
                 reasoning_effort=effort,
                 extra_body=body,
                 temperature=0 if role != "actor" else None,
-                max_tokens=8192 if role != "actor" else 65536,
+                max_tokens=8192
+                if role != "actor"
+                else self.config.get("actor_max_tokens", 65536),
                 adaptive_connections=64,
                 max_retries=0,
                 timeout=600,
@@ -382,6 +411,18 @@ class Experiment:
         destination = (self.state / "preflight" if preflight else self.logs) / kind
         self.reuse.load([self.state / "preflight", self.logs])
         ACTIVE_REUSE.set(self.reuse)
+        known = self.config.get("known_incomplete", [])
+        KNOWN_INCOMPLETE.set(known)
+        allow_incomplete = any(
+            record["model"] == specification["id"]
+            and any(
+                sample.id == record["sample_id"]
+                and sample.metadata.get("dataset") == record["dataset"]
+                for task in tasks
+                for sample in task.dataset
+            )
+            for record in known
+        )
         actor = self.model(specification, "actor", effort)
         roles = (
             {}
@@ -403,7 +444,7 @@ class Experiment:
             max_retries=0,
             retry_attempts=0,
             retry_cleanup=False,
-            fail_on_error=False,
+            fail_on_error=not allow_incomplete,
             continue_on_fail=True,
             display="none",
             tags=[self.state.name, name],
@@ -425,6 +466,16 @@ class Experiment:
             path = by_id[header.eval.eval_id]
             paths.append(path)
             self.reuse.restore(path)
+            log = read_eval_log(path, resolve_attachments=True)
+            unexpected = [
+                sample
+                for sample in (log.samples or [])
+                if sample.error and not sample.metadata.get("expected_incomplete")
+            ]
+            if unexpected and log.status == "success":
+                log.status = "error"
+                log.error = unexpected[0].error
+                write_eval_log(log, path)
         audit = audit_logs(paths, kind)
         self.history.append(
             {
@@ -455,16 +506,20 @@ class Experiment:
                 and r.get("preflight") == self.current["preflight"]
                 and r.get("phase") == self.current["phase"]
             ]
-            log.results.metadata = {
-                **(log.results.metadata or {}),
-                "run_cost": {
-                    "currency": "CNY",
-                    "amount": sum(r.get("cost") or 0 for r in selected),
-                    "request_count": len(selected),
-                    "unmetered_requests": sum(r.get("cost") is None for r in selected),
-                    "basis": "metered requests at recorded request-time rates; cache hits and reused actor outputs incur no new cost",
-                },
+            run_cost = {
+                "currency": "CNY",
+                "amount": sum(r.get("cost") or 0 for r in selected),
+                "request_count": len(selected),
+                "unmetered_requests": sum(r.get("cost") is None for r in selected),
+                "basis": "metered requests at recorded request-time rates; cache hits and reused actor outputs incur no new cost",
             }
+            if log.results is not None:
+                log.results.metadata = {
+                    **(log.results.metadata or {}),
+                    "run_cost": run_cost,
+                }
+            else:
+                log.eval.metadata = {**(log.eval.metadata or {}), "run_cost": run_cost}
             write_eval_log(log, path)
 
     def run(self):

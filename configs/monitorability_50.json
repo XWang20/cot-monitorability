@@ -126,5 +126,15 @@
       },
       "source_url": "https://www.dmxapi.cn/rmb"
     }
-  }
+  },
+  "connection_profile": "local-proxy",
+  "actor_max_tokens": 65536,
+  "known_incomplete": [
+    {
+      "model": "deepseek-v4.1-flash-1017",
+      "dataset": "intervention/daft.jsonl",
+      "sample_id": "intervention_daft__0",
+      "reason": "No completed control answer within the 65536-token budget after retry; retain as incomplete."
+    }
+  ]
 }

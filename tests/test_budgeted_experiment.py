@@ -281,3 +281,68 @@ def test_recorded_pair_reuses_both_actor_outputs_and_restores_tokens(
     assert (
         read_eval_log(path).stats.model_usage[result.eval.model].total_tokens == before
     )
+
+
+def test_local_profile_rejects_an_external_endpoint_before_dispatch(
+    tmp_path, monkeypatch
+):
+    state = tmp_path / "state"
+    state.mkdir()
+    experiment = runner.Experiment(
+        {"connection_profile": "local-proxy"},
+        state,
+        tmp_path / "logs",
+        RequestBudget(state, 500),
+    )
+    monkeypatch.setenv("OPENAI_BASE_URL", "https://example.test/v1")
+    monkeypatch.setenv("OPENAI_API_KEY", "test-key")
+    with pytest.raises(ValueError, match="loopback"):
+        experiment.model(
+            {"id": "ds", "model": "openai-api/openai/test"}, "actor", "high"
+        )
+    assert experiment.budget.snapshot()["unresolved"] == []
+
+
+def test_known_incomplete_sample_is_explicit_and_does_not_generate(
+    tmp_path, monkeypatch
+):
+    from inspect_ai.solver import chain
+
+    state = tmp_path / "state"
+    state.mkdir()
+    (state / "selection.json").write_text("{}")
+    rule = {
+        "model": "mockllm/source",
+        "dataset": "daft",
+        "sample_id": "q1",
+        "reason": "64K exhausted",
+    }
+    config = {
+        "preflight_samples": 5,
+        "max_tasks": 1,
+        "max_samples": 1,
+        "known_incomplete": [rule],
+    }
+    experiment = runner.Experiment(
+        config, state, tmp_path / "logs", RequestBudget(state, 500)
+    )
+    actor = get_model("mockllm/source", memoize=False)
+
+    async def forbidden(*args, **kwargs):
+        raise AssertionError("Known incomplete sample must not generate again")
+
+    monkeypatch.setattr(actor, "generate", forbidden)
+    monkeypatch.setattr(experiment, "model", lambda *args: actor)
+    task = Task(
+        dataset=[Sample(id="q1", input="Q", target="A", metadata={"dataset": "daft"})],
+        solver=chain(runner.identify_condition("daft"), generate()),
+        scorer=includes(),
+    )
+    paths = experiment.phase([task], {"id": "mockllm/source"}, "test", "openai", False)
+    loaded = read_eval_log(paths[0])
+    assert loaded.samples[0].error is not None
+    assert (
+        loaded.samples[0].metadata["expected_incomplete"]["reason"] == "64K exhausted"
+    )
+    assert experiment.history[0]["audit"]["passed"]
+    assert experiment.history[0]["audit"]["totals"]["expected_incomplete"] == 1
