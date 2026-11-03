@@ -332,3 +332,50 @@ def test_restoring_reuse_history_keeps_scores_and_does_not_add_a_paid_request(
     assert item.model_usage["mockllm/actor"].output_tokens == 7
     assert item.metadata["new_actor_cost_cny"] == 0
     assert experiment.restore_reused_history(replay_dir) == 0
+
+
+def test_sdk_client_has_no_hidden_retries_and_a_consistent_timeout():
+    from openai import DefaultAsyncHttpxClient
+
+    client = DefaultAsyncHttpxClient(timeout=600)
+    model = get_model(
+        "openai-api/openai/model-test",
+        base_url="https://example.test/v1",
+        api_key="test-key",
+        http_client=client,
+        client_timeout=600,
+        max_retries=0,
+        memoize=False,
+        config=GenerateConfig(max_retries=0, timeout=600),
+    )
+    assert model.api.client.max_retries == 0
+    assert model.api.client.timeout == 600
+    assert client.timeout.read == 600
+
+
+def test_frozen_selection_preserves_ids_order_inputs_and_targets_across_models():
+    samples = [
+        Sample(
+            id="q1",
+            input="First question",
+            target="A",
+            metadata={"dataset": "gpqa", "mode": "uppercase_thinking", "raw_id": 0},
+        ),
+        Sample(
+            id="q2",
+            input="Second question",
+            target="B",
+            metadata={"dataset": "gpqa", "mode": "uppercase_thinking", "raw_id": 1},
+        ),
+    ]
+    selection = {
+        "sample_ids": ["q2", "q1"],
+        "input_hashes": [
+            experiment.fingerprint(s.input, s.target, s.metadata) for s in samples[::-1]
+        ],
+    }
+    chosen = experiment.select_frozen_samples(samples, selection)
+    assert [sample.id for sample in chosen] == ["q2", "q1"]
+    samples[1].target = "C"
+    with pytest.raises(ValueError, match="inputs or targets changed"):
+        experiment.select_frozen_samples(samples, selection)

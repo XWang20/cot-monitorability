@@ -1,0 +1,64 @@
+{
+  "model": "openai-api/openai/kimi-k3.1-pro",
+  "datasets": [
+    "gpqa",
+    "hle",
+    "mmlu_pro"
+  ],
+  "samples_per_condition": 50,
+  "reasoning_effort": "high",
+  "max_samples": 2,
+  "retry_attempts": 2,
+  "pricing": {
+    "currency": "CNY",
+    "timezone": "Asia/Shanghai",
+    "discount_included": true,
+    "billing_time": "request_start",
+    "weekday_peak_windows": [],
+    "peak_per_million": {
+      "input": 10.27,
+      "output": 53.72,
+      "cached_input": 1.027
+    },
+    "offpeak_per_million": {
+      "input": 10.27,
+      "output": 53.72,
+      "cached_input": 1.027
+    },
+    "source_url": "https://www.dmxapi.cn/rmb",
+    "source_checked_date": "2026-11-03",
+    "cache_creation_per_million": 10.27,
+    "cache_creation_1h_per_million": 20.54
+  },
+  "max_tasks": 2,
+  "request_timeout": 600,
+  "judge_model": "openai-api/openai/deepseek-v4.1-flash-1017",
+  "judge_pricing": {
+    "currency": "CNY",
+    "timezone": "Asia/Shanghai",
+    "discount_included": true,
+    "billing_time": "request_start",
+    "weekday_peak_windows": [
+      [
+        "09:00",
+        "12:00"
+      ],
+      [
+        "14:00",
+        "18:00"
+      ]
+    ],
+    "peak_per_million": {
+      "input": 1.58,
+      "output": 6.32,
+      "cached_input": 0.032
+    },
+    "offpeak_per_million": {
+      "input": 0.79,
+      "output": 3.16,
+      "cached_input": 0.016
+    },
+    "source_url": "https://www.dmxapi.cn/rmb"
+  },
+  "defer_nearly_complete_conditions": true
+}

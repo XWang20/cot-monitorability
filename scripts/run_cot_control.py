@@ -14,13 +14,13 @@ from datetime import datetime, timezone
 from pathlib import Path
 from zoneinfo import ZoneInfo
 
-import httpx
 from dotenv import dotenv_values
 from inspect_ai import eval_set
 from inspect_ai.event import ModelEvent
 from inspect_ai.log import read_eval_log, write_eval_log
 from inspect_ai.model import GenerateConfig, ModelOutput, ModelUsage, get_model
 from inspect_ai.solver import chain, solver
+from openai import DefaultAsyncHttpxClient
 
 from cot_monitorability.cot_control.components import MAIN_PAPER_MODES
 from cot_monitorability.cot_control.cot_control import cot_controllability_qa
@@ -221,6 +221,20 @@ def ledger_hooks(role, state_dir, pricing):
     async def request_hook(request):
         request.extensions["cot_started_at"] = datetime.now(timezone.utc).isoformat()
         request.extensions["cot_sample"] = dict(SAMPLE.get())
+        request.extensions["cot_request_id"] = str(uuid.uuid4())
+        if request.url.path.endswith("/chat/completions"):
+            record = {
+                **SAMPLE.get(),
+                "role": role,
+                "started_at": request.extensions["cot_started_at"],
+                "request_id": request.extensions["cot_request_id"],
+            }
+            with LEDGER_LOCK:
+                with (state_dir / "requests_started.jsonl").open(
+                    "a", encoding="utf-8"
+                ) as handle:
+                    handle.write(json.dumps(record) + "\n")
+
         if request.url.path.endswith("/chat/completions"):
             body = json.loads(request.content)
             if body.get(
@@ -246,6 +260,7 @@ def ledger_hooks(role, state_dir, pricing):
         record = {
             **response.request.extensions.get("cot_sample", {}),
             "role": role,
+            "request_id": response.request.extensions.get("cot_request_id"),
             "started_at": started,
             "completed_at": datetime.now(timezone.utc).isoformat(),
             "status": response.status_code,
@@ -379,6 +394,24 @@ def write_report(log_dir, state_dir, pricing, final=None):
             else []
         )
     records = [json.loads(line) for line in lines if line.strip()]
+    start_file = state_dir / "requests_started.jsonl"
+    starts = (
+        [
+            json.loads(line)
+            for line in start_file.read_text().splitlines()
+            if line.strip()
+        ]
+        if start_file.exists()
+        else []
+    )
+    received = {row.get("request_id") for row in records}
+    unresolved = [row for row in starts if row["request_id"] not in received]
+    legacy_unknown_file = state_dir / "unmetered_failed_generations.json"
+    legacy_unknown = (
+        json.loads(legacy_unknown_file.read_text())
+        if legacy_unknown_file.exists()
+        else []
+    )
     costs = {}
     for role in ("actor", "judge"):
         selected = [row for row in records if row["role"] == role]
@@ -423,6 +456,9 @@ def write_report(log_dir, state_dir, pricing, final=None):
         "costs": costs,
         "total_new_cost": sum(row["cost"] for row in costs.values()),
         "reused_generation_records": reused,
+        "unresolved_http_attempts": unresolved,
+        "prior_unmetered_failed_generations": legacy_unknown,
+        "cost_total_is_known_portion_only": bool(unresolved or legacy_unknown),
         "logs": logs,
         "final": final,
     }
@@ -435,12 +471,24 @@ def write_report(log_dir, state_dir, pricing, final=None):
     return report
 
 
+def select_frozen_samples(dataset, selection):
+    by_id = {sample.id: sample for sample in dataset}
+    selected = [by_id[identifier] for identifier in selection["sample_ids"]]
+    hashes = [
+        fingerprint(sample.input, sample.target, sample.metadata) for sample in selected
+    ]
+    if "input_hashes" in selection and hashes != selection["input_hashes"]:
+        raise ValueError("Frozen sample inputs or targets changed")
+    return selected
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--config", type=Path, required=True)
     parser.add_argument("--log-dir", type=Path, required=True)
     parser.add_argument("--state-dir", type=Path, required=True)
     parser.add_argument("--reuse-dir", type=Path, action="append", default=[])
+    parser.add_argument("--sample-manifest", type=Path)
     args = parser.parse_args()
     config = json.loads(args.config.read_text())
     args.log_dir = args.log_dir.resolve()
@@ -451,6 +499,10 @@ def main():
     tasks = []
     wanted = set()
     plan = []
+    frozen = {}
+    if args.sample_manifest:
+        data = json.loads(args.sample_manifest.read_text())
+        frozen = {(row["dataset"], row["mode"]): row for row in data["plan"]}
     for dataset in config["datasets"]:
         for mode in MAIN_PAPER_MODES[1:]:
             task = cot_controllability_qa(
@@ -460,7 +512,14 @@ def main():
             )
             for sample in task.dataset:
                 sample.metadata["experiment_task_version"] = task.version
-            selected = list(task.dataset)[: config["samples_per_condition"]]
+            if frozen:
+                from inspect_ai.dataset import MemoryDataset
+
+                selection = frozen[(dataset, mode)]
+                selected = select_frozen_samples(task.dataset, selection)
+                task.dataset = MemoryDataset(selected)
+            else:
+                selected = list(task.dataset)[: config["samples_per_condition"]]
             assert len(selected) == config["samples_per_condition"]
             wanted.update(
                 fingerprint(sample.input, sample.target, sample.metadata)
@@ -472,6 +531,10 @@ def main():
                     "mode": mode,
                     "sample_ids": [sample.id for sample in selected],
                     "raw_ids": [sample.metadata["raw_id"] for sample in selected],
+                    "input_hashes": [
+                        fingerprint(sample.input, sample.target, sample.metadata)
+                        for sample in selected
+                    ],
                 }
             )
             task.solver = chain(prepare_sample(), task.solver, remember_generation())
@@ -486,6 +549,13 @@ def main():
             )
         )
         reused_count = len(CACHE)
+    if config.get("defer_nearly_complete_conditions", False):
+        tasks.sort(
+            key=lambda task: sum(
+                fingerprint(sample.input, sample.target, sample.metadata) in CACHE
+                for sample in task.dataset
+            )
+        )
     (args.state_dir / "protocol.json").write_text(
         json.dumps(
             {
@@ -495,7 +565,17 @@ def main():
                 "runner_sha256": hashlib.sha256(
                     Path(__file__).read_bytes()
                 ).hexdigest(),
-                "selection": "first eligible rows after the upstream loader's mode-specific filters",
+                "selection": "frozen sample manifest"
+                if frozen
+                else "first eligible rows after the upstream loader's mode-specific filters",
+                "sample_manifest": str(args.sample_manifest)
+                if args.sample_manifest
+                else None,
+                "sample_manifest_sha256": hashlib.sha256(
+                    args.sample_manifest.read_bytes()
+                ).hexdigest()
+                if args.sample_manifest
+                else None,
             },
             indent=2,
             ensure_ascii=False,
@@ -537,11 +617,14 @@ def main():
     thread.start()
     success = False
     # Native eval-set owns the asynchronous model lifecycle.
-    actor_client = httpx.AsyncClient(
-        event_hooks=ledger_hooks("actor", args.state_dir, pricing), timeout=300
+    actor_client = DefaultAsyncHttpxClient(
+        event_hooks=ledger_hooks("actor", args.state_dir, pricing),
+        timeout=config.get("request_timeout", 600),
     )
-    judge_client = httpx.AsyncClient(
-        event_hooks=ledger_hooks("judge", args.state_dir, pricing), timeout=300
+    judge_pricing = config.get("judge_pricing", pricing)
+    judge_client = DefaultAsyncHttpxClient(
+        event_hooks=ledger_hooks("judge", args.state_dir, judge_pricing),
+        timeout=config.get("request_timeout", 600),
     )
     actor = get_model(
         config["model"],
@@ -549,18 +632,25 @@ def main():
         api_key=key,
         memoize=False,
         http_client=actor_client,
+        client_timeout=config.get("request_timeout", 600),
+        max_retries=0,
         responses_api=False,
         stream=False,
         config=GenerateConfig(
-            reasoning_effort="high", extra_body=body, max_retries=0, timeout=300
+            reasoning_effort="high",
+            extra_body=body,
+            max_retries=0,
+            timeout=config.get("request_timeout", 600),
         ),
     )
     judge = get_model(
-        config["model"],
+        config.get("judge_model", config["model"]),
         base_url=base_url,
         api_key=key,
         memoize=False,
         http_client=judge_client,
+        client_timeout=config.get("request_timeout", 600),
+        max_retries=0,
         responses_api=False,
         stream=False,
         config=GenerateConfig(
@@ -569,7 +659,7 @@ def main():
             temperature=0,
             max_tokens=8192,
             max_retries=0,
-            timeout=300,
+            timeout=config.get("request_timeout", 600),
         ),
     )
     try:
@@ -628,7 +718,7 @@ def main():
                         "unmetered_requests": sum(
                             row["cost"] is None for row in selected
                         ),
-                        "pricing": pricing,
+                        "pricing_by_role": {"actor": pricing, "judge": judge_pricing},
                         "basis": "provided rates and metered tokens; includes this condition's retries",
                     },
                 }

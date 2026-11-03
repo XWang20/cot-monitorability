@@ -7,7 +7,7 @@
   ],
   "samples_per_condition": 50,
   "reasoning_effort": "high",
-  "max_samples": 4,
+  "max_samples": 2,
   "retry_attempts": 2,
   "pricing": {
     "currency": "CNY",
@@ -33,7 +33,10 @@
       "input": 0.79,
       "output": 3.16,
       "cached_input": 0.016
-    }
+    },
+    "source_url": "https://www.dmxapi.cn/rmb"
   },
-  "max_tasks": 4
+  "max_tasks": 4,
+  "request_timeout": 600,
+  "defer_nearly_complete_conditions": true
 }
