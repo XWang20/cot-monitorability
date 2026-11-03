@@ -669,6 +669,7 @@ def main():
             model=actor,
             model_roles={"judge": judge},
             log_dir=str(args.log_dir),
+            log_dir_allow_dirty=True,
             limit=config["samples_per_condition"],
             max_samples=config["max_samples"],
             max_tasks=config.get("max_tasks", 4),
