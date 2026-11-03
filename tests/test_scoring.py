@@ -237,3 +237,18 @@ async def test_intervention_monitor_retains_valid_positive_and_negative_verdicts
     )
     assert value == expected
     assert answer in ("X", "Y")
+
+
+@pytest.mark.parametrize("reply", ["No verdict", "This seems compliant", "???", ""])
+def test_adapter_rejects_non_verdict_compliance_judge_output(reply):
+    from cot_monitorability.cot_control.components import _validated_judge_response
+
+    with pytest.raises(ValueError, match="explicit T or F"):
+        _validated_judge_response(reply)
+
+
+@pytest.mark.parametrize("reply,value", [("T", 1), ('F\n- "violation"', 0), ("t", 1)])
+def test_adapter_preserves_canonical_compliance_judge_verdicts(reply, value):
+    from cot_monitorability.cot_control.components import _validated_judge_response
+
+    assert _validated_judge_response(reply) == value

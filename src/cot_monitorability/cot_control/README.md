@@ -39,9 +39,13 @@ Per-sample records retain joint accuracy/compliance and reasoning length. The re
 
 Baseline compliance is marked -1 and excluded from compliance aggregates. Missing reasoning receives zero compliance for control modes. Token counts use provider-reported reasoning tokens when available, otherwise an approximate word-based count; do not mix the two as exact length measurements.
 
-The T/F judge parser accepts some non-verdict text containing "T". The regression suite records this known issue. Inspect judge responses when using `ignore_question` or meta-discussion scoring.
+The adapter requires an explicit T/F verdict on the first line. Malformed judge output raises a scoring error instead of entering compliance metrics. The copied upstream parser is retained for provenance.
 
 ## Changelog
+
+### 5-A
+
+Validate T/F judge output before applying the upstream compliance rule. Proper verdicts retain the original three-judge procedure.
 
 ### 4-A
 

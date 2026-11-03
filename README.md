@@ -84,6 +84,20 @@ done
 
 The result index keeps effort levels separate. NCRI's default run stays at none; positive controls are configured separately and stored outside the result directory.
 
+### CoT-Control experiment matrix
+
+The resumable matrix runner uses native Inspect eval sets, reuses validated generations, and writes a per-request cost ledger. Configure connection credentials as above, and edit the model, sample count and discounted token rates in the experiment configuration:
+
+```bash
+uv run python scripts/run_cot_control.py \
+  --config configs/cot_control_ds50.json \
+  --log-dir eval_logs/cot_control_ds50 \
+  --state-dir tmp/cot_control_ds50 \
+  --reuse-dir eval_logs/cot_controllability_qa
+```
+
+The configuration selects 50 eligible questions per dataset/constraint at high effort with no additional elicitation. Costs are calculated from metered tokens and the configured request-time schedule; they are not a provider invoice. The state directory contains the sample manifest, request ledger and progress report.
+
 ## Data
 
 The first task construction downloads the required source archives. [asset_specs.json](src/cot_monitorability/asset_specs.json) records immutable upstream commits and archive SHA-256 values. Archives and cached files are verified before use.

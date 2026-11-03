@@ -135,3 +135,36 @@ def test_intervention_index_uses_core_eligibility_metric_for_reportability():
         ]
     }
     assert indexer.primary_result(run).startswith("Not reportable")
+
+
+def test_latest_results_preserve_dataset_and_constraint_conditions():
+    spec = importlib.util.spec_from_file_location(
+        "index_eval_logs", ROOT / "scripts/index_eval_logs.py"
+    )
+    indexer = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(indexer)
+    base = {
+        "task": "cot_monitorability/cot_controllability_qa",
+        "model": "openai-api/openai/example",
+        "status": "success",
+        "reasoning_effort": "high",
+        "created": "2026-01-01",
+    }
+    runs = [
+        {
+            **base,
+            "file": "word.eval",
+            "task_args": {"dataset": "gpqa", "modes": "word_suppression"},
+        },
+        {
+            **base,
+            "file": "upper.eval",
+            "task_args": {"dataset": "gpqa", "modes": "uppercase_thinking"},
+        },
+        {
+            **base,
+            "file": "hle.eval",
+            "task_args": {"dataset": "hle", "modes": "word_suppression"},
+        },
+    ]
+    assert len(indexer.latest_completed(runs)) == 3

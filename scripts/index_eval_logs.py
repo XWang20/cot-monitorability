@@ -64,6 +64,7 @@ def read_run(path):
             }
             for score in results.get("scores", [])
         ],
+        "run_cost": (results.get("metadata") or {}).get("run_cost"),
         "model_usage": stats.get("model_usage", {}),
         "revision": evaluation.get("revision"),
         "packages": evaluation.get("packages", {}),
@@ -111,6 +112,7 @@ def latest_completed(runs):
                     run["task"],
                     display_model(run),
                     run.get("reasoning_effort") or "default",
+                    json.dumps(run.get("task_args") or {}, sort_keys=True),
                 )
             ] = run
     return [latest[key] for key in sorted(latest)]
@@ -172,7 +174,7 @@ def render_markdown(runs):
         "",
         "## Latest completed runs",
         "",
-        "One latest completed run per package task, model, and effort. The listed configuration "
+        "One latest completed run per package task, model, effort, and task configuration. The listed configuration "
         "and sample count belong to that run.",
         "",
     ]
