@@ -7,7 +7,7 @@
   ],
   "samples_per_condition": 50,
   "reasoning_effort": "high",
-  "max_samples": 2,
+  "max_samples": 16,
   "retry_attempts": 2,
   "pricing": {
     "currency": "CNY",
@@ -38,5 +38,6 @@
   },
   "max_tasks": 4,
   "request_timeout": 600,
-  "defer_nearly_complete_conditions": true
+  "defer_nearly_complete_conditions": true,
+  "adaptive_connections": 64
 }

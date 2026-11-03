@@ -96,7 +96,11 @@ uv run python scripts/run_cot_control.py \
   --reuse-dir eval_logs/cot_controllability_qa
 ```
 
-The configuration selects 50 eligible questions per dataset/constraint at high effort with no additional elicitation. Costs are calculated from metered tokens and the configured request-time schedule; they are not a provider invoice. The state directory contains the sample manifest, request ledger and progress report. Use `--sample-manifest <your-shared-selection.json>` to enforce the same ordered inputs and targets across models. The Kimi configuration keeps DeepSeek as the judge and uses the separately recorded DMX RMB rates.
+The configuration selects 50 eligible questions per dataset/constraint at high effort with no additional elicitation.
+
+Each model runs up to four conditions with sixteen samples per condition (64 sample slots, or 128 across both models). Inspect adapts API connection concurrency to provider limits, up to 64 per model process.
+
+Costs are calculated from metered tokens and the configured request-time schedule; they are not a provider invoice. The state directory contains the sample manifest, request ledger and progress report. Use `--sample-manifest <your-shared-selection.json>` to enforce the same ordered inputs and targets across models. The Kimi configuration keeps DeepSeek as the judge and uses the separately recorded DMX RMB rates.
 
 ## Data
 

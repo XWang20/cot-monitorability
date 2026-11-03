@@ -7,7 +7,7 @@
   ],
   "samples_per_condition": 50,
   "reasoning_effort": "high",
-  "max_samples": 2,
+  "max_samples": 16,
   "retry_attempts": 2,
   "pricing": {
     "currency": "CNY",
@@ -30,7 +30,7 @@
     "cache_creation_per_million": 10.27,
     "cache_creation_1h_per_million": 20.54
   },
-  "max_tasks": 2,
+  "max_tasks": 4,
   "request_timeout": 600,
   "judge_model": "openai-api/openai/deepseek-v4.1-flash-1017",
   "judge_pricing": {
@@ -60,5 +60,6 @@
     },
     "source_url": "https://www.dmxapi.cn/rmb"
   },
-  "defer_nearly_complete_conditions": true
+  "defer_nearly_complete_conditions": true,
+  "adaptive_connections": 64
 }

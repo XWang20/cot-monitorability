@@ -639,6 +639,7 @@ def main():
         stream=False,
         config=GenerateConfig(
             reasoning_effort="high",
+            adaptive_connections=config.get("adaptive_connections", True),
             extra_body=body,
             max_retries=0,
             timeout=config.get("request_timeout", 600),
@@ -656,6 +657,7 @@ def main():
         stream=False,
         config=GenerateConfig(
             reasoning_effort="high",
+            adaptive_connections=config.get("adaptive_connections", True),
             extra_body=body,
             temperature=0,
             max_tokens=8192,
