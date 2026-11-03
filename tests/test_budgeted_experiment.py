@@ -136,3 +136,14 @@ def test_resume_cannot_silently_change_the_shared_budget(tmp_path):
     RequestBudget(tmp_path, 500, baseline=88, uncertainty=15)
     with pytest.raises(ValueError, match="Budget settings"):
         RequestBudget(tmp_path, 500, baseline=0, uncertainty=15)
+
+
+@pytest.mark.asyncio
+async def test_all_zero_usage_is_unmetered_and_keeps_the_reservation(tmp_path):
+    budget = RequestBudget(tmp_path, 3)
+    reservation = await budget.reserve({"messages": [], "max_tokens": 2}, PRICING, {})
+    budget.settle(
+        reservation, {"prompt_tokens": 0, "completion_tokens": 0}, PRICING, 200
+    )
+    assert budget.snapshot()["responses"][0]["cost"] is None
+    assert budget.snapshot()["outstanding_reservations"] == 2

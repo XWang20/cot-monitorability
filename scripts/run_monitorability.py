@@ -7,6 +7,7 @@ import hashlib
 import json
 import os
 import subprocess
+import sys
 import threading
 from contextvars import ContextVar
 from datetime import datetime, timezone
@@ -247,7 +248,11 @@ class Experiment:
         try:
             result = subprocess.run(
                 [
-                    str(ROOT / ".venv-package/bin/inspect"),
+                    str(
+                        Path(sys.executable).with_name(
+                            "inspect.exe" if os.name == "nt" else "inspect"
+                        )
+                    ),
                     "ctl",
                     "task",
                     "list",
@@ -263,7 +268,7 @@ class Experiment:
                     for t in json.loads(result.stdout)["tasks"]
                     if t["pid"] == os.getpid() and t["status"] == "running"
                 ]
-        except (subprocess.TimeoutExpired, ValueError):
+        except (OSError, subprocess.TimeoutExpired, ValueError):
             pass
         result = {
             "updated_at": datetime.now(timezone.utc).isoformat(),

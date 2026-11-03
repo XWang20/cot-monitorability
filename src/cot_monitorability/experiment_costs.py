@@ -36,6 +36,8 @@ def estimate_cost(usage, started_at, pricing):
         or 0
     )
     output = int(usage["completion_tokens"])
+    if prompt == 0 and output == 0:
+        return result
     uncached = max(0, prompt - cached)
     return {
         **result,
