@@ -34,5 +34,6 @@
       "output": 3.16,
       "cached_input": 0.016
     }
-  }
+  },
+  "max_tasks": 4
 }

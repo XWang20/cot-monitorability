@@ -580,7 +580,7 @@ def main():
             log_dir=str(args.log_dir),
             limit=config["samples_per_condition"],
             max_samples=config["max_samples"],
-            max_tasks=1,
+            max_tasks=config.get("max_tasks", 4),
             max_retries=0,
             retry_attempts=config["retry_attempts"],
             retry_cleanup=False,
