@@ -93,6 +93,7 @@ def test_task_runs_through_inspect_with_mock_models(task_entry, tmp_path, epochs
     assert logs[0].status == "success", logs[0].error
     assert logs[0].results.completed_samples == epochs
     assert logs[0].samples[0].scores
+    assert sum(len(score.metrics) for score in logs[0].results.scores) == 2
 
 
 @pytest.mark.dataset_download

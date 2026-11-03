@@ -4,7 +4,7 @@ description: Evaluates chain-of-thought constraint compliance and question-answe
 group: Safeguards
 contributors:
 - XWang20
-version: 3-A
+version: 4-A
 tasks:
 - name: cot_controllability_qa
   dataset_samples: 427

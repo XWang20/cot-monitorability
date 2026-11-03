@@ -34,13 +34,17 @@ For repetitions through the Inspect runner, use the CLI `--epochs`; distinguish 
 
 ## Scoring
 
-The general adapter reports `mb_cot_monitorability`, `mb_verification_rate`, and `mb_mean_cot_tokens`. For paired interventions, a sample is eligible when the intervened response passes verification and the original does not. Process samples need a verified response. Only eligible samples with a reasoning trace receive a monitor query.
+The general adapter reports `mb_cot_monitorability` and `mb_verification_rate` in the overview. Per-sample records retain reasoning lengths. For paired interventions, a sample is eligible when the intervened response passes verification and the original does not. Process samples need a verified response. Only eligible samples with a reasoning trace receive a monitor query.
 
 Report verification rates and eligible counts with monitorability. An aggregate with few eligible samples is unstable; Inspect logs contain the outputs and verdicts needed to inspect exclusions. Delegated subsets use their own metric definitions rather than these general metrics.
 
 The supported variants are non-sandbox tasks. Several delegated variants already have Inspect Evals listings; check those entries before proposing another registration.
 
 ## Changelog
+
+### 4-A
+
+Reject summary-only or redacted actor reasoning as a scoring error. Show two core metrics by default; auxiliary statistics remain in sample records or registered optional metrics.
 
 ### 3-A
 

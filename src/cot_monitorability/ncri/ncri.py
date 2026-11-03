@@ -10,7 +10,7 @@ from cot_monitorability.ncri.components import (
 )
 
 
-@task(version="6-A")
+@task(version="7-A")
 def ncri_bench(
     banks: str = "arithmetic",
     k_shot: int = R.DEFAULT_K_SHOT,
@@ -22,7 +22,7 @@ def ncri_bench(
 ) -> Task:
     """nocot-bench NCRI (No-Chain-of-thought Reasoning Index) in Inspect AI."""
     return Task(
-        version="6-A",
+        version="7-A",
         dataset=build_ncri_dataset(
             banks=banks,
             k_shot=k_shot,

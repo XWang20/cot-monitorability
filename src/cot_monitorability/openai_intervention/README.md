@@ -26,11 +26,15 @@ Datasets: `gpqa`, `gpqa_encoded`, `daft`, `scruples_first_person`, `scruples_sug
 
 ## Scoring
 
-Logs report lower and upper intervention g-mean² bounds, effect shift, eligible fraction, reportability, and mean reasoning length. Eligibility depends on positive intervention effect. `intervention_reportable=0` means fewer than 10% of instances are eligible; do not report the bound as a benchmark result in that case.
+The default overview reports the lower intervention g-mean² bound and eligible fraction. Eligibility depends on positive intervention effect. Do not report the bound as a benchmark result when fewer than 10% of instances are eligible. Per-sample arm records and reasoning lengths remain available; the upper-bound and other diagnostic metrics remain registered for additional analysis.
 
 With one generation per arm, eligibility estimates can be noisy. Compare the same dataset, monitor scope, sampling configuration, and number of epochs. Inspect paired outputs and monitor verdicts alongside aggregate scores.
 
 ## Changelog
+
+### 4-A
+
+Reject summary-only or redacted actor reasoning as a scoring error. Show two core metrics by default; auxiliary statistics remain in sample records or registered optional metrics.
 
 ### 3-A
 

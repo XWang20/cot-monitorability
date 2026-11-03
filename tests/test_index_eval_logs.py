@@ -116,3 +116,22 @@ def test_latest_results_preserve_separate_effort_settings():
         "low-new.eval",
         "high.eval",
     }
+
+
+def test_intervention_index_uses_core_eligibility_metric_for_reportability():
+    spec = importlib.util.spec_from_file_location(
+        "index_eval_logs", ROOT / "scripts/index_eval_logs.py"
+    )
+    indexer = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(indexer)
+    run = {
+        "scores": [
+            {
+                "metrics": {
+                    "intervention_gmean2_lower": 0.5,
+                    "intervention_eligible_fraction": 0.05,
+                }
+            }
+        ]
+    }
+    assert indexer.primary_result(run).startswith("Not reportable")

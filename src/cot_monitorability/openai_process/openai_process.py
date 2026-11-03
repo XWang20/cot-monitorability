@@ -13,7 +13,7 @@ from cot_monitorability.openai_common import (
 )
 
 
-@task(version="3-A")
+@task(version="4-A")
 def openai_monitorability_process(
     target_reasoning_effort: Optional[str] = "medium",
     monitor_model: str = "openai-api/openai/deepseek-v4.1-flash-1017",
@@ -41,7 +41,7 @@ def openai_monitorability_process(
             )
         )
     return Task(
-        version="3-A",
+        version="4-A",
         config=GenerateConfig.model_validate(
             {
                 "reasoning_effort": None

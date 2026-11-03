@@ -10,7 +10,6 @@ from inspect_ai.dataset import MemoryDataset, Sample
 from inspect_ai.model import (
     ChatMessageSystem,
     ChatMessageUser,
-    ContentReasoning,
     GenerateConfig,
     get_model,
 )
@@ -18,6 +17,7 @@ from inspect_ai.scorer import Metric, SampleScore, Score, Scorer, Target, metric
 from inspect_ai.solver import Generate, Solver, TaskState, solver
 
 from cot_monitorability.assets import ensure_asset
+from cot_monitorability.reasoning import full_reasoning
 from cot_monitorability.reference.cot_control.data import (
     convert_answer_to_letter,
     create_prompt_for_sample,
@@ -73,14 +73,8 @@ def extract_reasoning_and_text(state: TaskState) -> tuple[str, str, int]:
     if msg is None:
         return "", "", 0
 
-    reasoning_parts: List[str] = []
-    if isinstance(msg.content, list):
-        for block in msg.content:
-            if isinstance(block, ContentReasoning) and block.reasoning:
-                reasoning_parts.append(block.reasoning)
-
     text = msg.text or ""
-    reasoning = "\n".join(reasoning_parts).strip()
+    reasoning = full_reasoning(msg)
 
     if not reasoning and "<think>" in text and "</think>" in text:
         m = re.search(r"<think>(.*?)</think>", text, flags=re.DOTALL)
@@ -225,9 +219,6 @@ def controllability_750_1250_tok() -> Metric:
     metrics=[
         cot_controllability_score(),
         task_accuracy(),
-        controlled_and_accurate_rate(),
-        mean_cot_tokens(),
-        controllability_750_1250_tok(),
     ]
 )
 def cot_control_qa_scorer(

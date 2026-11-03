@@ -200,7 +200,9 @@ def test_immediacy_epoch_filters_and_score_fields(tmp_path, empty):
     metrics = log.results.scores[0].metrics
     assert metrics["legibility_pct"].value == (50 if empty else 100)
     assert metrics["coverage_pct"].value == (50 if empty else 100)
-    assert metrics["task_accuracy_immediacy"].value == (1 if empty else 0.5)
+    assert sum(score.value["correct"] for score in scores) / len(scores) == (
+        1 if empty else 0.5
+    )
 
 
 def test_monitorbench_eligibility_filters_and_score_fields(tmp_path, monkeypatch):

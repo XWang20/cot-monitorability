@@ -161,7 +161,7 @@ def ncri_valid_rate() -> Metric:
     return compute
 
 
-@scorer(metrics=[ncri_placement_score(), ncri_primary_accuracy(), ncri_valid_rate()])
+@scorer(metrics=[ncri_primary_accuracy(), ncri_valid_rate()])
 def ncri_scorer() -> Scorer:
     async def score(state: TaskState, target: Target) -> Score:
         meta = state.metadata or {}
@@ -174,8 +174,12 @@ def ncri_scorer() -> Scorer:
         reasoning_parts: List[str] = []
         if msg and isinstance(msg.content, list):
             for b in msg.content:
-                if isinstance(b, ContentReasoning) and b.reasoning:
-                    reasoning_parts.append(b.reasoning)
+                if isinstance(b, ContentReasoning):
+                    text = b.reasoning or b.summary
+                    if text:
+                        reasoning_parts.append(text)
+                    elif b.redacted:
+                        reasoning_parts.append("Redacted reasoning was returned")
         reasoning_text = "\n".join(reasoning_parts).strip()
         raw_text = (msg.text or "") if msg else ""
 

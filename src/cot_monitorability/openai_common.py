@@ -12,7 +12,6 @@ import numpy as np
 import pandas as pd
 from inspect_ai.model import (
     ChatMessageUser,
-    ContentReasoning,
     GenerateConfig,
     Model,
     get_model,
@@ -21,6 +20,7 @@ from inspect_ai.scorer import Metric, SampleScore, Score, Scorer, Target, metric
 from inspect_ai.solver import Generate, Solver, TaskState, solver
 
 from cot_monitorability.assets import ensure_asset
+from cot_monitorability.reasoning import full_reasoning
 from cot_monitorability.reference.openai_scaffold import (
     EvalItem,
     ModelCallOutput,
@@ -60,14 +60,8 @@ def _extract_cot_and_final_answer(
             final_answer="", action_only="", cot_only="", all_msgs=""
         ), 0
 
-    cot_parts: List[str] = []
-    if isinstance(getattr(msg, "content", None), list):
-        for block in msg.content:
-            if isinstance(block, ContentReasoning) and block.reasoning:
-                cot_parts.append(block.reasoning)
-
     visible_text = (msg.text or "").strip()
-    cot_body = "\n".join(cot_parts).strip()
+    cot_body = full_reasoning(msg)
 
     if not cot_body and "<think>" in visible_text and "</think>" in visible_text:
         m = re.search(r"<think>(.*?)</think>", visible_text, flags=re.DOTALL)
@@ -327,9 +321,7 @@ def process_mean_cot_tokens() -> Metric:
 @scorer(
     metrics=[
         process_gmean2_cot(),
-        process_post_control_score_k1(),
         process_answer_accuracy(),
-        process_mean_cot_tokens(),
     ]
 )
 def openai_process_scorer(
@@ -578,12 +570,8 @@ def intervention_mean_cot_tokens() -> Metric:
 
 @scorer(
     metrics=[
-        intervention_gmean2_upper(),
         intervention_gmean2_lower(),
         intervention_eligible_fraction(),
-        intervention_reportable(),
-        intervention_effect_shift(),
-        intervention_mean_cot_tokens(),
     ]
 )
 def openai_intervention_scorer(

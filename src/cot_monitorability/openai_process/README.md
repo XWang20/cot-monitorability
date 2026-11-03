@@ -30,6 +30,10 @@ Answer grading and theorem-path detection depend on the monitor. Unrecognized or
 
 ## Changelog
 
+### 4-A
+
+Reject summary-only or redacted actor reasoning as a scoring error. Show two core metrics by default; auxiliary statistics remain in sample records or registered optional metrics.
+
 ### 3-A
 
 Compute conditional monitorability and accuracy from individual epoch observations, preserving fractional rates across repetitions.

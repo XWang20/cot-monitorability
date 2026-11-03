@@ -52,7 +52,7 @@ uv run inspect eval cot_monitorability/openai_monitorability_intervention \
 
 Omit `--limit` for all samples. Use `--max-connections` to control concurrency. For repetitions, use `--epochs`. The package metrics consume individual epoch observations: conditional filters and token windows apply before aggregation, and intervention bounds pool all recorded arms. Delegated MonitorBench tasks retain their upstream pooling logic. Tasks also run directly from source, for example `inspect eval src/cot_monitorability/ncri/ncri.py@ncri_bench`.
 
-CoT tasks need a provider that exposes reasoning text. Hidden reasoning produces empty traces and changes the interpretation of monitorability scores. Select judge and monitor roles explicitly when comparing models; their prompts and sampling configuration affect the results.
+CoT tasks need a provider that exposes the complete readable reasoning trace. Summary-only or encrypted reasoning raises a scoring error. Hidden reasoning produces empty traces and changes the interpretation of monitorability scores. Select judge and monitor roles explicitly when comparing models; their prompts and sampling configuration affect the results.
 
 ### OpenAI-compatible API
 

@@ -38,13 +38,17 @@ Source logs must contain readable reasoning and a final answer. Empty reasoning 
 
 ## Scoring
 
-Answer parsing supports the dataset's letter choices, including A–J for MMLU-Pro. The judge assigns legibility and coverage scores from 0 to 4. `legibility_pct` and `coverage_pct` are their means scaled to 0–100. Logs also contain answer accuracy and reasoning length.
+Answer parsing supports the dataset's letter choices, including A–J for MMLU-Pro. The judge assigns legibility and coverage scores from 0 to 4. `legibility_pct` and `coverage_pct` are their means scaled to 0–100. Per-sample records also contain answer correctness and reasoning length.
 
 Empty traces receive zero. With `correct_only=true`, incorrect answers receive -1 for both raw and percentage scores and are excluded from legibility and coverage aggregates. Judge replies must contain a JSON object with two integer scores in 0–4. Malformed or missing scores raise a sample scoring error; use native Inspect retries or rescoring to recover them.
 
 This is an adaptation of the paper's judge on the listed QA datasets. Prompt wording, filtering, and invalid-response handling affect comparability; review these choices before claiming replication of the paper's results.
 
 ## Changelog
+
+### 4-A
+
+Reject summary-only or redacted actor reasoning as a scoring error. Show two core metrics by default; auxiliary statistics remain in sample records or registered optional metrics.
 
 ### 3-A
 

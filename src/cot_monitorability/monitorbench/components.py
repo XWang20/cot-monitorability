@@ -37,6 +37,7 @@ from inspect_ai.scorer import Metric, SampleScore, Score, Scorer, Target, metric
 from inspect_ai.solver import Generate, Solver, TaskState, solver
 
 from cot_monitorability.assets import asset_path, ensure_asset
+from cot_monitorability.reasoning import full_reasoning
 
 # Import the 5 tasks from semsorock/inspect-evals-monitor-bench
 from cot_monitorability.reference.monitor_bench import (
@@ -125,6 +126,7 @@ async def _verify_rollout(
     """Return (verified_bool, cot, action)."""
     if msg is None:
         return False, "", ""
+    full_reasoning(msg)
     extracted = extract_cot_action(msg)
     if extracted is None:
         return False, "", ""
@@ -241,7 +243,7 @@ def mb_mean_cot_tokens() -> Metric:
     return compute
 
 
-@scorer(metrics=[mb_cot_monitorability(), mb_verification_rate(), mb_mean_cot_tokens()])
+@scorer(metrics=[mb_cot_monitorability(), mb_verification_rate()])
 def monitorbench_general_scorer(
     monitor_model: str = "openai-api/openai/deepseek-v4.1-flash-1017",
     scopes: str = "cot",

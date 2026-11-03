@@ -4,7 +4,7 @@ description: Generates baseline QA reasoning and applies the current legibility 
 group: Safeguards
 contributors:
 - XWang20
-version: 3-A
+version: 4-A
 tasks:
 - name: cot_immediacy_2510
   dataset_samples: 445
