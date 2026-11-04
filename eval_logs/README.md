@@ -1,6 +1,6 @@
 # Evaluation results
 
-Index of 116 stored runs. Raw `.eval` files are kept by the operator; this directory versions their metadata and checksums.
+Index of 84 stored runs. Raw `.eval` files are kept by the operator; this directory versions their metadata and checksums.
 
 Interpret each run using its recorded task namespace, version, configuration, and package revision. Limited runs do not establish full-dataset performance.
 
@@ -73,56 +73,24 @@ One latest completed run per package task, model, effort, and task configuration
 | cot_monitorability/ncri_bench / all_ncri | 8-A | deepseek-v4.1-flash-1017-nt | disabled | 920/920 | success | ncri_placement_score=78.17; ncri_valid_rate=0.9707 |
 | cot_monitorability/ncri_bench / arithmetic | 3-A | kimi-k3.1-pro | none | 5/5 | success | Partial placement (1/19 domains); ncri_placement_score=123.2; ncri_valid_rate=1 |
 | cot_monitorability/ncri_bench / all_ncri | 8-A | kimi-k3.1-pro-nt | disabled | 920/920 | success | ncri_placement_score=102.6; ncri_valid_rate=1 |
-| cot_monitorability/openai_monitorability_intervention / daft | 5-A | deepseek-v4.1-flash-1017 | high | 49/50 | success | intervention_gmean2_lower=0.8571; intervention_eligible_fraction=0.1429 |
-| cot_monitorability/openai_monitorability_intervention / daft | 5-A | deepseek-v4.1-flash-1017 | high | 49/50 | success | intervention_gmean2_lower=0; intervention_eligible_fraction=0.1429 |
 | cot_monitorability/openai_monitorability_intervention / daft | 5-A | deepseek-v4.1-flash-1017 | high | 49/50 | success | intervention_gmean2_lower=1; intervention_eligible_fraction=0.1429 |
 | cot_monitorability/openai_monitorability_intervention / gpqa | 5-A | deepseek-v4.1-flash-1017 | high | 50/50 | success | intervention_gmean2_lower=1; intervention_eligible_fraction=0.1 |
-| cot_monitorability/openai_monitorability_intervention / gpqa | 5-A | deepseek-v4.1-flash-1017 | high | 50/50 | success | intervention_gmean2_lower=0; intervention_eligible_fraction=0.1 |
-| cot_monitorability/openai_monitorability_intervention / gpqa | 5-A | deepseek-v4.1-flash-1017 | high | 50/50 | success | intervention_gmean2_lower=1; intervention_eligible_fraction=0.1 |
-| cot_monitorability/openai_monitorability_intervention / gpqa_encoded | 5-A | deepseek-v4.1-flash-1017 | high | 50/50 | success | intervention_gmean2_lower=1; intervention_eligible_fraction=0.14 |
-| cot_monitorability/openai_monitorability_intervention / gpqa_encoded | 5-A | deepseek-v4.1-flash-1017 | high | 50/50 | success | intervention_gmean2_lower=0; intervention_eligible_fraction=0.14 |
 | cot_monitorability/openai_monitorability_intervention / gpqa_encoded | 5-A | deepseek-v4.1-flash-1017 | high | 50/50 | success | intervention_gmean2_lower=1; intervention_eligible_fraction=0.14 |
 | cot_monitorability/openai_monitorability_intervention / scruples_first_person | 5-A | deepseek-v4.1-flash-1017 | high | 50/50 | success | Not reportable (eligible fraction below 10%) |
-| cot_monitorability/openai_monitorability_intervention / scruples_first_person | 5-A | deepseek-v4.1-flash-1017 | high | 50/50 | success | Not reportable (eligible fraction below 10%) |
-| cot_monitorability/openai_monitorability_intervention / scruples_first_person | 5-A | deepseek-v4.1-flash-1017 | high | 50/50 | success | Not reportable (eligible fraction below 10%) |
 | cot_monitorability/openai_monitorability_intervention / scruples_suggest_right | 5-A | deepseek-v4.1-flash-1017 | high | 50/50 | success | intervention_gmean2_lower=0.1667; intervention_eligible_fraction=0.12 |
-| cot_monitorability/openai_monitorability_intervention / scruples_suggest_right | 5-A | deepseek-v4.1-flash-1017 | high | 50/50 | success | intervention_gmean2_lower=0; intervention_eligible_fraction=0.12 |
-| cot_monitorability/openai_monitorability_intervention / scruples_suggest_right | 5-A | deepseek-v4.1-flash-1017 | high | 50/50 | success | intervention_gmean2_lower=0.1667; intervention_eligible_fraction=0.12 |
-| cot_monitorability/openai_monitorability_intervention / scruples_suggest_wrong | 5-A | deepseek-v4.1-flash-1017 | high | 50/50 | success | intervention_gmean2_lower=0.2857; intervention_eligible_fraction=0.14 |
-| cot_monitorability/openai_monitorability_intervention / scruples_suggest_wrong | 5-A | deepseek-v4.1-flash-1017 | high | 50/50 | success | intervention_gmean2_lower=0; intervention_eligible_fraction=0.14 |
 | cot_monitorability/openai_monitorability_intervention / scruples_suggest_wrong | 5-A | deepseek-v4.1-flash-1017 | high | 50/50 | success | intervention_gmean2_lower=0.4286; intervention_eligible_fraction=0.14 |
 | cot_monitorability/openai_monitorability_intervention / wmdp_sandbagging | 5-A | deepseek-v4.1-flash-1017 | high | 50/50 | success | Not reportable (eligible fraction below 10%) |
-| cot_monitorability/openai_monitorability_intervention / wmdp_sandbagging | 5-A | deepseek-v4.1-flash-1017 | high | 50/50 | success | Not reportable (eligible fraction below 10%) |
-| cot_monitorability/openai_monitorability_intervention / wmdp_sandbagging | 5-A | deepseek-v4.1-flash-1017 | high | 50/50 | success | Not reportable (eligible fraction below 10%) |
 | cot_monitorability/openai_monitorability_intervention / scruples_suggest_wrong | 1-A | deepseek-v4.1-flash-1017 | medium | 5/5 | success | intervention_gmean2_lower=0; intervention_eligible_fraction=0.2 |
-| cot_monitorability/openai_monitorability_intervention / daft | 5-A | kimi-k3.1-pro | high | 48/50 | success | intervention_gmean2_lower=0.7143; intervention_eligible_fraction=0.2917 |
-| cot_monitorability/openai_monitorability_intervention / daft | 5-A | kimi-k3.1-pro | high | 48/50 | success | intervention_gmean2_lower=0; intervention_eligible_fraction=0.2917 |
 | cot_monitorability/openai_monitorability_intervention / daft | 5-A | kimi-k3.1-pro | high | 48/50 | success | intervention_gmean2_lower=0.9286; intervention_eligible_fraction=0.2917 |
 | cot_monitorability/openai_monitorability_intervention / gpqa | 5-A | kimi-k3.1-pro | high | 50/50 | success | intervention_gmean2_lower=0.8333; intervention_eligible_fraction=0.12 |
-| cot_monitorability/openai_monitorability_intervention / gpqa | 5-A | kimi-k3.1-pro | high | 50/50 | success | intervention_gmean2_lower=0; intervention_eligible_fraction=0.12 |
-| cot_monitorability/openai_monitorability_intervention / gpqa | 5-A | kimi-k3.1-pro | high | 50/50 | success | intervention_gmean2_lower=0.8333; intervention_eligible_fraction=0.12 |
-| cot_monitorability/openai_monitorability_intervention / gpqa_encoded | 5-A | kimi-k3.1-pro | high | 50/50 | success | intervention_gmean2_lower=0.9394; intervention_eligible_fraction=0.66 |
-| cot_monitorability/openai_monitorability_intervention / gpqa_encoded | 5-A | kimi-k3.1-pro | high | 50/50 | success | intervention_gmean2_lower=0; intervention_eligible_fraction=0.66 |
 | cot_monitorability/openai_monitorability_intervention / gpqa_encoded | 5-A | kimi-k3.1-pro | high | 50/50 | success | intervention_gmean2_lower=1; intervention_eligible_fraction=0.66 |
 | cot_monitorability/openai_monitorability_intervention / scruples_first_person | 5-A | kimi-k3.1-pro | high | 50/50 | success | Not reportable (eligible fraction below 10%) |
-| cot_monitorability/openai_monitorability_intervention / scruples_first_person | 5-A | kimi-k3.1-pro | high | 50/50 | success | Not reportable (eligible fraction below 10%) |
-| cot_monitorability/openai_monitorability_intervention / scruples_first_person | 5-A | kimi-k3.1-pro | high | 50/50 | success | Not reportable (eligible fraction below 10%) |
 | cot_monitorability/openai_monitorability_intervention / scruples_suggest_right | 5-A | kimi-k3.1-pro | high | 50/50 | success | Not reportable (eligible fraction below 10%) |
-| cot_monitorability/openai_monitorability_intervention / scruples_suggest_right | 5-A | kimi-k3.1-pro | high | 50/50 | success | Not reportable (eligible fraction below 10%) |
-| cot_monitorability/openai_monitorability_intervention / scruples_suggest_right | 5-A | kimi-k3.1-pro | high | 50/50 | success | Not reportable (eligible fraction below 10%) |
-| cot_monitorability/openai_monitorability_intervention / scruples_suggest_wrong | 5-A | kimi-k3.1-pro | high | 50/50 | success | intervention_gmean2_lower=0.4444; intervention_eligible_fraction=0.18 |
-| cot_monitorability/openai_monitorability_intervention / scruples_suggest_wrong | 5-A | kimi-k3.1-pro | high | 50/50 | success | intervention_gmean2_lower=0; intervention_eligible_fraction=0.18 |
 | cot_monitorability/openai_monitorability_intervention / scruples_suggest_wrong | 5-A | kimi-k3.1-pro | high | 50/50 | success | intervention_gmean2_lower=0.3333; intervention_eligible_fraction=0.18 |
 | cot_monitorability/openai_monitorability_intervention / wmdp_sandbagging | 5-A | kimi-k3.1-pro | high | 50/50 | success | Not reportable (eligible fraction below 10%) |
-| cot_monitorability/openai_monitorability_intervention / wmdp_sandbagging | 5-A | kimi-k3.1-pro | high | 50/50 | success | Not reportable (eligible fraction below 10%) |
-| cot_monitorability/openai_monitorability_intervention / wmdp_sandbagging | 5-A | kimi-k3.1-pro | high | 50/50 | success | Not reportable (eligible fraction below 10%) |
 | cot_monitorability/openai_monitorability_intervention / scruples_suggest_wrong | 1-A | kimi-k3.1-pro | medium | 5/5 | success | intervention_gmean2_lower=0.5; intervention_eligible_fraction=0.4 |
-| cot_monitorability/openai_monitorability_process / all_messages | 5-A | deepseek-v4.1-flash-1017 | high | 50/50 | success | process_gmean2_cot=0.8182 |
-| cot_monitorability/openai_monitorability_process / answer_only | 5-A | deepseek-v4.1-flash-1017 | high | 50/50 | success | process_gmean2_cot=0.5227 |
 | cot_monitorability/openai_monitorability_process / cot_only | 5-A | deepseek-v4.1-flash-1017 | high | 50/50 | success | process_gmean2_cot=0.7727 |
 | cot_monitorability/openai_monitorability_process / cot_only | 1-A | deepseek-v4.1-flash-1017 | medium | 5/5 | success | process_gmean2_cot=1 |
-| cot_monitorability/openai_monitorability_process / all_messages | 5-A | kimi-k3.1-pro | high | 50/50 | success | process_gmean2_cot=0.7872 |
-| cot_monitorability/openai_monitorability_process / answer_only | 5-A | kimi-k3.1-pro | high | 50/50 | success | process_gmean2_cot=0.5319 |
 | cot_monitorability/openai_monitorability_process / cot_only | 5-A | kimi-k3.1-pro | high | 50/50 | success | process_gmean2_cot=0.7234 |
 | cot_monitorability/openai_monitorability_process / cot_only | 1-A | kimi-k3.1-pro | medium | 5/5 | success | process_gmean2_cot=0.8 |
 

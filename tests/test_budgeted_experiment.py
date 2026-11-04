@@ -185,6 +185,17 @@ def test_stage_sample_guard_and_ncri_summary_location(tmp_path):
     assert runner.dataset_dir_name(process) == "gpqa_physics"
 
 
+def test_empty_phase_is_skipped(tmp_path):
+    experiment = runner.Experiment(
+        {"preflight_samples": 5},
+        tmp_path / "state",
+        tmp_path / "logs",
+        RequestBudget(tmp_path / "state", 500),
+    )
+    assert experiment.phase([], {"id": "ds"}, "other_scopes", "openai", False) == []
+    assert experiment.history == []
+
+
 def test_resume_cannot_silently_change_the_shared_budget(tmp_path):
     RequestBudget(tmp_path, 500, baseline=88, uncertainty=15)
     with pytest.raises(ValueError, match="Budget settings"):

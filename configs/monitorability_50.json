@@ -5,9 +5,7 @@
   "max_tasks": 4,
   "max_samples": 16,
   "scopes": [
-    "cot_only",
-    "answer_only",
-    "all_messages"
+    "cot_only"
   ],
   "intervention_datasets": [
     "gpqa",

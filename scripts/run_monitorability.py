@@ -453,6 +453,8 @@ class Experiment:
         )
 
     def phase(self, tasks, specification, name, kind, preflight):
+        if not tasks:
+            return []
         effort = "none" if kind == "ncri" else "high"
         self.current = {
             "model": specification["id"],
