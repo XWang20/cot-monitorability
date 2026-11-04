@@ -148,8 +148,17 @@ def test_stage_sample_guard_and_ncri_summary_location(tmp_path):
     assert runner.expected_samples(tasks) == 10
     assert runner.expected_samples(tasks, 5) == 8
     summary = runner.ncri_summary_path(tmp_path / "logs", "deepseek")
-    assert summary.parent == tmp_path / "logs" / "ncri-index"
-    assert summary.parent.name != "ncri"
+    assert summary.parent == tmp_path / "logs" / "deepseek" / "ncri-index"
+    assert (
+        runner.task_dir_name(
+            Task(
+                dataset=[Sample(id="q", input="q", target="A")],
+                solver=generate(),
+                scorer=includes(),
+            )
+        )
+        == "task"
+    )
 
 
 def test_resume_cannot_silently_change_the_shared_budget(tmp_path):

@@ -6,6 +6,7 @@ import argparse
 import hashlib
 import json
 import os
+import re
 import subprocess
 import sys
 import threading
@@ -183,10 +184,27 @@ def expected_samples(tasks, preflight_samples=None):
     return sum(min(preflight_samples, len(task.dataset)) for task in tasks)
 
 
+TASK_DIRS = {
+    "openai_monitorability_process": "process",
+    "openai_monitorability_intervention": "intervention",
+    "ncri_bench": "ncri",
+}
+
+
+def path_slug(value):
+    return re.sub(r"[^A-Za-z0-9_.+-]+", "-", value).strip("-") or "unknown"
+
+
+def task_dir_name(task):
+    """One directory per task family, so each eval-set log dir stays resumable."""
+    name = task.name.rsplit("/", 1)[-1]
+    return TASK_DIRS.get(name, path_slug(name))
+
+
 def ncri_summary_path(log_dir, model_id):
-    """Model-level NCRI summary, kept out of the eval-set run directory."""
+    """Model-level NCRI summary, next to that model's bank runs."""
     name = "ncri-index_" + hashlib.sha256(model_id.encode()).hexdigest()[:12] + ".eval"
-    return Path(log_dir) / "ncri-index" / name
+    return Path(log_dir) / path_slug(model_id) / "ncri-index" / name
 
 
 def audit_logs(paths, kind):
@@ -428,7 +446,6 @@ class Experiment:
             "phase": name,
             "preflight": preflight,
         }
-        destination = (self.state / "preflight" if preflight else self.logs) / kind
         self.reuse.load([self.state / "preflight", self.logs])
         ACTIVE_REUSE.set(self.reuse)
         known = self.config.get("known_incomplete", [])
@@ -452,39 +469,51 @@ class Experiment:
                 "judge": self.model(specification, "judge", "high"),
             }
         )
-        success, headers = eval_set(
-            tasks,
-            model=actor,
-            model_roles=roles,
-            log_dir=str(destination),
-            log_dir_allow_dirty=True,
-            limit=self.config["preflight_samples"] if preflight else None,
-            max_tasks=self.config["max_tasks"],
-            max_samples=self.config["max_samples"],
-            max_retries=0,
-            retry_attempts=0,
-            retry_cleanup=False,
-            fail_on_error=not allow_incomplete,
-            continue_on_fail=True,
-            display="none",
-            tags=[self.state.name, name],
-            metadata={
-                "budget_currency": "CNY",
-                "budget_limit": self.budget.limit,
-                "sample_manifest_sha256": hashlib.sha256(
-                    (self.state / "selection.json").read_bytes()
-                ).hexdigest(),
-                "experiment_stage": dict(self.current),
-            },
+        base = (
+            self.state / "preflight" / path_slug(specification["id"])
+            if preflight
+            else self.logs / path_slug(specification["id"])
         )
-        by_id = {
-            read_eval_log(p, header_only=True).eval.eval_id: p
-            for p in destination.glob("*.eval")
-        }
+        groups = {}
+        for task in tasks:
+            groups.setdefault(task_dir_name(task), []).append(task)
+        success = True
         paths = []
-        for header in headers:
-            path = by_id[header.eval.eval_id]
-            paths.append(path)
+        for group_name, group_tasks in groups.items():
+            destination = base / group_name
+            destination.mkdir(parents=True, exist_ok=True)
+            group_success, headers = eval_set(
+                group_tasks,
+                model=actor,
+                model_roles=roles,
+                log_dir=str(destination),
+                log_dir_allow_dirty=True,
+                limit=self.config["preflight_samples"] if preflight else None,
+                max_tasks=self.config["max_tasks"],
+                max_samples=self.config["max_samples"],
+                max_retries=0,
+                retry_attempts=0,
+                retry_cleanup=False,
+                fail_on_error=not allow_incomplete,
+                continue_on_fail=True,
+                display="none",
+                tags=[self.state.name, name],
+                metadata={
+                    "budget_currency": "CNY",
+                    "budget_limit": self.budget.limit,
+                    "sample_manifest_sha256": hashlib.sha256(
+                        (self.state / "selection.json").read_bytes()
+                    ).hexdigest(),
+                    "experiment_stage": dict(self.current),
+                },
+            )
+            success = success and group_success
+            by_id = {
+                read_eval_log(p, header_only=True).eval.eval_id: p
+                for p in destination.glob("*.eval")
+            }
+            paths.extend(by_id[header.eval.eval_id] for header in headers)
+        for path in paths:
             self.reuse.restore(path)
             log = read_eval_log(path, resolve_attachments=True)
             unexpected = [
