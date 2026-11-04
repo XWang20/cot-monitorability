@@ -196,15 +196,28 @@ def path_slug(value):
 
 
 def task_dir_name(task):
-    """One directory per task family, so each eval-set log dir stays resumable."""
+    """Benchmark directory for a task family."""
     name = task.name.rsplit("/", 1)[-1]
     return TASK_DIRS.get(name, path_slug(name))
 
 
+def dataset_dir_name(task):
+    """Dataset directory below the benchmark, e.g. daft or gpqa_physics."""
+    try:
+        sample = next(iter(task.dataset))
+    except StopIteration:
+        return "default"
+    name = str((sample.metadata or {}).get("dataset") or "")
+    stem = name.rsplit("/", 1)[-1].removesuffix(".jsonl")
+    if stem.startswith("process_"):
+        stem = stem[len("process_") :]
+    return path_slug(stem or "default")
+
+
 def ncri_summary_path(log_dir, model_id):
-    """Model-level NCRI summary, next to that model's bank runs."""
+    """One model-level NCRI metric; the bank runs stay in the state directory."""
     name = "ncri-index_" + hashlib.sha256(model_id.encode()).hexdigest()[:12] + ".eval"
-    return Path(log_dir) / path_slug(model_id) / "ncri-index" / name
+    return Path(log_dir) / "ncri" / path_slug(model_id.removesuffix("-nt")) / name
 
 
 def audit_logs(paths, kind):
@@ -446,7 +459,7 @@ class Experiment:
             "phase": name,
             "preflight": preflight,
         }
-        self.reuse.load([self.state / "preflight", self.logs])
+        self.reuse.load([self.state, self.logs])
         ACTIVE_REUSE.set(self.reuse)
         known = self.config.get("known_incomplete", [])
         KNOWN_INCOMPLETE.set(known)
@@ -469,18 +482,29 @@ class Experiment:
                 "judge": self.model(specification, "judge", "high"),
             }
         )
-        base = (
-            self.state / "preflight" / path_slug(specification["id"])
-            if preflight
-            else self.logs / path_slug(specification["id"])
-        )
         groups = {}
         for task in tasks:
-            groups.setdefault(task_dir_name(task), []).append(task)
+            family = task_dir_name(task)
+            dataset = (
+                dataset_dir_name(task) if family in ("process", "intervention") else ""
+            )
+            groups.setdefault((family, dataset), []).append(task)
         success = True
         paths = []
-        for group_name, group_tasks in groups.items():
-            destination = base / group_name
+        for (family, dataset), group_tasks in groups.items():
+            if family == "ncri":
+                destination = (
+                    self.state / "preflight" / "ncri"
+                    if preflight
+                    else self.state / "ncri"
+                ) / path_slug(specification["id"])
+            else:
+                destination = (
+                    (self.state / "preflight" if preflight else self.logs)
+                    / family
+                    / dataset
+                    / path_slug(specification["id"])
+                )
             destination.mkdir(parents=True, exist_ok=True)
             group_success, headers = eval_set(
                 group_tasks,
