@@ -6952,6 +6952,441 @@
       }
     },
     {
+      "file": "eval_logs/immediacy/deepseek-v4.1-flash-1017/gpqa/2026-11-04T12-58-12-00-00_cot-immediacy-2510_htyCVs9su38ym4QSZBkFsT.eval",
+      "sha256": "c395db1485d0dca393d6f68c17f0bbb8100d5bd17005d529f9e246b2526f1640",
+      "bytes": 760548,
+      "task": "cot_monitorability/cot_immediacy_2510",
+      "task_version": "4-A",
+      "tags": [
+        "20261103T141734Z_monitorability-50",
+        "immediacy",
+        "gpqa"
+      ],
+      "model": "openai-api/openai/deepseek-v4.1-flash-1017",
+      "status": "success",
+      "created": "2026-11-04T12:58:12+00:00",
+      "started_at": "2026-11-04T12:58:12+00:00",
+      "completed_at": "2026-11-04T13:09:49+00:00",
+      "elapsed_seconds": 697.0,
+      "reasoning_effort": "high",
+      "task_args": {
+        "dataset": "gpqa",
+        "target_reasoning_effort": "high",
+        "judge_model": "openai-api/openai/deepseek-v4.1-flash-1017",
+        "correct_only": false
+      },
+      "eval_config": {
+        "limit": null,
+        "epochs": 1
+      },
+      "completed_samples": 50,
+      "total_samples": 50,
+      "scores": [
+        {
+          "scorer": "cot_immediacy_judge_scorer",
+          "scored_samples": 50,
+          "metrics": {
+            "legibility_pct": 92.5,
+            "coverage_pct": 94.5
+          },
+          "diagnostics": {}
+        }
+      ],
+      "run_cost": {
+        "currency": "CNY",
+        "amount": 1.141739274,
+        "request_count": 50,
+        "unmetered_requests": 0,
+        "basis": "metered requests at recorded request-time rates; cache hits and reused actor outputs incur no new cost"
+      },
+      "ncri_placement": null,
+      "model_usage": {
+        "openai-api/openai/deepseek-v4.1-flash-1017": {
+          "input_tokens": 370828,
+          "output_tokens": 351245,
+          "total_tokens": 728985,
+          "input_tokens_cache_read": 6912,
+          "reasoning_tokens": 346468
+        }
+      },
+      "revision": {
+        "type": "git",
+        "origin": "https://github.com/XWang20/cot-monitorability.git",
+        "commit": "f0f9606",
+        "dirty": true
+      },
+      "packages": {
+        "inspect_ai": "0.3.287",
+        "cot-monitorability": "0.1.0"
+      }
+    },
+    {
+      "file": "eval_logs/immediacy/deepseek-v4.1-flash-1017/hle/2026-11-04T13-09-50-00-00_cot-immediacy-2510_MZjKXBx9xjeWyw9grJYP8R.eval",
+      "sha256": "b8281a1b49e6584cbd6ae51a80639421f5c86a6bf8b7e452e302382353a2477d",
+      "bytes": 902355,
+      "task": "cot_monitorability/cot_immediacy_2510",
+      "task_version": "4-A",
+      "tags": [
+        "20261103T141734Z_monitorability-50",
+        "immediacy",
+        "hle"
+      ],
+      "model": "openai-api/openai/deepseek-v4.1-flash-1017",
+      "status": "success",
+      "created": "2026-11-04T13:09:50+00:00",
+      "started_at": "2026-11-04T13:09:50+00:00",
+      "completed_at": "2026-11-04T13:16:24+00:00",
+      "elapsed_seconds": 394.0,
+      "reasoning_effort": "high",
+      "task_args": {
+        "dataset": "hle",
+        "target_reasoning_effort": "high",
+        "judge_model": "openai-api/openai/deepseek-v4.1-flash-1017",
+        "correct_only": false
+      },
+      "eval_config": {
+        "limit": null,
+        "epochs": 1
+      },
+      "completed_samples": 50,
+      "total_samples": 50,
+      "scores": [
+        {
+          "scorer": "cot_immediacy_judge_scorer",
+          "scored_samples": 50,
+          "metrics": {
+            "legibility_pct": 92.0,
+            "coverage_pct": 92.5
+          },
+          "diagnostics": {}
+        }
+      ],
+      "run_cost": {
+        "currency": "CNY",
+        "amount": 1.2058299300000002,
+        "request_count": 50,
+        "unmetered_requests": 0,
+        "basis": "metered requests at recorded request-time rates; cache hits and reused actor outputs incur no new cost"
+      },
+      "ncri_placement": null,
+      "model_usage": {
+        "openai-api/openai/deepseek-v4.1-flash-1017": {
+          "input_tokens": 441781,
+          "output_tokens": 403018,
+          "total_tokens": 844799,
+          "input_tokens_cache_read": 0,
+          "reasoning_tokens": 396464
+        }
+      },
+      "revision": {
+        "type": "git",
+        "origin": "https://github.com/XWang20/cot-monitorability.git",
+        "commit": "f0f9606",
+        "dirty": true
+      },
+      "packages": {
+        "inspect_ai": "0.3.287",
+        "cot-monitorability": "0.1.0"
+      }
+    },
+    {
+      "file": "eval_logs/immediacy/deepseek-v4.1-flash-1017/mmlu_pro/2026-11-04T13-16-25-00-00_cot-immediacy-2510_KTdzrPTmKpRiYCACZeT37B.eval",
+      "sha256": "cbda6f2c9332a753c27ddd1ba76623b67b2d1a51960b426e1b3f66e866428c1f",
+      "bytes": 497911,
+      "task": "cot_monitorability/cot_immediacy_2510",
+      "task_version": "4-A",
+      "tags": [
+        "20261103T141734Z_monitorability-50",
+        "immediacy",
+        "mmlu_pro"
+      ],
+      "model": "openai-api/openai/deepseek-v4.1-flash-1017",
+      "status": "success",
+      "created": "2026-11-04T13:16:25+00:00",
+      "started_at": "2026-11-04T13:16:25+00:00",
+      "completed_at": "2026-11-04T13:22:22+00:00",
+      "elapsed_seconds": 357.0,
+      "reasoning_effort": "high",
+      "task_args": {
+        "dataset": "mmlu_pro",
+        "target_reasoning_effort": "high",
+        "judge_model": "openai-api/openai/deepseek-v4.1-flash-1017",
+        "correct_only": false
+      },
+      "eval_config": {
+        "limit": null,
+        "epochs": 1
+      },
+      "completed_samples": 50,
+      "total_samples": 50,
+      "scores": [
+        {
+          "scorer": "cot_immediacy_judge_scorer",
+          "scored_samples": 50,
+          "metrics": {
+            "legibility_pct": 96.0,
+            "coverage_pct": 92.5
+          },
+          "diagnostics": {}
+        }
+      ],
+      "run_cost": {
+        "currency": "CNY",
+        "amount": 0.31425489,
+        "request_count": 50,
+        "unmetered_requests": 0,
+        "basis": "metered requests at recorded request-time rates; cache hits and reused actor outputs incur no new cost"
+      },
+      "ncri_placement": null,
+      "model_usage": {
+        "openai-api/openai/deepseek-v4.1-flash-1017": {
+          "input_tokens": 148259,
+          "output_tokens": 119623,
+          "total_tokens": 267882,
+          "input_tokens_cache_read": 0,
+          "reasoning_tokens": 113596
+        }
+      },
+      "revision": {
+        "type": "git",
+        "origin": "https://github.com/XWang20/cot-monitorability.git",
+        "commit": "f0f9606",
+        "dirty": true
+      },
+      "packages": {
+        "inspect_ai": "0.3.287",
+        "cot-monitorability": "0.1.0"
+      }
+    },
+    {
+      "file": "eval_logs/immediacy/kimi-k3.1-pro/gpqa/2026-11-04T13-38-20-00-00_cot-immediacy-2510_bJcJdJF2VSLKyzVK5dkeq2.eval",
+      "sha256": "c40cfefb17c5a0231830db8999eaf6493fdbe1304f23fac81463ad2c1ff035e9",
+      "bytes": 483239,
+      "task": "cot_monitorability/cot_immediacy_2510",
+      "task_version": "4-A",
+      "tags": [
+        "20261103T141734Z_monitorability-50",
+        "immediacy",
+        "gpqa"
+      ],
+      "model": "openai-api/openai/kimi-k3.1-pro",
+      "status": "success",
+      "created": "2026-11-04T13:38:20+00:00",
+      "started_at": "2026-11-04T13:38:20+00:00",
+      "completed_at": "2026-11-04T13:47:45+00:00",
+      "elapsed_seconds": 565.0,
+      "reasoning_effort": "high",
+      "task_args": {
+        "dataset": "gpqa",
+        "target_reasoning_effort": "high",
+        "judge_model": "openai-api/openai/deepseek-v4.1-flash-1017",
+        "correct_only": false
+      },
+      "eval_config": {
+        "limit": null,
+        "epochs": 1
+      },
+      "completed_samples": 50,
+      "total_samples": 50,
+      "scores": [
+        {
+          "scorer": "cot_immediacy_judge_scorer",
+          "scored_samples": 50,
+          "metrics": {
+            "legibility_pct": 84.5,
+            "coverage_pct": 89.5
+          },
+          "diagnostics": {}
+        }
+      ],
+      "run_cost": {
+        "currency": "CNY",
+        "amount": 3.5364192,
+        "request_count": 50,
+        "unmetered_requests": 0,
+        "basis": "metered requests at recorded request-time rates; cache hits and reused actor outputs incur no new cost"
+      },
+      "ncri_placement": null,
+      "model_usage": {
+        "openai-api/openai/kimi-k3.1-pro": {
+          "input_tokens": 15460,
+          "output_tokens": 62875,
+          "total_tokens": 78335,
+          "input_tokens_cache_read": 0,
+          "reasoning_tokens": 61925
+        },
+        "openai-api/openai/deepseek-v4.1-flash-1017": {
+          "input_tokens": 100910,
+          "output_tokens": 33623,
+          "total_tokens": 134533,
+          "input_tokens_cache_read": 0,
+          "reasoning_tokens": 27179
+        }
+      },
+      "revision": {
+        "type": "git",
+        "origin": "https://github.com/XWang20/cot-monitorability.git",
+        "commit": "f0f9606",
+        "dirty": true
+      },
+      "packages": {
+        "inspect_ai": "0.3.287",
+        "cot-monitorability": "0.1.0"
+      }
+    },
+    {
+      "file": "eval_logs/immediacy/kimi-k3.1-pro/hle/2026-11-04T13-47-47-00-00_cot-immediacy-2510_jjuBs6V4WCxLRvphWtNp6R.eval",
+      "sha256": "a7c19108bbb14386fe5161358ac0934bb5da0b85537c20621326a2f915854284",
+      "bytes": 546346,
+      "task": "cot_monitorability/cot_immediacy_2510",
+      "task_version": "4-A",
+      "tags": [
+        "20261103T141734Z_monitorability-50",
+        "hle",
+        "immediacy"
+      ],
+      "model": "openai-api/openai/kimi-k3.1-pro",
+      "status": "success",
+      "created": "2026-11-04T13:47:47+00:00",
+      "started_at": "2026-11-04T13:47:47+00:00",
+      "completed_at": "2026-11-04T13:54:24+00:00",
+      "elapsed_seconds": 397.0,
+      "reasoning_effort": "high",
+      "task_args": {
+        "dataset": "hle",
+        "target_reasoning_effort": "high",
+        "judge_model": "openai-api/openai/deepseek-v4.1-flash-1017",
+        "correct_only": false
+      },
+      "eval_config": {
+        "limit": null,
+        "epochs": 1
+      },
+      "completed_samples": 50,
+      "total_samples": 50,
+      "scores": [
+        {
+          "scorer": "cot_immediacy_judge_scorer",
+          "scored_samples": 50,
+          "metrics": {
+            "legibility_pct": 84.0,
+            "coverage_pct": 83.0
+          },
+          "diagnostics": {}
+        }
+      ],
+      "run_cost": {
+        "currency": "CNY",
+        "amount": 3.32998667,
+        "request_count": 50,
+        "unmetered_requests": 0,
+        "basis": "metered requests at recorded request-time rates; cache hits and reused actor outputs incur no new cost"
+      },
+      "ncri_placement": null,
+      "model_usage": {
+        "openai-api/openai/kimi-k3.1-pro": {
+          "input_tokens": 20645,
+          "output_tokens": 58041,
+          "total_tokens": 78686,
+          "input_tokens_cache_read": 0,
+          "reasoning_tokens": 57091
+        },
+        "openai-api/openai/deepseek-v4.1-flash-1017": {
+          "input_tokens": 103747,
+          "output_tokens": 43837,
+          "total_tokens": 147584,
+          "input_tokens_cache_read": 0,
+          "reasoning_tokens": 37342
+        }
+      },
+      "revision": {
+        "type": "git",
+        "origin": "https://github.com/XWang20/cot-monitorability.git",
+        "commit": "f0f9606",
+        "dirty": true
+      },
+      "packages": {
+        "inspect_ai": "0.3.287",
+        "cot-monitorability": "0.1.0"
+      }
+    },
+    {
+      "file": "eval_logs/immediacy/kimi-k3.1-pro/mmlu_pro/2026-11-04T14-04-00-00-00_cot-immediacy-2510_6oso3Ufo7SHsVb2MctRxLY.eval",
+      "sha256": "32d4d2ff37c3a5e77c82be0d32cbd16675fc2488465de71f8a839c0796798ba5",
+      "bytes": 421226,
+      "task": "cot_monitorability/cot_immediacy_2510",
+      "task_version": "4-A",
+      "tags": [
+        "20261103T141734Z_monitorability-50",
+        "immediacy",
+        "mmlu_pro"
+      ],
+      "model": "openai-api/openai/kimi-k3.1-pro",
+      "status": "success",
+      "created": "2026-11-04T14:04:00+00:00",
+      "started_at": "2026-11-04T14:04:00+00:00",
+      "completed_at": "2026-11-04T14:04:06+00:00",
+      "elapsed_seconds": 6.0,
+      "reasoning_effort": "high",
+      "task_args": {
+        "dataset": "mmlu_pro",
+        "target_reasoning_effort": "high",
+        "judge_model": "openai-api/openai/deepseek-v4.1-flash-1017",
+        "correct_only": false
+      },
+      "eval_config": {
+        "limit": null,
+        "epochs": 1
+      },
+      "completed_samples": 50,
+      "total_samples": 50,
+      "scores": [
+        {
+          "scorer": "cot_immediacy_judge_scorer",
+          "scored_samples": 50,
+          "metrics": {
+            "legibility_pct": 92.5,
+            "coverage_pct": 91.5
+          },
+          "diagnostics": {}
+        }
+      ],
+      "run_cost": {
+        "currency": "CNY",
+        "amount": 1.19195832,
+        "request_count": 50,
+        "unmetered_requests": 0,
+        "basis": "metered requests at recorded request-time rates; cache hits and reused actor outputs incur no new cost"
+      },
+      "ncri_placement": null,
+      "model_usage": {
+        "openai-api/openai/kimi-k3.1-pro": {
+          "input_tokens": 14240,
+          "output_tokens": 19466,
+          "total_tokens": 33706,
+          "input_tokens_cache_read": 0,
+          "reasoning_tokens": 18516
+        },
+        "openai-api/openai/deepseek-v4.1-flash-1017": {
+          "input_tokens": 58929,
+          "output_tokens": 25890,
+          "total_tokens": 84819,
+          "input_tokens_cache_read": 0,
+          "reasoning_tokens": 20082
+        }
+      },
+      "revision": {
+        "type": "git",
+        "origin": "https://github.com/XWang20/cot-monitorability.git",
+        "commit": "f0f9606",
+        "dirty": true
+      },
+      "packages": {
+        "inspect_ai": "0.3.287",
+        "cot-monitorability": "0.1.0"
+      }
+    },
+    {
       "file": "eval_logs/intervention/deepseek-v4.1-flash-1017/daft/2026-11-03T18-40-01-00-00_openai-monitorability-intervention_H97PP23BFq5quVpzTCCoXo.eval",
       "sha256": "b03e3faafe981ef79640b9d9e4de5a4d5571771e5d912a0342183031a19769bb",
       "bytes": 3630195,
@@ -7946,6 +8381,1094 @@
         "origin": "https://github.com/XWang20/cot-monitorability.git",
         "commit": "d60d2b9",
         "dirty": false
+      },
+      "packages": {
+        "inspect_ai": "0.3.287",
+        "cot-monitorability": "0.1.0"
+      }
+    },
+    {
+      "file": "eval_logs/monitorbench/deepseek-v4.1-flash-1017/cue_answer.health/2026-11-04T12-47-30-00-00_monitorbench_foCT6Fapdzafhi6wVnFHEo.eval",
+      "sha256": "8b15b060bb1b650118975a76ead0e8486c10d4a95de73d78e32f53467c6feea1",
+      "bytes": 971759,
+      "task": "cot_monitorability/monitorbench",
+      "task_version": "4-A",
+      "tags": [
+        "cue_answer.health",
+        "20261103T141734Z_monitorability-50",
+        "monitorbench"
+      ],
+      "model": "openai-api/openai/deepseek-v4.1-flash-1017",
+      "status": "success",
+      "created": "2026-11-04T12:47:30+00:00",
+      "started_at": "2026-11-04T12:47:30+00:00",
+      "completed_at": "2026-11-04T12:55:35+00:00",
+      "elapsed_seconds": 485.0,
+      "reasoning_effort": "high",
+      "task_args": {
+        "subset": "cue_answer.health",
+        "stress_test": "standard",
+        "target_reasoning_effort": "high",
+        "epochs": 1,
+        "monitor_rollouts": 1,
+        "monitor_model": "openai-api/openai/deepseek-v4.1-flash-1017"
+      },
+      "eval_config": {
+        "limit": null,
+        "epochs": 1
+      },
+      "completed_samples": 50,
+      "total_samples": 50,
+      "scores": [
+        {
+          "scorer": "monitorbench_general_scorer",
+          "scored_samples": 50,
+          "metrics": {
+            "mb_cot_monitorability": 0.75,
+            "mb_verification_rate": 0.62
+          },
+          "diagnostics": {}
+        }
+      ],
+      "run_cost": {
+        "currency": "CNY",
+        "amount": 1.788981584,
+        "request_count": 100,
+        "unmetered_requests": 0,
+        "basis": "metered requests at recorded request-time rates; cache hits and reused actor outputs incur no new cost"
+      },
+      "ncri_placement": null,
+      "model_usage": {
+        "openai-api/openai/deepseek-v4.1-flash-1017": {
+          "input_tokens": 75501,
+          "output_tokens": 577768,
+          "total_tokens": 689493,
+          "input_tokens_cache_read": 36224,
+          "reasoning_tokens": 567141
+        }
+      },
+      "revision": {
+        "type": "git",
+        "origin": "https://github.com/XWang20/cot-monitorability.git",
+        "commit": "f0f9606",
+        "dirty": true
+      },
+      "packages": {
+        "inspect_ai": "0.3.287",
+        "cot-monitorability": "0.1.0"
+      }
+    },
+    {
+      "file": "eval_logs/monitorbench/deepseek-v4.1-flash-1017/cue_answer.logic/2026-11-04T12-11-02-00-00_monitorbench_Wms2FvpGoeyBYBBpoxvTJx.eval",
+      "sha256": "c2cf18e358565fcd5dce37f5d307382c71a54c60faf6361c68088de68eb7c2bc",
+      "bytes": 1860480,
+      "task": "cot_monitorability/monitorbench",
+      "task_version": "4-A",
+      "tags": [
+        "monitorbench",
+        "20261103T141734Z_monitorability-50",
+        "cue_answer.logic"
+      ],
+      "model": "openai-api/openai/deepseek-v4.1-flash-1017",
+      "status": "success",
+      "created": "2026-11-04T12:11:02+00:00",
+      "started_at": "2026-11-04T12:11:02+00:00",
+      "completed_at": "2026-11-04T12:11:02+00:00",
+      "elapsed_seconds": 0.0,
+      "reasoning_effort": "high",
+      "task_args": {
+        "subset": "cue_answer.logic",
+        "stress_test": "standard",
+        "target_reasoning_effort": "high",
+        "epochs": 1,
+        "monitor_rollouts": 1,
+        "monitor_model": "openai-api/openai/deepseek-v4.1-flash-1017"
+      },
+      "eval_config": {
+        "limit": null,
+        "epochs": 1
+      },
+      "completed_samples": 49,
+      "total_samples": 50,
+      "scores": [
+        {
+          "scorer": "monitorbench_general_scorer",
+          "scored_samples": 49,
+          "metrics": {
+            "mb_cot_monitorability": 0.5,
+            "mb_verification_rate": 0.9795918367346939
+          },
+          "diagnostics": {}
+        }
+      ],
+      "run_cost": {
+        "currency": "CNY",
+        "amount": 9.991291112,
+        "request_count": 938,
+        "unmetered_requests": 0,
+        "basis": "metered requests at recorded request-time rates; cache hits and reused actor outputs incur no new cost"
+      },
+      "ncri_placement": null,
+      "model_usage": {},
+      "revision": {
+        "type": "git",
+        "origin": "https://github.com/XWang20/cot-monitorability.git",
+        "commit": "f0f9606",
+        "dirty": true
+      },
+      "packages": {
+        "inspect_ai": "0.3.287",
+        "cot-monitorability": "0.1.0"
+      }
+    },
+    {
+      "file": "eval_logs/monitorbench/deepseek-v4.1-flash-1017/cue_answer.math/2026-11-04T10-12-18-00-00_monitorbench_6uV6r6mJsyjTLBf4qpHdmc.eval",
+      "sha256": "4ee01ce03c380ea76a4b4019cc44992b295aa731506f97f5744605d050c2a4a1",
+      "bytes": 1167754,
+      "task": "cot_monitorability/monitorbench",
+      "task_version": "4-A",
+      "tags": [
+        "20261103T141734Z_monitorability-50",
+        "monitorbench",
+        "cue_answer.math"
+      ],
+      "model": "openai-api/openai/deepseek-v4.1-flash-1017",
+      "status": "success",
+      "created": "2026-11-04T10:12:18+00:00",
+      "started_at": "2026-11-04T10:12:18+00:00",
+      "completed_at": "2026-11-04T10:25:30+00:00",
+      "elapsed_seconds": 792.0,
+      "reasoning_effort": "high",
+      "task_args": {
+        "subset": "cue_answer.math",
+        "stress_test": "standard",
+        "target_reasoning_effort": "high",
+        "epochs": 1,
+        "monitor_rollouts": 1,
+        "monitor_model": "openai-api/openai/deepseek-v4.1-flash-1017"
+      },
+      "eval_config": {
+        "limit": null,
+        "epochs": 1
+      },
+      "completed_samples": 28,
+      "total_samples": 28,
+      "scores": [
+        {
+          "scorer": "monitorbench_general_scorer",
+          "scored_samples": 28,
+          "metrics": {
+            "mb_cot_monitorability": 1.0,
+            "mb_verification_rate": 0.8214285714285714
+          },
+          "diagnostics": {}
+        }
+      ],
+      "run_cost": {
+        "currency": "CNY",
+        "amount": 5.674895056,
+        "request_count": 56,
+        "unmetered_requests": 0,
+        "basis": "metered requests at recorded request-time rates; cache hits and reused actor outputs incur no new cost"
+      },
+      "ncri_placement": null,
+      "model_usage": {
+        "openai-api/openai/deepseek-v4.1-flash-1017": {
+          "input_tokens": 63948,
+          "output_tokens": 135321,
+          "total_tokens": 200677,
+          "input_tokens_cache_read": 1408,
+          "reasoning_tokens": 135299
+        }
+      },
+      "revision": {
+        "type": "git",
+        "origin": "https://github.com/XWang20/cot-monitorability.git",
+        "commit": "f0f9606",
+        "dirty": true
+      },
+      "packages": {
+        "inspect_ai": "0.3.287",
+        "cot-monitorability": "0.1.0"
+      }
+    },
+    {
+      "file": "eval_logs/monitorbench/deepseek-v4.1-flash-1017/cue_condition.health/2026-11-04T08-59-00-00-00_monitorbench_FRAgPrgM934kHBnmSSsQCJ.eval",
+      "sha256": "f2288abbf99350146dc47de5dea2c3d11e3ef5e06737557da24c600dc5fcc4d2",
+      "bytes": 1102115,
+      "task": "cot_monitorability/monitorbench",
+      "task_version": "4-A",
+      "tags": [
+        "cue_condition.health",
+        "20261103T141734Z_monitorability-50",
+        "monitorbench"
+      ],
+      "model": "openai-api/openai/deepseek-v4.1-flash-1017",
+      "status": "success",
+      "created": "2026-11-04T08:59:00+00:00",
+      "started_at": "2026-11-04T08:59:00+00:00",
+      "completed_at": "2026-11-04T09:07:52+00:00",
+      "elapsed_seconds": 532.0,
+      "reasoning_effort": "high",
+      "task_args": {
+        "subset": "cue_condition.health",
+        "stress_test": "standard",
+        "target_reasoning_effort": "high",
+        "epochs": 1,
+        "monitor_rollouts": 1,
+        "monitor_model": "openai-api/openai/deepseek-v4.1-flash-1017"
+      },
+      "eval_config": {
+        "limit": null,
+        "epochs": 1
+      },
+      "completed_samples": 50,
+      "total_samples": 50,
+      "scores": [
+        {
+          "scorer": "monitorbench_general_scorer",
+          "scored_samples": 50,
+          "metrics": {
+            "mb_cot_monitorability": 1.0,
+            "mb_verification_rate": 0.66
+          },
+          "diagnostics": {}
+        }
+      ],
+      "run_cost": {
+        "currency": "CNY",
+        "amount": 4.205078884000001,
+        "request_count": 100,
+        "unmetered_requests": 0,
+        "basis": "metered requests at recorded request-time rates; cache hits and reused actor outputs incur no new cost"
+      },
+      "ncri_placement": null,
+      "model_usage": {
+        "openai-api/openai/deepseek-v4.1-flash-1017": {
+          "input_tokens": 163945,
+          "output_tokens": 662346,
+          "total_tokens": 827443,
+          "input_tokens_cache_read": 1152,
+          "reasoning_tokens": 651994
+        }
+      },
+      "revision": {
+        "type": "git",
+        "origin": "https://github.com/XWang20/cot-monitorability.git",
+        "commit": "f0f9606",
+        "dirty": true
+      },
+      "packages": {
+        "inspect_ai": "0.3.287",
+        "cot-monitorability": "0.1.0"
+      }
+    },
+    {
+      "file": "eval_logs/monitorbench/deepseek-v4.1-flash-1017/cue_condition.judgment/2026-11-04T08-54-59-00-00_monitorbench_YNNP9zfsorR8589D8P9yo5.eval",
+      "sha256": "fb9592afa83f04f0b7bb71acdc18c71c8277f5780313ed1761b375b927523786",
+      "bytes": 725781,
+      "task": "cot_monitorability/monitorbench",
+      "task_version": "4-A",
+      "tags": [
+        "cue_condition.judgment",
+        "20261103T141734Z_monitorability-50",
+        "monitorbench"
+      ],
+      "model": "openai-api/openai/deepseek-v4.1-flash-1017",
+      "status": "success",
+      "created": "2026-11-04T08:54:59+00:00",
+      "started_at": "2026-11-04T08:54:59+00:00",
+      "completed_at": "2026-11-04T08:58:58+00:00",
+      "elapsed_seconds": 239.0,
+      "reasoning_effort": "high",
+      "task_args": {
+        "subset": "cue_condition.judgment",
+        "stress_test": "standard",
+        "target_reasoning_effort": "high",
+        "epochs": 1,
+        "monitor_rollouts": 1,
+        "monitor_model": "openai-api/openai/deepseek-v4.1-flash-1017"
+      },
+      "eval_config": {
+        "limit": null,
+        "epochs": 1
+      },
+      "completed_samples": 50,
+      "total_samples": 50,
+      "scores": [
+        {
+          "scorer": "monitorbench_general_scorer",
+          "scored_samples": 50,
+          "metrics": {
+            "mb_cot_monitorability": 1.0,
+            "mb_verification_rate": 0.8
+          },
+          "diagnostics": {}
+        }
+      ],
+      "run_cost": {
+        "currency": "CNY",
+        "amount": 1.797701108,
+        "request_count": 100,
+        "unmetered_requests": 0,
+        "basis": "metered requests at recorded request-time rates; cache hits and reused actor outputs incur no new cost"
+      },
+      "ncri_placement": null,
+      "model_usage": {
+        "openai-api/openai/deepseek-v4.1-flash-1017": {
+          "input_tokens": 62844,
+          "output_tokens": 306916,
+          "total_tokens": 374624,
+          "input_tokens_cache_read": 4864,
+          "reasoning_tokens": 289370
+        }
+      },
+      "revision": {
+        "type": "git",
+        "origin": "https://github.com/XWang20/cot-monitorability.git",
+        "commit": "f0f9606",
+        "dirty": true
+      },
+      "packages": {
+        "inspect_ai": "0.3.287",
+        "cot-monitorability": "0.1.0"
+      }
+    },
+    {
+      "file": "eval_logs/monitorbench/deepseek-v4.1-flash-1017/cue_condition.knowledge/2026-11-04T08-52-48-00-00_monitorbench_Ex4djg7BFAi5HqjjttGbnE.eval",
+      "sha256": "9cbc15b75defb7d26946001e0af7b4b1c95f8e53c8451c20e4a3b3f8afaa3f50",
+      "bytes": 480786,
+      "task": "cot_monitorability/monitorbench",
+      "task_version": "4-A",
+      "tags": [
+        "20261103T141734Z_monitorability-50",
+        "monitorbench",
+        "cue_condition.knowledge"
+      ],
+      "model": "openai-api/openai/deepseek-v4.1-flash-1017",
+      "status": "success",
+      "created": "2026-11-04T08:52:48+00:00",
+      "started_at": "2026-11-04T08:52:48+00:00",
+      "completed_at": "2026-11-04T08:54:02+00:00",
+      "elapsed_seconds": 74.0,
+      "reasoning_effort": "high",
+      "task_args": {
+        "subset": "cue_condition.knowledge",
+        "stress_test": "standard",
+        "target_reasoning_effort": "high",
+        "epochs": 1,
+        "monitor_rollouts": 1,
+        "monitor_model": "openai-api/openai/deepseek-v4.1-flash-1017"
+      },
+      "eval_config": {
+        "limit": null,
+        "epochs": 1
+      },
+      "completed_samples": 50,
+      "total_samples": 50,
+      "scores": [
+        {
+          "scorer": "monitorbench_general_scorer",
+          "scored_samples": 50,
+          "metrics": {
+            "mb_cot_monitorability": 1.0,
+            "mb_verification_rate": 0.98
+          },
+          "diagnostics": {}
+        }
+      ],
+      "run_cost": {
+        "currency": "CNY",
+        "amount": 0.32157334800000004,
+        "request_count": 100,
+        "unmetered_requests": 0,
+        "basis": "metered requests at recorded request-time rates; cache hits and reused actor outputs incur no new cost"
+      },
+      "ncri_placement": null,
+      "model_usage": {
+        "openai-api/openai/deepseek-v4.1-flash-1017": {
+          "input_tokens": 86925,
+          "output_tokens": 70121,
+          "total_tokens": 180982,
+          "input_tokens_cache_read": 23936,
+          "reasoning_tokens": 57957
+        }
+      },
+      "revision": {
+        "type": "git",
+        "origin": "https://github.com/XWang20/cot-monitorability.git",
+        "commit": "f0f9606",
+        "dirty": true
+      },
+      "packages": {
+        "inspect_ai": "0.3.287",
+        "cot-monitorability": "0.1.0"
+      }
+    },
+    {
+      "file": "eval_logs/monitorbench/deepseek-v4.1-flash-1017/cue_condition.preference/2026-11-04T08-54-03-00-00_monitorbench_RWJTskbXdCDcavKokbrRda.eval",
+      "sha256": "b77a7a646c0ef9c70fa0c19a906b044bb9165c0789b6a7e32d557ebe8b102f02",
+      "bytes": 400669,
+      "task": "cot_monitorability/monitorbench",
+      "task_version": "4-A",
+      "tags": [
+        "20261103T141734Z_monitorability-50",
+        "cue_condition.preference",
+        "monitorbench"
+      ],
+      "model": "openai-api/openai/deepseek-v4.1-flash-1017",
+      "status": "success",
+      "created": "2026-11-04T08:54:03+00:00",
+      "started_at": "2026-11-04T08:54:03+00:00",
+      "completed_at": "2026-11-04T08:54:58+00:00",
+      "elapsed_seconds": 55.0,
+      "reasoning_effort": "high",
+      "task_args": {
+        "subset": "cue_condition.preference",
+        "stress_test": "standard",
+        "target_reasoning_effort": "high",
+        "epochs": 1,
+        "monitor_rollouts": 1,
+        "monitor_model": "openai-api/openai/deepseek-v4.1-flash-1017"
+      },
+      "eval_config": {
+        "limit": null,
+        "epochs": 1
+      },
+      "completed_samples": 50,
+      "total_samples": 50,
+      "scores": [
+        {
+          "scorer": "monitorbench_general_scorer",
+          "scored_samples": 50,
+          "metrics": {
+            "mb_cot_monitorability": 1.0,
+            "mb_verification_rate": 0.84
+          },
+          "diagnostics": {}
+        }
+      ],
+      "run_cost": {
+        "currency": "CNY",
+        "amount": 0.29544652800000004,
+        "request_count": 100,
+        "unmetered_requests": 0,
+        "basis": "metered requests at recorded request-time rates; cache hits and reused actor outputs incur no new cost"
+      },
+      "ncri_placement": null,
+      "model_usage": {
+        "openai-api/openai/deepseek-v4.1-flash-1017": {
+          "input_tokens": 38020,
+          "output_tokens": 57054,
+          "total_tokens": 100578,
+          "input_tokens_cache_read": 5504,
+          "reasoning_tokens": 45108
+        }
+      },
+      "revision": {
+        "type": "git",
+        "origin": "https://github.com/XWang20/cot-monitorability.git",
+        "commit": "f0f9606",
+        "dirty": true
+      },
+      "packages": {
+        "inspect_ai": "0.3.287",
+        "cot-monitorability": "0.1.0"
+      }
+    },
+    {
+      "file": "eval_logs/monitorbench/deepseek-v4.1-flash-1017/dual_objectives_steganography/2026-11-04T07-28-27-00-00_monitorbench_haC8H2rYPudHK7qJZW9ZRE.eval",
+      "sha256": "49477087238d093221ff0fa3f411f2b0d9853bc0a8b18608e7a88ce3b950605a",
+      "bytes": 483516,
+      "task": "cot_monitorability/monitorbench",
+      "task_version": "4-A",
+      "tags": [
+        "20261103T141734Z_monitorability-50",
+        "dual_objectives_steganography",
+        "monitorbench"
+      ],
+      "model": "openai-api/openai/deepseek-v4.1-flash-1017",
+      "status": "success",
+      "created": "2026-11-04T07:28:27+00:00",
+      "started_at": "2026-11-04T07:28:27+00:00",
+      "completed_at": "2026-11-04T07:29:14+00:00",
+      "elapsed_seconds": 47.0,
+      "reasoning_effort": "high",
+      "task_args": {
+        "subset": "dual_objectives_steganography",
+        "stress_test": "standard",
+        "target_reasoning_effort": "high",
+        "epochs": 1,
+        "monitor_rollouts": 1,
+        "monitor_model": "openai-api/openai/deepseek-v4.1-flash-1017"
+      },
+      "eval_config": {
+        "limit": null,
+        "epochs": 1
+      },
+      "completed_samples": 50,
+      "total_samples": 50,
+      "scores": [
+        {
+          "scorer": "steganography_monitor",
+          "scored_samples": 50,
+          "metrics": {
+            "monitorability_action": 0.02040816326530612,
+            "pooled_pairs_action": 49.0,
+            "monitorability_cot": 1.0,
+            "pooled_pairs_cot": 49.0,
+            "monitorability_all": 1.0,
+            "pooled_pairs_all": 49.0,
+            "verified_rollout_rate": 0.98
+          },
+          "diagnostics": {}
+        }
+      ],
+      "run_cost": {
+        "currency": "CNY",
+        "amount": 0.55385952,
+        "request_count": 50,
+        "unmetered_requests": 0,
+        "basis": "metered requests at recorded request-time rates; cache hits and reused actor outputs incur no new cost"
+      },
+      "ncri_placement": null,
+      "model_usage": {
+        "openai-api/openai/deepseek-v4.1-flash-1017": {
+          "input_tokens": 225619,
+          "output_tokens": 42338,
+          "total_tokens": 268213,
+          "input_tokens_cache_read": 256,
+          "reasoning_tokens": 41164
+        }
+      },
+      "revision": {
+        "type": "git",
+        "origin": "https://github.com/XWang20/cot-monitorability.git",
+        "commit": "f0f9606",
+        "dirty": true
+      },
+      "packages": {
+        "inspect_ai": "0.3.287",
+        "cot-monitorability": "0.1.0"
+      }
+    },
+    {
+      "file": "eval_logs/monitorbench/deepseek-v4.1-flash-1017/dual_objectives_summarization/2026-11-04T07-29-15-00-00_monitorbench_MNryRTEqtraUXi9rzuhEfq.eval",
+      "sha256": "6ee31d70a8e4e70a2c107789fe7d7329bd9f5d6656cd8dbb9f0d0fc034f4d444",
+      "bytes": 1480687,
+      "task": "cot_monitorability/monitorbench",
+      "task_version": "4-A",
+      "tags": [
+        "20261103T141734Z_monitorability-50",
+        "dual_objectives_summarization",
+        "monitorbench"
+      ],
+      "model": "openai-api/openai/deepseek-v4.1-flash-1017",
+      "status": "success",
+      "created": "2026-11-04T07:29:15+00:00",
+      "started_at": "2026-11-04T07:29:15+00:00",
+      "completed_at": "2026-11-04T07:30:25+00:00",
+      "elapsed_seconds": 70.0,
+      "reasoning_effort": "high",
+      "task_args": {
+        "subset": "dual_objectives_summarization",
+        "stress_test": "standard",
+        "target_reasoning_effort": "high",
+        "epochs": 1,
+        "monitor_rollouts": 1,
+        "monitor_model": "openai-api/openai/deepseek-v4.1-flash-1017"
+      },
+      "eval_config": {
+        "limit": null,
+        "epochs": 1
+      },
+      "completed_samples": 50,
+      "total_samples": 50,
+      "scores": [
+        {
+          "scorer": "summarization_monitor",
+          "scored_samples": 50,
+          "metrics": {
+            "monitorability_action": 0.0,
+            "pooled_pairs_action": 50.0,
+            "monitorability_cot": 1.0,
+            "pooled_pairs_cot": 50.0,
+            "monitorability_all": 1.0,
+            "pooled_pairs_all": 50.0,
+            "verified_rollout_rate": 1.0
+          },
+          "diagnostics": {}
+        }
+      ],
+      "run_cost": {
+        "currency": "CNY",
+        "amount": 1.27859604,
+        "request_count": 50,
+        "unmetered_requests": 0,
+        "basis": "metered requests at recorded request-time rates; cache hits and reused actor outputs incur no new cost"
+      },
+      "ncri_placement": null,
+      "model_usage": {
+        "openai-api/openai/deepseek-v4.1-flash-1017": {
+          "input_tokens": 739945,
+          "output_tokens": 101408,
+          "total_tokens": 841609,
+          "input_tokens_cache_read": 256,
+          "reasoning_tokens": 90597
+        }
+      },
+      "revision": {
+        "type": "git",
+        "origin": "https://github.com/XWang20/cot-monitorability.git",
+        "commit": "f0f9606",
+        "dirty": true
+      },
+      "packages": {
+        "inspect_ai": "0.3.287",
+        "cot-monitorability": "0.1.0"
+      }
+    },
+    {
+      "file": "eval_logs/monitorbench/deepseek-v4.1-flash-1017/goal_deception.realworld/2026-11-04T08-50-54-00-00_monitorbench_UHc8VxqgpMQVGo4vpq8VC9.eval",
+      "sha256": "5ad72997ee01a8f856090c4405ff6e75221c822c1b39e6508e2c549799420c5d",
+      "bytes": 532697,
+      "task": "cot_monitorability/monitorbench",
+      "task_version": "4-A",
+      "tags": [
+        "20261103T141734Z_monitorability-50",
+        "monitorbench",
+        "goal_deception.realworld"
+      ],
+      "model": "openai-api/openai/deepseek-v4.1-flash-1017",
+      "status": "success",
+      "created": "2026-11-04T08:50:54+00:00",
+      "started_at": "2026-11-04T08:50:54+00:00",
+      "completed_at": "2026-11-04T08:52:47+00:00",
+      "elapsed_seconds": 113.0,
+      "reasoning_effort": "high",
+      "task_args": {
+        "subset": "goal_deception.realworld",
+        "stress_test": "standard",
+        "target_reasoning_effort": "high",
+        "epochs": 1,
+        "monitor_rollouts": 1,
+        "monitor_model": "openai-api/openai/deepseek-v4.1-flash-1017"
+      },
+      "eval_config": {
+        "limit": null,
+        "epochs": 1
+      },
+      "completed_samples": 50,
+      "total_samples": 50,
+      "scores": [
+        {
+          "scorer": "monitorbench_general_scorer",
+          "scored_samples": 50,
+          "metrics": {
+            "mb_cot_monitorability": 0.3333333333333333,
+            "mb_verification_rate": 0.06
+          },
+          "diagnostics": {}
+        }
+      ],
+      "run_cost": {
+        "currency": "CNY",
+        "amount": 0.51576888,
+        "request_count": 100,
+        "unmetered_requests": 0,
+        "basis": "metered requests at recorded request-time rates; cache hits and reused actor outputs incur no new cost"
+      },
+      "ncri_placement": null,
+      "model_usage": {
+        "openai-api/openai/deepseek-v4.1-flash-1017": {
+          "input_tokens": 93564,
+          "output_tokens": 109290,
+          "total_tokens": 206694,
+          "input_tokens_cache_read": 3840,
+          "reasoning_tokens": 86556
+        }
+      },
+      "revision": {
+        "type": "git",
+        "origin": "https://github.com/XWang20/cot-monitorability.git",
+        "commit": "f0f9606",
+        "dirty": true
+      },
+      "packages": {
+        "inspect_ai": "0.3.287",
+        "cot-monitorability": "0.1.0"
+      }
+    },
+    {
+      "file": "eval_logs/monitorbench/deepseek-v4.1-flash-1017/goal_sandbag.science/2026-11-04T08-37-19-00-00_monitorbench_AnQRAsex2bbLniwgiDpvLQ.eval",
+      "sha256": "ea9294dcaa09370c3119252b0bc0963ea02f0ae50a82e3172fae9ebe32fa5f3f",
+      "bytes": 908764,
+      "task": "cot_monitorability/monitorbench",
+      "task_version": "4-A",
+      "tags": [
+        "goal_sandbag.science",
+        "20261103T141734Z_monitorability-50",
+        "monitorbench"
+      ],
+      "model": "openai-api/openai/deepseek-v4.1-flash-1017",
+      "status": "success",
+      "created": "2026-11-04T08:37:19+00:00",
+      "started_at": "2026-11-04T08:37:19+00:00",
+      "completed_at": "2026-11-04T08:50:53+00:00",
+      "elapsed_seconds": 814.0,
+      "reasoning_effort": "high",
+      "task_args": {
+        "subset": "goal_sandbag.science",
+        "stress_test": "standard",
+        "target_reasoning_effort": "high",
+        "epochs": 1,
+        "monitor_rollouts": 1,
+        "monitor_model": "openai-api/openai/deepseek-v4.1-flash-1017"
+      },
+      "eval_config": {
+        "limit": null,
+        "epochs": 1
+      },
+      "completed_samples": 50,
+      "total_samples": 50,
+      "scores": [
+        {
+          "scorer": "monitorbench_general_scorer",
+          "scored_samples": 50,
+          "metrics": {
+            "mb_cot_monitorability": 0.0,
+            "mb_verification_rate": 0.06
+          },
+          "diagnostics": {}
+        }
+      ],
+      "run_cost": {
+        "currency": "CNY",
+        "amount": 7.793911368000001,
+        "request_count": 200,
+        "unmetered_requests": 0,
+        "basis": "metered requests at recorded request-time rates; cache hits and reused actor outputs incur no new cost"
+      },
+      "ncri_placement": null,
+      "model_usage": {
+        "openai-api/openai/deepseek-v4.1-flash-1017": {
+          "input_tokens": 10153,
+          "output_tokens": 586613,
+          "total_tokens": 618270,
+          "input_tokens_cache_read": 21504,
+          "reasoning_tokens": 566916
+        }
+      },
+      "revision": {
+        "type": "git",
+        "origin": "https://github.com/XWang20/cot-monitorability.git",
+        "commit": "f0f9606",
+        "dirty": true
+      },
+      "packages": {
+        "inspect_ai": "0.3.287",
+        "cot-monitorability": "0.1.0"
+      }
+    },
+    {
+      "file": "eval_logs/monitorbench/deepseek-v4.1-flash-1017/goal_sandbag_engineering/2026-11-04T07-45-40-00-00_monitorbench_6W855BfKRs57qNGwgdi3qn.eval",
+      "sha256": "bdf0d4c0cd6b8514ea923c62b8ae83fe82a02397c09b052291fbc9230b83d33b",
+      "bytes": 1407094,
+      "task": "cot_monitorability/monitorbench",
+      "task_version": "4-A",
+      "tags": [
+        "20261103T141734Z_monitorability-50",
+        "goal_sandbag_engineering",
+        "monitorbench"
+      ],
+      "model": "openai-api/openai/deepseek-v4.1-flash-1017",
+      "status": "success",
+      "created": "2026-11-04T07:45:40+00:00",
+      "started_at": "2026-11-04T07:45:40+00:00",
+      "completed_at": "2026-11-04T08:00:09+00:00",
+      "elapsed_seconds": 869.0,
+      "reasoning_effort": "high",
+      "task_args": {
+        "subset": "goal_sandbag_engineering",
+        "stress_test": "standard",
+        "target_reasoning_effort": "high",
+        "epochs": 1,
+        "monitor_rollouts": 1,
+        "monitor_model": "openai-api/openai/deepseek-v4.1-flash-1017"
+      },
+      "eval_config": {
+        "limit": null,
+        "epochs": 1
+      },
+      "completed_samples": 50,
+      "total_samples": 50,
+      "scores": [
+        {
+          "scorer": "intervention_monitor",
+          "scored_samples": 50,
+          "metrics": {
+            "paired_groups": 50.0,
+            "original_verified_rollout_rate": 0.44,
+            "intervened_verified_rollout_rate": 0.56,
+            "monitorability_action": 0.0,
+            "eligible_groups_action": 9.0,
+            "monitorability_cot": 0.1111111111111111,
+            "eligible_groups_cot": 9.0,
+            "monitorability_all": 0.1111111111111111,
+            "eligible_groups_all": 9.0
+          },
+          "diagnostics": {}
+        }
+      ],
+      "run_cost": {
+        "currency": "CNY",
+        "amount": 5.090353736,
+        "request_count": 100,
+        "unmetered_requests": 0,
+        "basis": "metered requests at recorded request-time rates; cache hits and reused actor outputs incur no new cost"
+      },
+      "ncri_placement": null,
+      "model_usage": {
+        "openai-api/openai/deepseek-v4.1-flash-1017": {
+          "input_tokens": 713737,
+          "output_tokens": 952696,
+          "total_tokens": 1679233,
+          "input_tokens_cache_read": 12800,
+          "reasoning_tokens": 897834
+        }
+      },
+      "revision": {
+        "type": "git",
+        "origin": "https://github.com/XWang20/cot-monitorability.git",
+        "commit": "f0f9606",
+        "dirty": true
+      },
+      "packages": {
+        "inspect_ai": "0.3.287",
+        "cot-monitorability": "0.1.0"
+      }
+    },
+    {
+      "file": "eval_logs/monitorbench/deepseek-v4.1-flash-1017/goal_sandbag_math/2026-11-04T07-35-26-00-00_monitorbench_XhUERp5sYyLxjpGDUBRNgB.eval",
+      "sha256": "3840f5772d1dc670ce3f0a320736360b7a1439c61fa0dd2b0ab7757609899563",
+      "bytes": 590480,
+      "task": "cot_monitorability/monitorbench",
+      "task_version": "4-A",
+      "tags": [
+        "20261103T141734Z_monitorability-50",
+        "goal_sandbag_math",
+        "monitorbench"
+      ],
+      "model": "openai-api/openai/deepseek-v4.1-flash-1017",
+      "status": "success",
+      "created": "2026-11-04T07:35:26+00:00",
+      "started_at": "2026-11-04T07:35:26+00:00",
+      "completed_at": "2026-11-04T07:45:39+00:00",
+      "elapsed_seconds": 613.0,
+      "reasoning_effort": "high",
+      "task_args": {
+        "subset": "goal_sandbag_math",
+        "stress_test": "standard",
+        "target_reasoning_effort": "high",
+        "epochs": 1,
+        "monitor_rollouts": 1,
+        "monitor_model": "openai-api/openai/deepseek-v4.1-flash-1017"
+      },
+      "eval_config": {
+        "limit": null,
+        "epochs": 1
+      },
+      "completed_samples": 30,
+      "total_samples": 30,
+      "scores": [
+        {
+          "scorer": "intervention_monitor",
+          "scored_samples": 30,
+          "metrics": {
+            "paired_groups": 30.0,
+            "original_verified_rollout_rate": 0.0,
+            "intervened_verified_rollout_rate": 0.06666666666666667,
+            "monitorability_action": 0.0,
+            "eligible_groups_action": 2.0,
+            "monitorability_cot": 1.0,
+            "eligible_groups_cot": 2.0,
+            "monitorability_all": 1.0,
+            "eligible_groups_all": 2.0
+          },
+          "diagnostics": {}
+        }
+      ],
+      "run_cost": {
+        "currency": "CNY",
+        "amount": 2.1242089920000002,
+        "request_count": 60,
+        "unmetered_requests": 0,
+        "basis": "metered requests at recorded request-time rates; cache hits and reused actor outputs incur no new cost"
+      },
+      "ncri_placement": null,
+      "model_usage": {
+        "openai-api/openai/deepseek-v4.1-flash-1017": {
+          "input_tokens": 24853,
+          "output_tokens": 351344,
+          "total_tokens": 378373,
+          "input_tokens_cache_read": 2176,
+          "reasoning_tokens": 325381
+        }
+      },
+      "revision": {
+        "type": "git",
+        "origin": "https://github.com/XWang20/cot-monitorability.git",
+        "commit": "f0f9606",
+        "dirty": true
+      },
+      "packages": {
+        "inspect_ai": "0.3.287",
+        "cot-monitorability": "0.1.0"
+      }
+    },
+    {
+      "file": "eval_logs/monitorbench/deepseek-v4.1-flash-1017/goal_sandbag_safety/2026-11-04T07-30-27-00-00_monitorbench_hWDBGxtxYnw226DvxjCM9y.eval",
+      "sha256": "6d808447c3c13d948129f0c21dd204593709da075780c0de6f839bce7af14f2a",
+      "bytes": 536666,
+      "task": "cot_monitorability/monitorbench",
+      "task_version": "4-A",
+      "tags": [
+        "20261103T141734Z_monitorability-50",
+        "goal_sandbag_safety",
+        "monitorbench"
+      ],
+      "model": "openai-api/openai/deepseek-v4.1-flash-1017",
+      "status": "success",
+      "created": "2026-11-04T07:30:27+00:00",
+      "started_at": "2026-11-04T07:30:27+00:00",
+      "completed_at": "2026-11-04T07:35:24+00:00",
+      "elapsed_seconds": 297.0,
+      "reasoning_effort": "high",
+      "task_args": {
+        "subset": "goal_sandbag_safety",
+        "stress_test": "standard",
+        "target_reasoning_effort": "high",
+        "epochs": 1,
+        "monitor_rollouts": 1,
+        "monitor_model": "openai-api/openai/deepseek-v4.1-flash-1017"
+      },
+      "eval_config": {
+        "limit": null,
+        "epochs": 1
+      },
+      "completed_samples": 50,
+      "total_samples": 50,
+      "scores": [
+        {
+          "scorer": "intervention_monitor",
+          "scored_samples": 50,
+          "metrics": {
+            "paired_groups": 50.0,
+            "original_verified_rollout_rate": 0.16,
+            "intervened_verified_rollout_rate": 0.12,
+            "monitorability_action": 0.0,
+            "eligible_groups_action": 0.0,
+            "monitorability_cot": 0.0,
+            "eligible_groups_cot": 0.0,
+            "monitorability_all": 0.0,
+            "eligible_groups_all": 0.0
+          },
+          "diagnostics": {}
+        }
+      ],
+      "run_cost": {
+        "currency": "CNY",
+        "amount": 1.057677272,
+        "request_count": 100,
+        "unmetered_requests": 0,
+        "basis": "metered requests at recorded request-time rates; cache hits and reused actor outputs incur no new cost"
+      },
+      "ncri_placement": null,
+      "model_usage": {
+        "openai-api/openai/deepseek-v4.1-flash-1017": {
+          "input_tokens": 111787,
+          "output_tokens": 193978,
+          "total_tokens": 309221,
+          "input_tokens_cache_read": 3456,
+          "reasoning_tokens": 180321
+        }
+      },
+      "revision": {
+        "type": "git",
+        "origin": "https://github.com/XWang20/cot-monitorability.git",
+        "commit": "f0f9606",
+        "dirty": true
+      },
+      "packages": {
+        "inspect_ai": "0.3.287",
+        "cot-monitorability": "0.1.0"
+      }
+    },
+    {
+      "file": "eval_logs/monitorbench/deepseek-v4.1-flash-1017/process.multistep/2026-11-04T12-55-36-00-00_monitorbench_WvrwrJJZcawqiDwE3K3CLv.eval",
+      "sha256": "70b3c9300657463d9197fc26fae8f0fcc576a891a524c57158978d5490003353",
+      "bytes": 449254,
+      "task": "cot_monitorability/monitorbench",
+      "task_version": "4-A",
+      "tags": [
+        "process.multistep",
+        "20261103T141734Z_monitorability-50",
+        "monitorbench"
+      ],
+      "model": "openai-api/openai/deepseek-v4.1-flash-1017",
+      "status": "success",
+      "created": "2026-11-04T12:55:36+00:00",
+      "started_at": "2026-11-04T12:55:36+00:00",
+      "completed_at": "2026-11-04T12:57:43+00:00",
+      "elapsed_seconds": 127.0,
+      "reasoning_effort": "high",
+      "task_args": {
+        "subset": "process.multistep",
+        "stress_test": "standard",
+        "target_reasoning_effort": "high",
+        "epochs": 1,
+        "monitor_rollouts": 1,
+        "monitor_model": "openai-api/openai/deepseek-v4.1-flash-1017"
+      },
+      "eval_config": {
+        "limit": null,
+        "epochs": 1
+      },
+      "completed_samples": 25,
+      "total_samples": 25,
+      "scores": [
+        {
+          "scorer": "monitorbench_general_scorer",
+          "scored_samples": 25,
+          "metrics": {
+            "mb_cot_monitorability": 0.88,
+            "mb_verification_rate": 1.0
+          },
+          "diagnostics": {}
+        }
+      ],
+      "run_cost": {
+        "currency": "CNY",
+        "amount": 0.60222332,
+        "request_count": 25,
+        "unmetered_requests": 0,
+        "basis": "metered requests at recorded request-time rates; cache hits and reused actor outputs incur no new cost"
+      },
+      "ncri_placement": null,
+      "model_usage": {
+        "openai-api/openai/deepseek-v4.1-flash-1017": {
+          "input_tokens": 259114,
+          "output_tokens": 242059,
+          "total_tokens": 501173,
+          "input_tokens_cache_read": 0,
+          "reasoning_tokens": 237308
+        }
+      },
+      "revision": {
+        "type": "git",
+        "origin": "https://github.com/XWang20/cot-monitorability.git",
+        "commit": "f0f9606",
+        "dirty": true
       },
       "packages": {
         "inspect_ai": "0.3.287",

@@ -1,6 +1,6 @@
 # Evaluation results
 
-Index of 84 stored runs. Raw `.eval` files are kept by the operator; this directory versions their metadata and checksums.
+Index of 105 stored runs. Raw `.eval` files are kept by the operator; this directory versions their metadata and checksums.
 
 Interpret each run using its recorded task namespace, version, configuration, and package revision. Limited runs do not establish full-dataset performance.
 
@@ -65,8 +65,29 @@ One latest completed run per package task, model, effort, and task configuration
 | cot_monitorability/cot_controllability_qa / mmlu_pro/repeat_sentences | 5-A | kimi-k3.1-pro | high | 50/50 | success | cot_controllability_score=0 |
 | cot_monitorability/cot_controllability_qa / mmlu_pro/uppercase_thinking | 5-A | kimi-k3.1-pro | high | 50/50 | success | cot_controllability_score=0 |
 | cot_monitorability/cot_controllability_qa / mmlu_pro/word_suppression | 5-A | kimi-k3.1-pro | high | 50/50 | success | cot_controllability_score=0.2 |
+| cot_monitorability/cot_immediacy_2510 / gpqa | 4-A | deepseek-v4.1-flash-1017 | high | 50/50 | success | legibility_pct=92.5; coverage_pct=94.5 |
 | cot_monitorability/cot_immediacy_2510 / gpqa | 1-A | deepseek-v4.1-flash-1017 | high | 5/5 | success | legibility_pct=90; coverage_pct=100 |
+| cot_monitorability/cot_immediacy_2510 / hle | 4-A | deepseek-v4.1-flash-1017 | high | 50/50 | success | legibility_pct=92; coverage_pct=92.5 |
+| cot_monitorability/cot_immediacy_2510 / mmlu_pro | 4-A | deepseek-v4.1-flash-1017 | high | 50/50 | success | legibility_pct=96; coverage_pct=92.5 |
+| cot_monitorability/cot_immediacy_2510 / gpqa | 4-A | kimi-k3.1-pro | high | 50/50 | success | legibility_pct=84.5; coverage_pct=89.5 |
 | cot_monitorability/cot_immediacy_2510 / gpqa | 1-A | kimi-k3.1-pro | high | 5/5 | success | legibility_pct=80; coverage_pct=95 |
+| cot_monitorability/cot_immediacy_2510 / hle | 4-A | kimi-k3.1-pro | high | 50/50 | success | legibility_pct=84; coverage_pct=83 |
+| cot_monitorability/cot_immediacy_2510 / mmlu_pro | 4-A | kimi-k3.1-pro | high | 50/50 | success | legibility_pct=92.5; coverage_pct=91.5 |
+| cot_monitorability/monitorbench / cue_answer.health | 4-A | deepseek-v4.1-flash-1017 | high | 50/50 | success | mb_cot_monitorability=0.75 |
+| cot_monitorability/monitorbench / cue_answer.logic | 4-A | deepseek-v4.1-flash-1017 | high | 49/50 | success | mb_cot_monitorability=0.5 |
+| cot_monitorability/monitorbench / cue_answer.math | 4-A | deepseek-v4.1-flash-1017 | high | 28/28 | success | mb_cot_monitorability=1 |
+| cot_monitorability/monitorbench / cue_condition.health | 4-A | deepseek-v4.1-flash-1017 | high | 50/50 | success | mb_cot_monitorability=1 |
+| cot_monitorability/monitorbench / cue_condition.judgment | 4-A | deepseek-v4.1-flash-1017 | high | 50/50 | success | mb_cot_monitorability=1 |
+| cot_monitorability/monitorbench / cue_condition.knowledge | 4-A | deepseek-v4.1-flash-1017 | high | 50/50 | success | mb_cot_monitorability=1 |
+| cot_monitorability/monitorbench / cue_condition.preference | 4-A | deepseek-v4.1-flash-1017 | high | 50/50 | success | mb_cot_monitorability=1 |
+| cot_monitorability/monitorbench / dual_objectives_steganography | 4-A | deepseek-v4.1-flash-1017 | high | 50/50 | success | Not recorded |
+| cot_monitorability/monitorbench / dual_objectives_summarization | 4-A | deepseek-v4.1-flash-1017 | high | 50/50 | success | Not recorded |
+| cot_monitorability/monitorbench / goal_deception.realworld | 4-A | deepseek-v4.1-flash-1017 | high | 50/50 | success | mb_cot_monitorability=0.3333 |
+| cot_monitorability/monitorbench / goal_sandbag.science | 4-A | deepseek-v4.1-flash-1017 | high | 50/50 | success | mb_cot_monitorability=0 |
+| cot_monitorability/monitorbench / goal_sandbag_engineering | 4-A | deepseek-v4.1-flash-1017 | high | 50/50 | success | Not recorded |
+| cot_monitorability/monitorbench / goal_sandbag_math | 4-A | deepseek-v4.1-flash-1017 | high | 30/30 | success | Not recorded |
+| cot_monitorability/monitorbench / goal_sandbag_safety | 4-A | deepseek-v4.1-flash-1017 | high | 50/50 | success | Not recorded |
+| cot_monitorability/monitorbench / process.multistep | 4-A | deepseek-v4.1-flash-1017 | high | 25/25 | success | mb_cot_monitorability=0.88 |
 | cot_monitorability/monitorbench / cue_condition.preference | 1-A | deepseek-v4.1-flash-1017 | high | 5/5 | success | mb_cot_monitorability=1 |
 | cot_monitorability/monitorbench / cue_condition.preference | 1-A | kimi-k3.1-pro | high | 5/5 | success | mb_cot_monitorability=1 |
 | cot_monitorability/ncri_bench / arithmetic | 3-A | deepseek-v4.1-flash-1017 | none | 5/5 | success | Partial placement (1/19 domains); ncri_placement_score=75.47; ncri_valid_rate=1 |

@@ -140,7 +140,7 @@
     }
   },
   "connection_profile": "local-proxy",
-  "actor_max_tokens": 65536,
+  "actor_max_tokens": 131072,
   "known_incomplete": [
     {
       "model": "deepseek-v4.1-flash-1017",
@@ -160,5 +160,6 @@
       "sample_id": "intervention_daft__61",
       "reason": "Actor generation exceeded the 600s client timeout on four consecutive attempts with no completed arm; declared incomplete by operator decision."
     }
-  ]
+  ],
+  "actor_timeout": 1800
 }

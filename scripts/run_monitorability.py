@@ -424,8 +424,9 @@ class Experiment:
                 "role": role,
             }
 
+        timeout = self.config.get("actor_timeout", 600) if role == "actor" else 600
         client = DefaultAsyncHttpxClient(
-            timeout=600,
+            timeout=timeout,
             event_hooks=self.budget.hooks(chosen["pricing"], context, effort),
         )
         return get_model(
@@ -434,7 +435,7 @@ class Experiment:
             api_key=api_key,
             memoize=False,
             http_client=client,
-            client_timeout=600,
+            client_timeout=timeout,
             max_retries=0,
             responses_api=False,
             stream=False,
@@ -447,7 +448,7 @@ class Experiment:
                 else self.config.get("actor_max_tokens", 65536),
                 adaptive_connections=64,
                 max_retries=0,
-                timeout=600,
+                timeout=timeout,
                 cache=CachePolicy(expiry="30D", scopes={"experiment": self.state.name}),
             ),
         )
