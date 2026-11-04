@@ -502,8 +502,8 @@ class Experiment:
                 destination = (
                     (self.state / "preflight" if preflight else self.logs)
                     / family
-                    / dataset
                     / path_slug(specification["id"])
+                    / dataset
                 )
             destination.mkdir(parents=True, exist_ok=True)
             group_success, headers = eval_set(
