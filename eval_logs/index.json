@@ -2,7 +2,7 @@
   "schema_version": 1,
   "runs": [
     {
-      "file": "eval_logs/20261103T090109Z_cot-control-50/cot_control/deepseek-v4.1-flash-1017/gpqa/2026-11-03T10-37-33-00-00_cot-controllability-qa_AqhkiUqTrRGVjsDk3ZBbny.eval",
+      "file": "eval_logs/cot_control/deepseek-v4.1-flash-1017/gpqa/2026-11-03T10-37-33-00-00_cot-controllability-qa_AqhkiUqTrRGVjsDk3ZBbny.eval",
       "sha256": "66b9d200f1ed0647f61ab087696c963cbbd5156cebe4d41364af21060e263936",
       "bytes": 626341,
       "task": "cot_monitorability/cot_controllability_qa",
@@ -133,7 +133,7 @@
       }
     },
     {
-      "file": "eval_logs/20261103T090109Z_cot-control-50/cot_control/deepseek-v4.1-flash-1017/gpqa/2026-11-03T10-37-33-00-00_cot-controllability-qa_JNKb2gxuRdiv5GCMXiDaHA.eval",
+      "file": "eval_logs/cot_control/deepseek-v4.1-flash-1017/gpqa/2026-11-03T10-37-33-00-00_cot-controllability-qa_JNKb2gxuRdiv5GCMXiDaHA.eval",
       "sha256": "f9f910c20bcb3dd18d633e97cf547aa8b93f1584503dfef5f3c5b8bbd8f1bce0",
       "bytes": 629016,
       "task": "cot_monitorability/cot_controllability_qa",
@@ -264,7 +264,7 @@
       }
     },
     {
-      "file": "eval_logs/20261103T090109Z_cot-control-50/cot_control/deepseek-v4.1-flash-1017/gpqa/2026-11-03T10-48-47-00-00_cot-controllability-qa_Jh5k53cWMnyrsyYfMYsznw.eval",
+      "file": "eval_logs/cot_control/deepseek-v4.1-flash-1017/gpqa/2026-11-03T10-48-47-00-00_cot-controllability-qa_Jh5k53cWMnyrsyYfMYsznw.eval",
       "sha256": "c1ec16a4cc549f20dbc6905104a1437f7cda4b582728a9aaf24a9fb0cab99b32",
       "bytes": 672251,
       "task": "cot_monitorability/cot_controllability_qa",
@@ -395,7 +395,7 @@
       }
     },
     {
-      "file": "eval_logs/20261103T090109Z_cot-control-50/cot_control/deepseek-v4.1-flash-1017/gpqa/2026-11-03T11-49-09-00-00_cot-controllability-qa_Et6zHB7M6VegWFkyZvViaC.eval",
+      "file": "eval_logs/cot_control/deepseek-v4.1-flash-1017/gpqa/2026-11-03T11-49-09-00-00_cot-controllability-qa_Et6zHB7M6VegWFkyZvViaC.eval",
       "sha256": "7887bb3fc4ad00878e373120d907945d3e2033872d44f0cc2338b92ec50971c3",
       "bytes": 622393,
       "task": "cot_monitorability/cot_controllability_qa",
@@ -526,7 +526,7 @@
       }
     },
     {
-      "file": "eval_logs/20261103T090109Z_cot-control-50/cot_control/deepseek-v4.1-flash-1017/gpqa/2026-11-03T12-05-14-00-00_cot-controllability-qa_cbietyxSsCKMEpEfFHTChu.eval",
+      "file": "eval_logs/cot_control/deepseek-v4.1-flash-1017/gpqa/2026-11-03T12-05-14-00-00_cot-controllability-qa_cbietyxSsCKMEpEfFHTChu.eval",
       "sha256": "3ac6251dc1b32392ee1e37976392c7ce8724935198ea489a4d02182e32f9487f",
       "bytes": 729657,
       "task": "cot_monitorability/cot_controllability_qa",
@@ -657,7 +657,7 @@
       }
     },
     {
-      "file": "eval_logs/20261103T090109Z_cot-control-50/cot_control/deepseek-v4.1-flash-1017/gpqa/2026-11-03T12-09-11-00-00_cot-controllability-qa_gtfEdkyVhXURYMjdcBoxWe.eval",
+      "file": "eval_logs/cot_control/deepseek-v4.1-flash-1017/gpqa/2026-11-03T12-09-11-00-00_cot-controllability-qa_gtfEdkyVhXURYMjdcBoxWe.eval",
       "sha256": "b62d714280f3207a7afbb7b4e82eb5a08e4423735d2ed54c20674ca604e32c06",
       "bytes": 667402,
       "task": "cot_monitorability/cot_controllability_qa",
@@ -788,7 +788,7 @@
       }
     },
     {
-      "file": "eval_logs/20261103T090109Z_cot-control-50/cot_control/deepseek-v4.1-flash-1017/gpqa/2026-11-03T13-56-34-00-00_cot-controllability-qa_7NxfsJE2D5iYCXkT6PXtmL.eval",
+      "file": "eval_logs/cot_control/deepseek-v4.1-flash-1017/gpqa/2026-11-03T13-56-34-00-00_cot-controllability-qa_7NxfsJE2D5iYCXkT6PXtmL.eval",
       "sha256": "1a2e92a16f6a8656e4dc9914fac339bceba50a43746e7ca30b51053e79f502c4",
       "bytes": 720114,
       "task": "cot_monitorability/cot_controllability_qa",
@@ -919,7 +919,7 @@
       }
     },
     {
-      "file": "eval_logs/20261103T090109Z_cot-control-50/cot_control/deepseek-v4.1-flash-1017/gpqa/2026-11-03T13-56-34-00-00_cot-controllability-qa_Te9QSSPNYoZWuaZ4ajhBsH.eval",
+      "file": "eval_logs/cot_control/deepseek-v4.1-flash-1017/gpqa/2026-11-03T13-56-34-00-00_cot-controllability-qa_Te9QSSPNYoZWuaZ4ajhBsH.eval",
       "sha256": "0ceb33aaae307844fb3b8365a8ed5633b654b09c37984547766566007aca9389",
       "bytes": 659478,
       "task": "cot_monitorability/cot_controllability_qa",
@@ -1050,7 +1050,7 @@
       }
     },
     {
-      "file": "eval_logs/20261103T090109Z_cot-control-50/cot_control/deepseek-v4.1-flash-1017/gpqa/2026-11-03T13-56-34-00-00_cot-controllability-qa_hvHMu86gSPtrXvh9fNK5dH.eval",
+      "file": "eval_logs/cot_control/deepseek-v4.1-flash-1017/gpqa/2026-11-03T13-56-34-00-00_cot-controllability-qa_hvHMu86gSPtrXvh9fNK5dH.eval",
       "sha256": "699ea31bd696b5ac7841841613f32b046dc41c4bc5c204a9c1bd9e3b704f9b3a",
       "bytes": 667959,
       "task": "cot_monitorability/cot_controllability_qa",
@@ -1181,7 +1181,7 @@
       }
     },
     {
-      "file": "eval_logs/20261103T090109Z_cot-control-50/cot_control/deepseek-v4.1-flash-1017/hle/2026-11-03T10-37-33-00-00_cot-controllability-qa_3RATK6haqHSayGSsHVXjEA.eval",
+      "file": "eval_logs/cot_control/deepseek-v4.1-flash-1017/hle/2026-11-03T10-37-33-00-00_cot-controllability-qa_3RATK6haqHSayGSsHVXjEA.eval",
       "sha256": "e8e7946102fec3a655d000cf523a3d24593b649fe770cd852d9148f46f9eeb0d",
       "bytes": 787356,
       "task": "cot_monitorability/cot_controllability_qa",
@@ -1312,7 +1312,7 @@
       }
     },
     {
-      "file": "eval_logs/20261103T090109Z_cot-control-50/cot_control/deepseek-v4.1-flash-1017/hle/2026-11-03T10-37-33-00-00_cot-controllability-qa_H3BXd6ZoJJszibHTWgfNAb.eval",
+      "file": "eval_logs/cot_control/deepseek-v4.1-flash-1017/hle/2026-11-03T10-37-33-00-00_cot-controllability-qa_H3BXd6ZoJJszibHTWgfNAb.eval",
       "sha256": "528e300d2fa861487e7d488d032c5278f56c964378d3532bc7f3c10b1b06edfc",
       "bytes": 723689,
       "task": "cot_monitorability/cot_controllability_qa",
@@ -1443,7 +1443,7 @@
       }
     },
     {
-      "file": "eval_logs/20261103T090109Z_cot-control-50/cot_control/deepseek-v4.1-flash-1017/hle/2026-11-03T10-37-33-00-00_cot-controllability-qa_Lh3iTxyUa5FjiSQzjSkjXc.eval",
+      "file": "eval_logs/cot_control/deepseek-v4.1-flash-1017/hle/2026-11-03T10-37-33-00-00_cot-controllability-qa_Lh3iTxyUa5FjiSQzjSkjXc.eval",
       "sha256": "a5b4138c84225a8f1faaa98a6e2cc8ab1cb06277f55476eca866827015503778",
       "bytes": 684593,
       "task": "cot_monitorability/cot_controllability_qa",
@@ -1574,7 +1574,7 @@
       }
     },
     {
-      "file": "eval_logs/20261103T090109Z_cot-control-50/cot_control/deepseek-v4.1-flash-1017/hle/2026-11-03T10-37-33-00-00_cot-controllability-qa_PGcsKRNLvLhkfmKnrnVjpQ.eval",
+      "file": "eval_logs/cot_control/deepseek-v4.1-flash-1017/hle/2026-11-03T10-37-33-00-00_cot-controllability-qa_PGcsKRNLvLhkfmKnrnVjpQ.eval",
       "sha256": "4f5ff8e7c9621a70b5889de8b0fb89a94955e03afbe579ddeba23c633d36f401",
       "bytes": 807168,
       "task": "cot_monitorability/cot_controllability_qa",
@@ -1705,7 +1705,7 @@
       }
     },
     {
-      "file": "eval_logs/20261103T090109Z_cot-control-50/cot_control/deepseek-v4.1-flash-1017/hle/2026-11-03T10-37-33-00-00_cot-controllability-qa_PGtfC2Sz9ZFwJY2ay8wQZn.eval",
+      "file": "eval_logs/cot_control/deepseek-v4.1-flash-1017/hle/2026-11-03T10-37-33-00-00_cot-controllability-qa_PGtfC2Sz9ZFwJY2ay8wQZn.eval",
       "sha256": "1c4e50ffccf939c04c420c9cf9cf6fdd07885adebcde199d22f95593095805c2",
       "bytes": 686096,
       "task": "cot_monitorability/cot_controllability_qa",
@@ -1836,7 +1836,7 @@
       }
     },
     {
-      "file": "eval_logs/20261103T090109Z_cot-control-50/cot_control/deepseek-v4.1-flash-1017/hle/2026-11-03T10-37-33-00-00_cot-controllability-qa_VvJnXT4a4232tu9xeS5fSX.eval",
+      "file": "eval_logs/cot_control/deepseek-v4.1-flash-1017/hle/2026-11-03T10-37-33-00-00_cot-controllability-qa_VvJnXT4a4232tu9xeS5fSX.eval",
       "sha256": "e0448f9ea9d615175fb2747055f35bc7e0047bc2afcb6df11ce200f348977ae0",
       "bytes": 765088,
       "task": "cot_monitorability/cot_controllability_qa",
@@ -1967,7 +1967,7 @@
       }
     },
     {
-      "file": "eval_logs/20261103T090109Z_cot-control-50/cot_control/deepseek-v4.1-flash-1017/hle/2026-11-03T10-37-33-00-00_cot-controllability-qa_dP9Ksnp9QJ8B8nZSVEL3Xq.eval",
+      "file": "eval_logs/cot_control/deepseek-v4.1-flash-1017/hle/2026-11-03T10-37-33-00-00_cot-controllability-qa_dP9Ksnp9QJ8B8nZSVEL3Xq.eval",
       "sha256": "0189ebd3a3279d8a412bcb59214efe2807c268b46cc89a79ad143382395cfe6a",
       "bytes": 712032,
       "task": "cot_monitorability/cot_controllability_qa",
@@ -2098,7 +2098,7 @@
       }
     },
     {
-      "file": "eval_logs/20261103T090109Z_cot-control-50/cot_control/deepseek-v4.1-flash-1017/hle/2026-11-03T10-37-33-00-00_cot-controllability-qa_ks3QQvtHGxZJfMQjMsxMmw.eval",
+      "file": "eval_logs/cot_control/deepseek-v4.1-flash-1017/hle/2026-11-03T10-37-33-00-00_cot-controllability-qa_ks3QQvtHGxZJfMQjMsxMmw.eval",
       "sha256": "72f34e415a64f2772d384931359fa2d0894473e59e5a518ac6a5a9d1e3a3213a",
       "bytes": 778968,
       "task": "cot_monitorability/cot_controllability_qa",
@@ -2229,7 +2229,7 @@
       }
     },
     {
-      "file": "eval_logs/20261103T090109Z_cot-control-50/cot_control/deepseek-v4.1-flash-1017/hle/2026-11-03T13-56-34-00-00_cot-controllability-qa_kZF7bRKJ3G7zbcTvfGpKgf.eval",
+      "file": "eval_logs/cot_control/deepseek-v4.1-flash-1017/hle/2026-11-03T13-56-34-00-00_cot-controllability-qa_kZF7bRKJ3G7zbcTvfGpKgf.eval",
       "sha256": "599c61c9184652c960b8f71e7b869e15f1d90db6ede01251e2e08b2e9f2e4dfe",
       "bytes": 751281,
       "task": "cot_monitorability/cot_controllability_qa",
@@ -2360,7 +2360,7 @@
       }
     },
     {
-      "file": "eval_logs/20261103T090109Z_cot-control-50/cot_control/deepseek-v4.1-flash-1017/mmlu_pro/2026-11-03T10-37-33-00-00_cot-controllability-qa_2z3k3TLVc9b2dkyG5mk5Pa.eval",
+      "file": "eval_logs/cot_control/deepseek-v4.1-flash-1017/mmlu_pro/2026-11-03T10-37-33-00-00_cot-controllability-qa_2z3k3TLVc9b2dkyG5mk5Pa.eval",
       "sha256": "062143a0104a139215655f4c617de9815903a2c56deca2026576d3c2dc227cc3",
       "bytes": 349467,
       "task": "cot_monitorability/cot_controllability_qa",
@@ -2491,7 +2491,7 @@
       }
     },
     {
-      "file": "eval_logs/20261103T090109Z_cot-control-50/cot_control/deepseek-v4.1-flash-1017/mmlu_pro/2026-11-03T10-37-33-00-00_cot-controllability-qa_6eHdZ8bTzeodM2vzRwtrc8.eval",
+      "file": "eval_logs/cot_control/deepseek-v4.1-flash-1017/mmlu_pro/2026-11-03T10-37-33-00-00_cot-controllability-qa_6eHdZ8bTzeodM2vzRwtrc8.eval",
       "sha256": "a404ce46619a657cbdd64f72765d5dab83b6e4b4629131aa5eab922de4895108",
       "bytes": 370319,
       "task": "cot_monitorability/cot_controllability_qa",
@@ -2622,7 +2622,7 @@
       }
     },
     {
-      "file": "eval_logs/20261103T090109Z_cot-control-50/cot_control/deepseek-v4.1-flash-1017/mmlu_pro/2026-11-03T10-37-33-00-00_cot-controllability-qa_6kUXbmgpBVxrceLi4ktuMk.eval",
+      "file": "eval_logs/cot_control/deepseek-v4.1-flash-1017/mmlu_pro/2026-11-03T10-37-33-00-00_cot-controllability-qa_6kUXbmgpBVxrceLi4ktuMk.eval",
       "sha256": "9c4d55e8f15ba5c5b3bf0caa79aff2c6bf897e974ba1ea00035e05fa9ec826e5",
       "bytes": 385398,
       "task": "cot_monitorability/cot_controllability_qa",
@@ -2753,7 +2753,7 @@
       }
     },
     {
-      "file": "eval_logs/20261103T090109Z_cot-control-50/cot_control/deepseek-v4.1-flash-1017/mmlu_pro/2026-11-03T10-37-33-00-00_cot-controllability-qa_BUa5JFZtU4L3dyoMU5dUfi.eval",
+      "file": "eval_logs/cot_control/deepseek-v4.1-flash-1017/mmlu_pro/2026-11-03T10-37-33-00-00_cot-controllability-qa_BUa5JFZtU4L3dyoMU5dUfi.eval",
       "sha256": "1149ecbb32c776c436da2df72f364d830cd470a9075d9c7ecfc9b51dde1b6856",
       "bytes": 345410,
       "task": "cot_monitorability/cot_controllability_qa",
@@ -2884,7 +2884,7 @@
       }
     },
     {
-      "file": "eval_logs/20261103T090109Z_cot-control-50/cot_control/deepseek-v4.1-flash-1017/mmlu_pro/2026-11-03T10-37-33-00-00_cot-controllability-qa_FEnwzW5EMuLiY9F6GQtTV2.eval",
+      "file": "eval_logs/cot_control/deepseek-v4.1-flash-1017/mmlu_pro/2026-11-03T10-37-33-00-00_cot-controllability-qa_FEnwzW5EMuLiY9F6GQtTV2.eval",
       "sha256": "645f37f64d2ddf1c6cedc46c3eaa0692e42b7fb645de624a8fce25065206e5e1",
       "bytes": 385142,
       "task": "cot_monitorability/cot_controllability_qa",
@@ -3015,7 +3015,7 @@
       }
     },
     {
-      "file": "eval_logs/20261103T090109Z_cot-control-50/cot_control/deepseek-v4.1-flash-1017/mmlu_pro/2026-11-03T10-37-33-00-00_cot-controllability-qa_g8b5aQnYSRG7TZVuB3KFYz.eval",
+      "file": "eval_logs/cot_control/deepseek-v4.1-flash-1017/mmlu_pro/2026-11-03T10-37-33-00-00_cot-controllability-qa_g8b5aQnYSRG7TZVuB3KFYz.eval",
       "sha256": "705d1f6a7bea0adc7ceaa68a0c4505fa5377c83ce30f8670df60b77a958994d9",
       "bytes": 390700,
       "task": "cot_monitorability/cot_controllability_qa",
@@ -3146,7 +3146,7 @@
       }
     },
     {
-      "file": "eval_logs/20261103T090109Z_cot-control-50/cot_control/deepseek-v4.1-flash-1017/mmlu_pro/2026-11-03T10-37-33-00-00_cot-controllability-qa_kfQ6v3ZXFZrtT4spVqTJfo.eval",
+      "file": "eval_logs/cot_control/deepseek-v4.1-flash-1017/mmlu_pro/2026-11-03T10-37-33-00-00_cot-controllability-qa_kfQ6v3ZXFZrtT4spVqTJfo.eval",
       "sha256": "d45d9d267c07f776047e22b7a9b983c689d5b48cd8eb385980925861e5186e95",
       "bytes": 421808,
       "task": "cot_monitorability/cot_controllability_qa",
@@ -3277,7 +3277,7 @@
       }
     },
     {
-      "file": "eval_logs/20261103T090109Z_cot-control-50/cot_control/deepseek-v4.1-flash-1017/mmlu_pro/2026-11-03T10-37-33-00-00_cot-controllability-qa_mYWASteshhgfbosy2mZPFF.eval",
+      "file": "eval_logs/cot_control/deepseek-v4.1-flash-1017/mmlu_pro/2026-11-03T10-37-33-00-00_cot-controllability-qa_mYWASteshhgfbosy2mZPFF.eval",
       "sha256": "b159f40c8c8b2b8021055cadf8636cb27c011226205d040b9c4138d73710dcbe",
       "bytes": 324410,
       "task": "cot_monitorability/cot_controllability_qa",
@@ -3408,7 +3408,7 @@
       }
     },
     {
-      "file": "eval_logs/20261103T090109Z_cot-control-50/cot_control/deepseek-v4.1-flash-1017/mmlu_pro/2026-11-03T10-37-33-00-00_cot-controllability-qa_n4QWC8dSoit4oXbnhCmHGA.eval",
+      "file": "eval_logs/cot_control/deepseek-v4.1-flash-1017/mmlu_pro/2026-11-03T10-37-33-00-00_cot-controllability-qa_n4QWC8dSoit4oXbnhCmHGA.eval",
       "sha256": "e33dcf51649ba66fa1d809a78ee5138775b741e0b1efc462ba19d7dd97025007",
       "bytes": 387039,
       "task": "cot_monitorability/cot_controllability_qa",
@@ -3539,7 +3539,7 @@
       }
     },
     {
-      "file": "eval_logs/20261103T090109Z_cot-control-50/cot_control/kimi-k3.1-pro/gpqa/2026-11-03T10-37-32-00-00_cot-controllability-qa_6b9hYHJQDgXoyaxodrjMxe.eval",
+      "file": "eval_logs/cot_control/kimi-k3.1-pro/gpqa/2026-11-03T10-37-32-00-00_cot-controllability-qa_6b9hYHJQDgXoyaxodrjMxe.eval",
       "sha256": "ec8570dca122fb9fbe07d5c8e0f949cd41820f3223d4bfc4cde7af1cbbbbebc0",
       "bytes": 325701,
       "task": "cot_monitorability/cot_controllability_qa",
@@ -3665,7 +3665,7 @@
       }
     },
     {
-      "file": "eval_logs/20261103T090109Z_cot-control-50/cot_control/kimi-k3.1-pro/gpqa/2026-11-03T10-37-32-00-00_cot-controllability-qa_Dq5Ki5HF9yVkEF2r2hffKE.eval",
+      "file": "eval_logs/cot_control/kimi-k3.1-pro/gpqa/2026-11-03T10-37-32-00-00_cot-controllability-qa_Dq5Ki5HF9yVkEF2r2hffKE.eval",
       "sha256": "1167dd0f2e51b768fec83f45d287cc880a3014d400ae147126d8ccef367e100e",
       "bytes": 344808,
       "task": "cot_monitorability/cot_controllability_qa",
@@ -3798,7 +3798,7 @@
       }
     },
     {
-      "file": "eval_logs/20261103T090109Z_cot-control-50/cot_control/kimi-k3.1-pro/gpqa/2026-11-03T10-37-32-00-00_cot-controllability-qa_KafecFDErMzR7Anf6BaMa5.eval",
+      "file": "eval_logs/cot_control/kimi-k3.1-pro/gpqa/2026-11-03T10-37-32-00-00_cot-controllability-qa_KafecFDErMzR7Anf6BaMa5.eval",
       "sha256": "e36c512eb5f3a813bcbe5700be97bc5a562ae0e11df50df63022feca955df628",
       "bytes": 330352,
       "task": "cot_monitorability/cot_controllability_qa",
@@ -3924,7 +3924,7 @@
       }
     },
     {
-      "file": "eval_logs/20261103T090109Z_cot-control-50/cot_control/kimi-k3.1-pro/gpqa/2026-11-03T10-37-32-00-00_cot-controllability-qa_X7WJd43E4sjiTFQHZEY2B5.eval",
+      "file": "eval_logs/cot_control/kimi-k3.1-pro/gpqa/2026-11-03T10-37-32-00-00_cot-controllability-qa_X7WJd43E4sjiTFQHZEY2B5.eval",
       "sha256": "fd3c222131e1d3bcc2dc1468a9650bc4adabc259232bb286929ca6707873a0dc",
       "bytes": 325508,
       "task": "cot_monitorability/cot_controllability_qa",
@@ -4050,7 +4050,7 @@
       }
     },
     {
-      "file": "eval_logs/20261103T090109Z_cot-control-50/cot_control/kimi-k3.1-pro/gpqa/2026-11-03T10-37-32-00-00_cot-controllability-qa_b3nFGDaB8e9HTjMWhyM8zH.eval",
+      "file": "eval_logs/cot_control/kimi-k3.1-pro/gpqa/2026-11-03T10-37-32-00-00_cot-controllability-qa_b3nFGDaB8e9HTjMWhyM8zH.eval",
       "sha256": "9b2406de431773a874d921e15f06c37e2980ea3ce6f18f26c34cf13b08ee7abc",
       "bytes": 346648,
       "task": "cot_monitorability/cot_controllability_qa",
@@ -4176,7 +4176,7 @@
       }
     },
     {
-      "file": "eval_logs/20261103T090109Z_cot-control-50/cot_control/kimi-k3.1-pro/gpqa/2026-11-03T10-37-32-00-00_cot-controllability-qa_gvMZR3shCGNwt5hsRhQTph.eval",
+      "file": "eval_logs/cot_control/kimi-k3.1-pro/gpqa/2026-11-03T10-37-32-00-00_cot-controllability-qa_gvMZR3shCGNwt5hsRhQTph.eval",
       "sha256": "6cbdde892ca0688b8ccaed6ff4cf4fcccc2ef7a1e5de45691de555d9b3b41185",
       "bytes": 333678,
       "task": "cot_monitorability/cot_controllability_qa",
@@ -4302,7 +4302,7 @@
       }
     },
     {
-      "file": "eval_logs/20261103T090109Z_cot-control-50/cot_control/kimi-k3.1-pro/gpqa/2026-11-03T10-37-32-00-00_cot-controllability-qa_i7m9StEifti3N5nZwhEBBR.eval",
+      "file": "eval_logs/cot_control/kimi-k3.1-pro/gpqa/2026-11-03T10-37-32-00-00_cot-controllability-qa_i7m9StEifti3N5nZwhEBBR.eval",
       "sha256": "4b0887b2dc8900f2710c60a2800b8625fae80c0732e8d51110cd9e952bb8fcce",
       "bytes": 340887,
       "task": "cot_monitorability/cot_controllability_qa",
@@ -4428,7 +4428,7 @@
       }
     },
     {
-      "file": "eval_logs/20261103T090109Z_cot-control-50/cot_control/kimi-k3.1-pro/gpqa/2026-11-03T10-37-32-00-00_cot-controllability-qa_kLh6RHnDkV9grLDVhPsdNs.eval",
+      "file": "eval_logs/cot_control/kimi-k3.1-pro/gpqa/2026-11-03T10-37-32-00-00_cot-controllability-qa_kLh6RHnDkV9grLDVhPsdNs.eval",
       "sha256": "b4e8837095f6d7353928ef20fa94017df2ca333ce22034983f081d43b8773197",
       "bytes": 331403,
       "task": "cot_monitorability/cot_controllability_qa",
@@ -4554,7 +4554,7 @@
       }
     },
     {
-      "file": "eval_logs/20261103T090109Z_cot-control-50/cot_control/kimi-k3.1-pro/gpqa/2026-11-03T10-37-32-00-00_cot-controllability-qa_nbFYUwcWEXEsBv6e3yHvjn.eval",
+      "file": "eval_logs/cot_control/kimi-k3.1-pro/gpqa/2026-11-03T10-37-32-00-00_cot-controllability-qa_nbFYUwcWEXEsBv6e3yHvjn.eval",
       "sha256": "3470fd2cfbacd40da13e94ec6dbb591cd641cefcc95b3692a6b9de9f8da15fcf",
       "bytes": 336806,
       "task": "cot_monitorability/cot_controllability_qa",
@@ -4680,7 +4680,7 @@
       }
     },
     {
-      "file": "eval_logs/20261103T090109Z_cot-control-50/cot_control/kimi-k3.1-pro/hle/2026-11-03T10-37-32-00-00_cot-controllability-qa_6DLJUL3sYDPBwD65Npjmvj.eval",
+      "file": "eval_logs/cot_control/kimi-k3.1-pro/hle/2026-11-03T10-37-32-00-00_cot-controllability-qa_6DLJUL3sYDPBwD65Npjmvj.eval",
       "sha256": "ab660fbf7d8741f2475a3b2bc9f916c3a97aa6e4d85ea3da52b94f1a3492b4d6",
       "bytes": 412766,
       "task": "cot_monitorability/cot_controllability_qa",
@@ -4806,7 +4806,7 @@
       }
     },
     {
-      "file": "eval_logs/20261103T090109Z_cot-control-50/cot_control/kimi-k3.1-pro/hle/2026-11-03T10-37-32-00-00_cot-controllability-qa_GLbxhkyfwk5kioaWWCgoi8.eval",
+      "file": "eval_logs/cot_control/kimi-k3.1-pro/hle/2026-11-03T10-37-32-00-00_cot-controllability-qa_GLbxhkyfwk5kioaWWCgoi8.eval",
       "sha256": "84b92ca9b2b8e6ea4a150ce8fab2fd3769fa276a8b1e8fb405d0e72f761cd3f4",
       "bytes": 352907,
       "task": "cot_monitorability/cot_controllability_qa",
@@ -4932,7 +4932,7 @@
       }
     },
     {
-      "file": "eval_logs/20261103T090109Z_cot-control-50/cot_control/kimi-k3.1-pro/hle/2026-11-03T10-37-32-00-00_cot-controllability-qa_HeScAdkyTHX2Yu4BC7nTAQ.eval",
+      "file": "eval_logs/cot_control/kimi-k3.1-pro/hle/2026-11-03T10-37-32-00-00_cot-controllability-qa_HeScAdkyTHX2Yu4BC7nTAQ.eval",
       "sha256": "117f846a1d488049eb8e85871ee3adb4a36f738b32146bf58c1726db46e29456",
       "bytes": 400461,
       "task": "cot_monitorability/cot_controllability_qa",
@@ -5058,7 +5058,7 @@
       }
     },
     {
-      "file": "eval_logs/20261103T090109Z_cot-control-50/cot_control/kimi-k3.1-pro/hle/2026-11-03T10-37-32-00-00_cot-controllability-qa_M7Gf8mvGBd6BxKEscQBD2s.eval",
+      "file": "eval_logs/cot_control/kimi-k3.1-pro/hle/2026-11-03T10-37-32-00-00_cot-controllability-qa_M7Gf8mvGBd6BxKEscQBD2s.eval",
       "sha256": "843f3adc7718c6890cfd6e971ee7e2ea9447eed3a30bc62e540c9b1155e94d9a",
       "bytes": 372207,
       "task": "cot_monitorability/cot_controllability_qa",
@@ -5184,7 +5184,7 @@
       }
     },
     {
-      "file": "eval_logs/20261103T090109Z_cot-control-50/cot_control/kimi-k3.1-pro/hle/2026-11-03T10-37-32-00-00_cot-controllability-qa_T95Tn74xmGixqYBxtAaaxr.eval",
+      "file": "eval_logs/cot_control/kimi-k3.1-pro/hle/2026-11-03T10-37-32-00-00_cot-controllability-qa_T95Tn74xmGixqYBxtAaaxr.eval",
       "sha256": "918f997a5b3616159aa67ff1d9b2fd3ea26252bedd96271a9bd40d5a36d561cf",
       "bytes": 359201,
       "task": "cot_monitorability/cot_controllability_qa",
@@ -5310,7 +5310,7 @@
       }
     },
     {
-      "file": "eval_logs/20261103T090109Z_cot-control-50/cot_control/kimi-k3.1-pro/hle/2026-11-03T10-37-32-00-00_cot-controllability-qa_VY99QYi4t89AUU369XERdk.eval",
+      "file": "eval_logs/cot_control/kimi-k3.1-pro/hle/2026-11-03T10-37-32-00-00_cot-controllability-qa_VY99QYi4t89AUU369XERdk.eval",
       "sha256": "8188c742b3ad7c1bf442814d23ef98e1a7f88f3a1c275904614bb79576bc208b",
       "bytes": 364620,
       "task": "cot_monitorability/cot_controllability_qa",
@@ -5436,7 +5436,7 @@
       }
     },
     {
-      "file": "eval_logs/20261103T090109Z_cot-control-50/cot_control/kimi-k3.1-pro/hle/2026-11-03T10-37-32-00-00_cot-controllability-qa_dsEGx2XLQBc3xWChpa3uuf.eval",
+      "file": "eval_logs/cot_control/kimi-k3.1-pro/hle/2026-11-03T10-37-32-00-00_cot-controllability-qa_dsEGx2XLQBc3xWChpa3uuf.eval",
       "sha256": "0a4d741503b64d5d2fd6b10394c677126425943420594a055ee037c1eb06ef86",
       "bytes": 358189,
       "task": "cot_monitorability/cot_controllability_qa",
@@ -5562,7 +5562,7 @@
       }
     },
     {
-      "file": "eval_logs/20261103T090109Z_cot-control-50/cot_control/kimi-k3.1-pro/hle/2026-11-03T10-37-32-00-00_cot-controllability-qa_eLLZKhLBoRafwz92qDNxcg.eval",
+      "file": "eval_logs/cot_control/kimi-k3.1-pro/hle/2026-11-03T10-37-32-00-00_cot-controllability-qa_eLLZKhLBoRafwz92qDNxcg.eval",
       "sha256": "6bee6745062931abbfd8e6f9e125358c7637b3002f4d6b33fca8d0beb5aa974c",
       "bytes": 374077,
       "task": "cot_monitorability/cot_controllability_qa",
@@ -5688,7 +5688,7 @@
       }
     },
     {
-      "file": "eval_logs/20261103T090109Z_cot-control-50/cot_control/kimi-k3.1-pro/hle/2026-11-03T11-32-22-00-00_cot-controllability-qa_m5xYS9YnjKpXRNUqPJXK9P.eval",
+      "file": "eval_logs/cot_control/kimi-k3.1-pro/hle/2026-11-03T11-32-22-00-00_cot-controllability-qa_m5xYS9YnjKpXRNUqPJXK9P.eval",
       "sha256": "ca734869d666e7cc07816ff80ed514b571dc73a387ab7979478aff09702c60af",
       "bytes": 401721,
       "task": "cot_monitorability/cot_controllability_qa",
@@ -5820,7 +5820,7 @@
       }
     },
     {
-      "file": "eval_logs/20261103T090109Z_cot-control-50/cot_control/kimi-k3.1-pro/mmlu_pro/2026-11-03T10-37-32-00-00_cot-controllability-qa_4r4xyN9hg2HcZ7zoH4Qe5h.eval",
+      "file": "eval_logs/cot_control/kimi-k3.1-pro/mmlu_pro/2026-11-03T10-37-32-00-00_cot-controllability-qa_4r4xyN9hg2HcZ7zoH4Qe5h.eval",
       "sha256": "3208446eb2783807f8c11e08c868f81067755da126f5abbe44cfc171b95d237f",
       "bytes": 352514,
       "task": "cot_monitorability/cot_controllability_qa",
@@ -5952,7 +5952,7 @@
       }
     },
     {
-      "file": "eval_logs/20261103T090109Z_cot-control-50/cot_control/kimi-k3.1-pro/mmlu_pro/2026-11-03T10-37-32-00-00_cot-controllability-qa_Do8VxSC8neRWtfsLpm7bH5.eval",
+      "file": "eval_logs/cot_control/kimi-k3.1-pro/mmlu_pro/2026-11-03T10-37-32-00-00_cot-controllability-qa_Do8VxSC8neRWtfsLpm7bH5.eval",
       "sha256": "a654fea458aaa5fca77763e711db4206c203d58d688a96cf93cd210eec0d05eb",
       "bytes": 296727,
       "task": "cot_monitorability/cot_controllability_qa",
@@ -6077,7 +6077,7 @@
       }
     },
     {
-      "file": "eval_logs/20261103T090109Z_cot-control-50/cot_control/kimi-k3.1-pro/mmlu_pro/2026-11-03T10-37-32-00-00_cot-controllability-qa_JpGFvdRnj4z5myXX3NcS7R.eval",
+      "file": "eval_logs/cot_control/kimi-k3.1-pro/mmlu_pro/2026-11-03T10-37-32-00-00_cot-controllability-qa_JpGFvdRnj4z5myXX3NcS7R.eval",
       "sha256": "c0145cae510bf55b63a9505b6ca44969fe41e1761b4b5afa4a03d5e692d3234b",
       "bytes": 286621,
       "task": "cot_monitorability/cot_controllability_qa",
@@ -6202,7 +6202,7 @@
       }
     },
     {
-      "file": "eval_logs/20261103T090109Z_cot-control-50/cot_control/kimi-k3.1-pro/mmlu_pro/2026-11-03T10-37-32-00-00_cot-controllability-qa_WCg9DHetZFzptp4mNVoKXL.eval",
+      "file": "eval_logs/cot_control/kimi-k3.1-pro/mmlu_pro/2026-11-03T10-37-32-00-00_cot-controllability-qa_WCg9DHetZFzptp4mNVoKXL.eval",
       "sha256": "bccdfa853f22a8625acd437d1c71bc83223d10fb09c25a6340d5d555c1904057",
       "bytes": 344398,
       "task": "cot_monitorability/cot_controllability_qa",
@@ -6327,7 +6327,7 @@
       }
     },
     {
-      "file": "eval_logs/20261103T090109Z_cot-control-50/cot_control/kimi-k3.1-pro/mmlu_pro/2026-11-03T10-37-32-00-00_cot-controllability-qa_WgF39Hc7pLoyTzqD2GB4VB.eval",
+      "file": "eval_logs/cot_control/kimi-k3.1-pro/mmlu_pro/2026-11-03T10-37-32-00-00_cot-controllability-qa_WgF39Hc7pLoyTzqD2GB4VB.eval",
       "sha256": "f211b91bb8e674943150f8decffa81299cc7207db9899e9183e7565a63aa31c3",
       "bytes": 301134,
       "task": "cot_monitorability/cot_controllability_qa",
@@ -6452,7 +6452,7 @@
       }
     },
     {
-      "file": "eval_logs/20261103T090109Z_cot-control-50/cot_control/kimi-k3.1-pro/mmlu_pro/2026-11-03T10-37-32-00-00_cot-controllability-qa_cD8DiWEVUG7JYYGRaAByyD.eval",
+      "file": "eval_logs/cot_control/kimi-k3.1-pro/mmlu_pro/2026-11-03T10-37-32-00-00_cot-controllability-qa_cD8DiWEVUG7JYYGRaAByyD.eval",
       "sha256": "d3b1637e5bf83c7eeaef7ca07bfb7978e6227316f13db2254ea42a71b8543045",
       "bytes": 294963,
       "task": "cot_monitorability/cot_controllability_qa",
@@ -6577,7 +6577,7 @@
       }
     },
     {
-      "file": "eval_logs/20261103T090109Z_cot-control-50/cot_control/kimi-k3.1-pro/mmlu_pro/2026-11-03T10-37-32-00-00_cot-controllability-qa_d7Rdki6S5bQzEwaRKzM6cP.eval",
+      "file": "eval_logs/cot_control/kimi-k3.1-pro/mmlu_pro/2026-11-03T10-37-32-00-00_cot-controllability-qa_d7Rdki6S5bQzEwaRKzM6cP.eval",
       "sha256": "d315ac1779b656bae658ef3cebbde6a6f1a75cc04b1052ca90ef348fab2016ee",
       "bytes": 288964,
       "task": "cot_monitorability/cot_controllability_qa",
@@ -6702,7 +6702,7 @@
       }
     },
     {
-      "file": "eval_logs/20261103T090109Z_cot-control-50/cot_control/kimi-k3.1-pro/mmlu_pro/2026-11-03T10-37-32-00-00_cot-controllability-qa_e6CSpML79RPHuePUwRqAAV.eval",
+      "file": "eval_logs/cot_control/kimi-k3.1-pro/mmlu_pro/2026-11-03T10-37-32-00-00_cot-controllability-qa_e6CSpML79RPHuePUwRqAAV.eval",
       "sha256": "ea4492ce81c14401ed5bb1f3f3ce0923b1a35760225d8234cb6bf077b77fe281",
       "bytes": 300631,
       "task": "cot_monitorability/cot_controllability_qa",
@@ -6827,7 +6827,7 @@
       }
     },
     {
-      "file": "eval_logs/20261103T090109Z_cot-control-50/cot_control/kimi-k3.1-pro/mmlu_pro/2026-11-03T10-37-32-00-00_cot-controllability-qa_iTYnYSZ4z6kefAaP6nMutq.eval",
+      "file": "eval_logs/cot_control/kimi-k3.1-pro/mmlu_pro/2026-11-03T10-37-32-00-00_cot-controllability-qa_iTYnYSZ4z6kefAaP6nMutq.eval",
       "sha256": "b05c4679930f8967b8b36540a6502d3f85239aeb5851a74021d53d329aaa920e",
       "bytes": 283498,
       "task": "cot_monitorability/cot_controllability_qa",
@@ -6952,7 +6952,7 @@
       }
     },
     {
-      "file": "eval_logs/20261103T141734Z_monitorability-50/intervention/deepseek-v4.1-flash-1017/daft/2026-11-03T18-40-01-00-00_openai-monitorability-intervention_H97PP23BFq5quVpzTCCoXo.eval",
+      "file": "eval_logs/intervention/deepseek-v4.1-flash-1017/daft/2026-11-03T18-40-01-00-00_openai-monitorability-intervention_H97PP23BFq5quVpzTCCoXo.eval",
       "sha256": "b03e3faafe981ef79640b9d9e4de5a4d5571771e5d912a0342183031a19769bb",
       "bytes": 3630195,
       "task": "cot_monitorability/openai_monitorability_intervention",
@@ -7020,7 +7020,7 @@
       }
     },
     {
-      "file": "eval_logs/20261103T141734Z_monitorability-50/intervention/deepseek-v4.1-flash-1017/daft/2026-11-03T18-49-42-00-00_openai-monitorability-intervention_aMnbE7SfXnagiFxL2BiSvZ.eval",
+      "file": "eval_logs/intervention/deepseek-v4.1-flash-1017/daft/2026-11-03T18-49-42-00-00_openai-monitorability-intervention_aMnbE7SfXnagiFxL2BiSvZ.eval",
       "sha256": "04d3ab0d4f5b6537b1a42bc1853236dcf1b526a73b9a1639bb87f260cb8b5b1c",
       "bytes": 2864087,
       "task": "cot_monitorability/openai_monitorability_intervention",
@@ -7088,7 +7088,7 @@
       }
     },
     {
-      "file": "eval_logs/20261103T141734Z_monitorability-50/intervention/deepseek-v4.1-flash-1017/daft/2026-11-03T18-49-42-00-00_openai-monitorability-intervention_nhqBTq3zmCjQVy2ZdAmF5Z.eval",
+      "file": "eval_logs/intervention/deepseek-v4.1-flash-1017/daft/2026-11-03T18-49-42-00-00_openai-monitorability-intervention_nhqBTq3zmCjQVy2ZdAmF5Z.eval",
       "sha256": "8ddf5069f855130030432282c343b242198eca94923cc17efc46f8e4d6d06614",
       "bytes": 2689139,
       "task": "cot_monitorability/openai_monitorability_intervention",
@@ -7156,7 +7156,7 @@
       }
     },
     {
-      "file": "eval_logs/20261103T141734Z_monitorability-50/intervention/deepseek-v4.1-flash-1017/gpqa/2026-11-03T15-19-03-00-00_openai-monitorability-intervention_fCwFdUYDNcbppvvdGUyKGy.eval",
+      "file": "eval_logs/intervention/deepseek-v4.1-flash-1017/gpqa/2026-11-03T15-19-03-00-00_openai-monitorability-intervention_fCwFdUYDNcbppvvdGUyKGy.eval",
       "sha256": "cd1dd37bb366f8d35dbb3b2cc7a0418752b25d2266588c5ecea33b9674f3a51e",
       "bytes": 1502983,
       "task": "cot_monitorability/openai_monitorability_intervention",
@@ -7224,7 +7224,7 @@
       }
     },
     {
-      "file": "eval_logs/20261103T141734Z_monitorability-50/intervention/deepseek-v4.1-flash-1017/gpqa/2026-11-03T18-49-42-00-00_openai-monitorability-intervention_fHdYDhr6iTASbspDKbCUvQ.eval",
+      "file": "eval_logs/intervention/deepseek-v4.1-flash-1017/gpqa/2026-11-03T18-49-42-00-00_openai-monitorability-intervention_fHdYDhr6iTASbspDKbCUvQ.eval",
       "sha256": "9e01af4c5626f55ad234c216502046795c8ee500e5d69fbf4bb1d53f89938aea",
       "bytes": 1412448,
       "task": "cot_monitorability/openai_monitorability_intervention",
@@ -7292,7 +7292,7 @@
       }
     },
     {
-      "file": "eval_logs/20261103T141734Z_monitorability-50/intervention/deepseek-v4.1-flash-1017/gpqa/2026-11-03T18-49-42-00-00_openai-monitorability-intervention_iCiCwHXkRT45SowSvbsiEf.eval",
+      "file": "eval_logs/intervention/deepseek-v4.1-flash-1017/gpqa/2026-11-03T18-49-42-00-00_openai-monitorability-intervention_iCiCwHXkRT45SowSvbsiEf.eval",
       "sha256": "f9bc018fb623508d3644aa9cfc47a70cb054772d60c7380f5f46bce1e0ef4213",
       "bytes": 1542692,
       "task": "cot_monitorability/openai_monitorability_intervention",
@@ -7360,7 +7360,7 @@
       }
     },
     {
-      "file": "eval_logs/20261103T141734Z_monitorability-50/intervention/deepseek-v4.1-flash-1017/gpqa_encoded/2026-11-03T15-58-26-00-00_openai-monitorability-intervention_SCVqA7o36vHuRKpTAJUuCx.eval",
+      "file": "eval_logs/intervention/deepseek-v4.1-flash-1017/gpqa_encoded/2026-11-03T15-58-26-00-00_openai-monitorability-intervention_SCVqA7o36vHuRKpTAJUuCx.eval",
       "sha256": "c8245e31c0f9bab99184413ce209f66bf468789e6c96c80c1d0ebe0d5ec06e2a",
       "bytes": 1707986,
       "task": "cot_monitorability/openai_monitorability_intervention",
@@ -7428,7 +7428,7 @@
       }
     },
     {
-      "file": "eval_logs/20261103T141734Z_monitorability-50/intervention/deepseek-v4.1-flash-1017/gpqa_encoded/2026-11-03T18-49-42-00-00_openai-monitorability-intervention_Si2KWcBafxR3YT7zPHQRAG.eval",
+      "file": "eval_logs/intervention/deepseek-v4.1-flash-1017/gpqa_encoded/2026-11-03T18-49-42-00-00_openai-monitorability-intervention_Si2KWcBafxR3YT7zPHQRAG.eval",
       "sha256": "a5a606a0651d74ec96293ead1ffec84ce6fd603e384fe60b1fe2da384e32ab75",
       "bytes": 1613287,
       "task": "cot_monitorability/openai_monitorability_intervention",
@@ -7496,7 +7496,7 @@
       }
     },
     {
-      "file": "eval_logs/20261103T141734Z_monitorability-50/intervention/deepseek-v4.1-flash-1017/gpqa_encoded/2026-11-03T18-49-42-00-00_openai-monitorability-intervention_UW8hK48pNsPYEgjUnwmzZM.eval",
+      "file": "eval_logs/intervention/deepseek-v4.1-flash-1017/gpqa_encoded/2026-11-03T18-49-42-00-00_openai-monitorability-intervention_UW8hK48pNsPYEgjUnwmzZM.eval",
       "sha256": "9704219391c170e8d502a3e5300873649bdd1e6dffc35cdfd4b544fb20efac55",
       "bytes": 1495304,
       "task": "cot_monitorability/openai_monitorability_intervention",
@@ -7564,7 +7564,7 @@
       }
     },
     {
-      "file": "eval_logs/20261103T141734Z_monitorability-50/intervention/deepseek-v4.1-flash-1017/scruples_first_person/2026-11-03T15-19-03-00-00_openai-monitorability-intervention_9tsRM9ENfUdMJVkb8e2pxh.eval",
+      "file": "eval_logs/intervention/deepseek-v4.1-flash-1017/scruples_first_person/2026-11-03T15-19-03-00-00_openai-monitorability-intervention_9tsRM9ENfUdMJVkb8e2pxh.eval",
       "sha256": "3d0d7d0cf064b25de17252560cc4a0a88727f6bc7fc7d7c64139dbbb7ad17fc3",
       "bytes": 611403,
       "task": "cot_monitorability/openai_monitorability_intervention",
@@ -7632,7 +7632,7 @@
       }
     },
     {
-      "file": "eval_logs/20261103T141734Z_monitorability-50/intervention/deepseek-v4.1-flash-1017/scruples_first_person/2026-11-03T18-49-42-00-00_openai-monitorability-intervention_NgLxY5Ynsw2pqECDcC7td6.eval",
+      "file": "eval_logs/intervention/deepseek-v4.1-flash-1017/scruples_first_person/2026-11-03T18-49-42-00-00_openai-monitorability-intervention_NgLxY5Ynsw2pqECDcC7td6.eval",
       "sha256": "9e5f5eabd0ea1fe7e169ea2ba3207045570146ee6ccc1efef9bbe0463eb188d8",
       "bytes": 625989,
       "task": "cot_monitorability/openai_monitorability_intervention",
@@ -7700,7 +7700,7 @@
       }
     },
     {
-      "file": "eval_logs/20261103T141734Z_monitorability-50/intervention/deepseek-v4.1-flash-1017/scruples_first_person/2026-11-03T18-49-42-00-00_openai-monitorability-intervention_knfJTR9m3E9JLLYsTbmB5u.eval",
+      "file": "eval_logs/intervention/deepseek-v4.1-flash-1017/scruples_first_person/2026-11-03T18-49-42-00-00_openai-monitorability-intervention_knfJTR9m3E9JLLYsTbmB5u.eval",
       "sha256": "a7e064ac515cdb8ce21781e9b4f0320320f2f66450bed75a8dad8d39466ae197",
       "bytes": 569733,
       "task": "cot_monitorability/openai_monitorability_intervention",
@@ -7768,7 +7768,7 @@
       }
     },
     {
-      "file": "eval_logs/20261103T141734Z_monitorability-50/intervention/deepseek-v4.1-flash-1017/scruples_suggest_right/2026-11-03T15-19-03-00-00_openai-monitorability-intervention_ZH4QQcBYQChh85mKM7fczC.eval",
+      "file": "eval_logs/intervention/deepseek-v4.1-flash-1017/scruples_suggest_right/2026-11-03T15-19-03-00-00_openai-monitorability-intervention_ZH4QQcBYQChh85mKM7fczC.eval",
       "sha256": "3f11396a911572728d538efa24be96b2f63a6c7a864af94184e71210bea126c4",
       "bytes": 647907,
       "task": "cot_monitorability/openai_monitorability_intervention",
@@ -7836,7 +7836,7 @@
       }
     },
     {
-      "file": "eval_logs/20261103T141734Z_monitorability-50/intervention/deepseek-v4.1-flash-1017/scruples_suggest_right/2026-11-03T18-49-42-00-00_openai-monitorability-intervention_aGo37EFiuhaaAXydmbFh7d.eval",
+      "file": "eval_logs/intervention/deepseek-v4.1-flash-1017/scruples_suggest_right/2026-11-03T18-49-42-00-00_openai-monitorability-intervention_aGo37EFiuhaaAXydmbFh7d.eval",
       "sha256": "c8cf3bec89b22d30f1cca9ba0c0d00ffdc61622b902657d641dffbe2ff381431",
       "bytes": 658687,
       "task": "cot_monitorability/openai_monitorability_intervention",
@@ -7904,7 +7904,7 @@
       }
     },
     {
-      "file": "eval_logs/20261103T141734Z_monitorability-50/intervention/deepseek-v4.1-flash-1017/scruples_suggest_right/2026-11-03T18-49-42-00-00_openai-monitorability-intervention_jd3MuPDkKEdhZ4qTje77yG.eval",
+      "file": "eval_logs/intervention/deepseek-v4.1-flash-1017/scruples_suggest_right/2026-11-03T18-49-42-00-00_openai-monitorability-intervention_jd3MuPDkKEdhZ4qTje77yG.eval",
       "sha256": "1e3fd0d23a09610745755548c435dd4f48d2d14a7b53b56d6e9b056e49cbab39",
       "bytes": 606426,
       "task": "cot_monitorability/openai_monitorability_intervention",
@@ -7972,7 +7972,7 @@
       }
     },
     {
-      "file": "eval_logs/20261103T141734Z_monitorability-50/intervention/deepseek-v4.1-flash-1017/scruples_suggest_wrong/2026-11-03T15-19-03-00-00_openai-monitorability-intervention_cPBADpvJf4f4r66iNC84LJ.eval",
+      "file": "eval_logs/intervention/deepseek-v4.1-flash-1017/scruples_suggest_wrong/2026-11-03T15-19-03-00-00_openai-monitorability-intervention_cPBADpvJf4f4r66iNC84LJ.eval",
       "sha256": "12d5a782863dad8970bacc53be81b065c59826835e536d8dbee9b7430753ef6d",
       "bytes": 632036,
       "task": "cot_monitorability/openai_monitorability_intervention",
@@ -8040,7 +8040,7 @@
       }
     },
     {
-      "file": "eval_logs/20261103T141734Z_monitorability-50/intervention/deepseek-v4.1-flash-1017/scruples_suggest_wrong/2026-11-03T18-49-42-00-00_openai-monitorability-intervention_PTngjN5qkBeK7vuQn75dD5.eval",
+      "file": "eval_logs/intervention/deepseek-v4.1-flash-1017/scruples_suggest_wrong/2026-11-03T18-49-42-00-00_openai-monitorability-intervention_PTngjN5qkBeK7vuQn75dD5.eval",
       "sha256": "cd05acc228e1856eae1fe8234e3251aeeedf0cc07209d54d32c7d0fdd7444f92",
       "bytes": 649680,
       "task": "cot_monitorability/openai_monitorability_intervention",
@@ -8108,7 +8108,7 @@
       }
     },
     {
-      "file": "eval_logs/20261103T141734Z_monitorability-50/intervention/deepseek-v4.1-flash-1017/scruples_suggest_wrong/2026-11-03T18-49-42-00-00_openai-monitorability-intervention_fB5mJPdDjoYbtzLjWbu6pK.eval",
+      "file": "eval_logs/intervention/deepseek-v4.1-flash-1017/scruples_suggest_wrong/2026-11-03T18-49-42-00-00_openai-monitorability-intervention_fB5mJPdDjoYbtzLjWbu6pK.eval",
       "sha256": "e973c0cf56e60022275d1ba232ba9e56351648c11487660c5c24030604196165",
       "bytes": 582546,
       "task": "cot_monitorability/openai_monitorability_intervention",
@@ -8176,7 +8176,7 @@
       }
     },
     {
-      "file": "eval_logs/20261103T141734Z_monitorability-50/intervention/deepseek-v4.1-flash-1017/wmdp_sandbagging/2026-11-03T15-58-26-00-00_openai-monitorability-intervention_avedG6cWXR2Ka3bwrGu2QP.eval",
+      "file": "eval_logs/intervention/deepseek-v4.1-flash-1017/wmdp_sandbagging/2026-11-03T15-58-26-00-00_openai-monitorability-intervention_avedG6cWXR2Ka3bwrGu2QP.eval",
       "sha256": "5c1c2556a04d3a8fd02fd136cb86c868f576365bf70b2f640dbc8fa8dfbad3b5",
       "bytes": 2166977,
       "task": "cot_monitorability/openai_monitorability_intervention",
@@ -8244,7 +8244,7 @@
       }
     },
     {
-      "file": "eval_logs/20261103T141734Z_monitorability-50/intervention/deepseek-v4.1-flash-1017/wmdp_sandbagging/2026-11-03T18-49-42-00-00_openai-monitorability-intervention_VU8ReSzJtd7PT2k9ht233R.eval",
+      "file": "eval_logs/intervention/deepseek-v4.1-flash-1017/wmdp_sandbagging/2026-11-03T18-49-42-00-00_openai-monitorability-intervention_VU8ReSzJtd7PT2k9ht233R.eval",
       "sha256": "f7a811c93b6cf08d21388ebaa6036cb0f651e0388e1dca5f3f33a80d4ee0abdf",
       "bytes": 1582764,
       "task": "cot_monitorability/openai_monitorability_intervention",
@@ -8312,7 +8312,7 @@
       }
     },
     {
-      "file": "eval_logs/20261103T141734Z_monitorability-50/intervention/deepseek-v4.1-flash-1017/wmdp_sandbagging/2026-11-03T18-49-42-00-00_openai-monitorability-intervention_au3r7SbbETieQoVxj8RGfq.eval",
+      "file": "eval_logs/intervention/deepseek-v4.1-flash-1017/wmdp_sandbagging/2026-11-03T18-49-42-00-00_openai-monitorability-intervention_au3r7SbbETieQoVxj8RGfq.eval",
       "sha256": "b6d8baeebd1be66e8bb7bc3974d617ba1ecd446634f66b4bd97d7d81ec9886a4",
       "bytes": 1933840,
       "task": "cot_monitorability/openai_monitorability_intervention",
@@ -8380,7 +8380,7 @@
       }
     },
     {
-      "file": "eval_logs/20261103T141734Z_monitorability-50/intervention/kimi-k3.1-pro/daft/2026-11-04T05-08-08-00-00_openai-monitorability-intervention_d9377pv7yLh4FHjYiJFCjE.eval",
+      "file": "eval_logs/intervention/kimi-k3.1-pro/daft/2026-11-04T05-08-08-00-00_openai-monitorability-intervention_d9377pv7yLh4FHjYiJFCjE.eval",
       "sha256": "585ec7732959d2f7de557b51eacfc59891924dd57cbb7114b40fc4910fb56779",
       "bytes": 1333075,
       "task": "cot_monitorability/openai_monitorability_intervention",
@@ -8455,7 +8455,7 @@
       }
     },
     {
-      "file": "eval_logs/20261103T141734Z_monitorability-50/intervention/kimi-k3.1-pro/daft/2026-11-04T05-08-49-00-00_openai-monitorability-intervention_hxZAccE8ZxZnXqEa8MX2uZ.eval",
+      "file": "eval_logs/intervention/kimi-k3.1-pro/daft/2026-11-04T05-08-49-00-00_openai-monitorability-intervention_hxZAccE8ZxZnXqEa8MX2uZ.eval",
       "sha256": "f28d59ed31030b77fdc9e967795c284f8aca6cdbe049956de6708ac3f65d1abb",
       "bytes": 1080858,
       "task": "cot_monitorability/openai_monitorability_intervention",
@@ -8530,7 +8530,7 @@
       }
     },
     {
-      "file": "eval_logs/20261103T141734Z_monitorability-50/intervention/kimi-k3.1-pro/daft/2026-11-04T05-08-49-00-00_openai-monitorability-intervention_mitF2p3PGFFnAd9AEuHV4Y.eval",
+      "file": "eval_logs/intervention/kimi-k3.1-pro/daft/2026-11-04T05-08-49-00-00_openai-monitorability-intervention_mitF2p3PGFFnAd9AEuHV4Y.eval",
       "sha256": "61afd5260000262b3d02a2e4c519752e465ee01bc2810c3c34f7e21c70d666d1",
       "bytes": 1251587,
       "task": "cot_monitorability/openai_monitorability_intervention",
@@ -8605,7 +8605,7 @@
       }
     },
     {
-      "file": "eval_logs/20261103T141734Z_monitorability-50/intervention/kimi-k3.1-pro/gpqa/2026-11-04T02-33-04-00-00_openai-monitorability-intervention_gxZWTZX9UXgLmhPZD7NAhf.eval",
+      "file": "eval_logs/intervention/kimi-k3.1-pro/gpqa/2026-11-04T02-33-04-00-00_openai-monitorability-intervention_gxZWTZX9UXgLmhPZD7NAhf.eval",
       "sha256": "5222b282fa40f65d0917f526b349fe0d3c3b488bd145ec0c428d452ffbdb5ea5",
       "bytes": 850579,
       "task": "cot_monitorability/openai_monitorability_intervention",
@@ -8680,7 +8680,7 @@
       }
     },
     {
-      "file": "eval_logs/20261103T141734Z_monitorability-50/intervention/kimi-k3.1-pro/gpqa/2026-11-04T05-08-49-00-00_openai-monitorability-intervention_KuRLNnWzWirpMWJrSwK8zA.eval",
+      "file": "eval_logs/intervention/kimi-k3.1-pro/gpqa/2026-11-04T05-08-49-00-00_openai-monitorability-intervention_KuRLNnWzWirpMWJrSwK8zA.eval",
       "sha256": "5554929214f6ecd3345aad78c8dcf00bd57188452122bc900b2c7368ffa216fc",
       "bytes": 737020,
       "task": "cot_monitorability/openai_monitorability_intervention",
@@ -8755,7 +8755,7 @@
       }
     },
     {
-      "file": "eval_logs/20261103T141734Z_monitorability-50/intervention/kimi-k3.1-pro/gpqa/2026-11-04T05-26-10-00-00_openai-monitorability-intervention_CzFnSPysgiRzoGLd7Q9F7N.eval",
+      "file": "eval_logs/intervention/kimi-k3.1-pro/gpqa/2026-11-04T05-26-10-00-00_openai-monitorability-intervention_CzFnSPysgiRzoGLd7Q9F7N.eval",
       "sha256": "f5f613e0198965530ce77c5014b79f0d394c187c28ca2b136f326d3f7a738e4a",
       "bytes": 862707,
       "task": "cot_monitorability/openai_monitorability_intervention",
@@ -8830,7 +8830,7 @@
       }
     },
     {
-      "file": "eval_logs/20261103T141734Z_monitorability-50/intervention/kimi-k3.1-pro/gpqa_encoded/2026-11-04T02-33-04-00-00_openai-monitorability-intervention_boJiYcLekm4WnGPSWKPVbd.eval",
+      "file": "eval_logs/intervention/kimi-k3.1-pro/gpqa_encoded/2026-11-04T02-33-04-00-00_openai-monitorability-intervention_boJiYcLekm4WnGPSWKPVbd.eval",
       "sha256": "76af9b0c2af975643ffc67358662a551c2f2ee33cfc59553a62a69b1e325c4ad",
       "bytes": 926869,
       "task": "cot_monitorability/openai_monitorability_intervention",
@@ -8905,7 +8905,7 @@
       }
     },
     {
-      "file": "eval_logs/20261103T141734Z_monitorability-50/intervention/kimi-k3.1-pro/gpqa_encoded/2026-11-04T05-08-49-00-00_openai-monitorability-intervention_RXoCvboq3prg8BkjRquSu2.eval",
+      "file": "eval_logs/intervention/kimi-k3.1-pro/gpqa_encoded/2026-11-04T05-08-49-00-00_openai-monitorability-intervention_RXoCvboq3prg8BkjRquSu2.eval",
       "sha256": "8d3c0d3ea6462807b427aa8d5c54475710620372880a780521d96f1dcfd21f13",
       "bytes": 806754,
       "task": "cot_monitorability/openai_monitorability_intervention",
@@ -8980,7 +8980,7 @@
       }
     },
     {
-      "file": "eval_logs/20261103T141734Z_monitorability-50/intervention/kimi-k3.1-pro/gpqa_encoded/2026-11-04T05-08-49-00-00_openai-monitorability-intervention_f4VaWRPjdyrAN9JUhyFpCa.eval",
+      "file": "eval_logs/intervention/kimi-k3.1-pro/gpqa_encoded/2026-11-04T05-08-49-00-00_openai-monitorability-intervention_f4VaWRPjdyrAN9JUhyFpCa.eval",
       "sha256": "f7e686d7821283b99226ad61f81b5c363ee2dc93b1eaedb6e4aa62d9505de9a9",
       "bytes": 932847,
       "task": "cot_monitorability/openai_monitorability_intervention",
@@ -9055,7 +9055,7 @@
       }
     },
     {
-      "file": "eval_logs/20261103T141734Z_monitorability-50/intervention/kimi-k3.1-pro/scruples_first_person/2026-11-03T19-45-59-00-00_openai-monitorability-intervention_GPMDNerf6i9vMd73hWBvSh.eval",
+      "file": "eval_logs/intervention/kimi-k3.1-pro/scruples_first_person/2026-11-03T19-45-59-00-00_openai-monitorability-intervention_GPMDNerf6i9vMd73hWBvSh.eval",
       "sha256": "c84a2a33c674d40d28a73de5410c037f3853ab7d12ea2a044a35f7626f1f2989",
       "bytes": 573769,
       "task": "cot_monitorability/openai_monitorability_intervention",
@@ -9130,7 +9130,7 @@
       }
     },
     {
-      "file": "eval_logs/20261103T141734Z_monitorability-50/intervention/kimi-k3.1-pro/scruples_first_person/2026-11-04T05-08-49-00-00_openai-monitorability-intervention_2Gqmv27HqhMb7XK6ezVQLb.eval",
+      "file": "eval_logs/intervention/kimi-k3.1-pro/scruples_first_person/2026-11-04T05-08-49-00-00_openai-monitorability-intervention_2Gqmv27HqhMb7XK6ezVQLb.eval",
       "sha256": "907f4fb0ff1277d661ca85515a82a65bed1cd9bfa587cc0f54b19df988efcc3b",
       "bytes": 587174,
       "task": "cot_monitorability/openai_monitorability_intervention",
@@ -9205,7 +9205,7 @@
       }
     },
     {
-      "file": "eval_logs/20261103T141734Z_monitorability-50/intervention/kimi-k3.1-pro/scruples_first_person/2026-11-04T05-08-49-00-00_openai-monitorability-intervention_cnb56pNLoMaLzzNCC7EHND.eval",
+      "file": "eval_logs/intervention/kimi-k3.1-pro/scruples_first_person/2026-11-04T05-08-49-00-00_openai-monitorability-intervention_cnb56pNLoMaLzzNCC7EHND.eval",
       "sha256": "ba5fc53ab9e855b1fbc7442478053e4b61ab0c773632d0d9f80e64499f097616",
       "bytes": 523815,
       "task": "cot_monitorability/openai_monitorability_intervention",
@@ -9273,7 +9273,7 @@
       }
     },
     {
-      "file": "eval_logs/20261103T141734Z_monitorability-50/intervention/kimi-k3.1-pro/scruples_suggest_right/2026-11-03T19-45-59-00-00_openai-monitorability-intervention_h2CT8C6855xCjMxpjxR6HR.eval",
+      "file": "eval_logs/intervention/kimi-k3.1-pro/scruples_suggest_right/2026-11-03T19-45-59-00-00_openai-monitorability-intervention_h2CT8C6855xCjMxpjxR6HR.eval",
       "sha256": "f427526559912c054cd7f301407dacc3d6c0d1b12758844737ebd4c0a055e376",
       "bytes": 586113,
       "task": "cot_monitorability/openai_monitorability_intervention",
@@ -9348,7 +9348,7 @@
       }
     },
     {
-      "file": "eval_logs/20261103T141734Z_monitorability-50/intervention/kimi-k3.1-pro/scruples_suggest_right/2026-11-04T05-08-49-00-00_openai-monitorability-intervention_A9NUiJLkgEqGZRQeUjbNmK.eval",
+      "file": "eval_logs/intervention/kimi-k3.1-pro/scruples_suggest_right/2026-11-04T05-08-49-00-00_openai-monitorability-intervention_A9NUiJLkgEqGZRQeUjbNmK.eval",
       "sha256": "5facaf56193e01fb48449fd81c64a6429af69c67decda3017b16cf1d6f340769",
       "bytes": 599597,
       "task": "cot_monitorability/openai_monitorability_intervention",
@@ -9423,7 +9423,7 @@
       }
     },
     {
-      "file": "eval_logs/20261103T141734Z_monitorability-50/intervention/kimi-k3.1-pro/scruples_suggest_right/2026-11-04T05-08-49-00-00_openai-monitorability-intervention_AECuyQgzTCV4TCFtgoFkon.eval",
+      "file": "eval_logs/intervention/kimi-k3.1-pro/scruples_suggest_right/2026-11-04T05-08-49-00-00_openai-monitorability-intervention_AECuyQgzTCV4TCFtgoFkon.eval",
       "sha256": "a2fdcb6d2a99440afe685c596199e722b842b2ee6f5ccd6b3867fb461a39002d",
       "bytes": 527039,
       "task": "cot_monitorability/openai_monitorability_intervention",
@@ -9491,7 +9491,7 @@
       }
     },
     {
-      "file": "eval_logs/20261103T141734Z_monitorability-50/intervention/kimi-k3.1-pro/scruples_suggest_wrong/2026-11-03T19-45-59-00-00_openai-monitorability-intervention_RrtivSKTp5275QiCAXpTGS.eval",
+      "file": "eval_logs/intervention/kimi-k3.1-pro/scruples_suggest_wrong/2026-11-03T19-45-59-00-00_openai-monitorability-intervention_RrtivSKTp5275QiCAXpTGS.eval",
       "sha256": "095f4b9d187fa58484a2fc7ecf29180ab71fb4b55cd327bc0e633823235204b4",
       "bytes": 580821,
       "task": "cot_monitorability/openai_monitorability_intervention",
@@ -9566,7 +9566,7 @@
       }
     },
     {
-      "file": "eval_logs/20261103T141734Z_monitorability-50/intervention/kimi-k3.1-pro/scruples_suggest_wrong/2026-11-04T05-08-49-00-00_openai-monitorability-intervention_HQVGTnH7cL3s6jUQiY3t5y.eval",
+      "file": "eval_logs/intervention/kimi-k3.1-pro/scruples_suggest_wrong/2026-11-04T05-08-49-00-00_openai-monitorability-intervention_HQVGTnH7cL3s6jUQiY3t5y.eval",
       "sha256": "78b849ea65f85c0a69ce65354d65781caafcf55368481029441cdb4626143e9d",
       "bytes": 526347,
       "task": "cot_monitorability/openai_monitorability_intervention",
@@ -9634,7 +9634,7 @@
       }
     },
     {
-      "file": "eval_logs/20261103T141734Z_monitorability-50/intervention/kimi-k3.1-pro/scruples_suggest_wrong/2026-11-04T05-08-49-00-00_openai-monitorability-intervention_Wy68xByaedbmucS3Qu76XS.eval",
+      "file": "eval_logs/intervention/kimi-k3.1-pro/scruples_suggest_wrong/2026-11-04T05-08-49-00-00_openai-monitorability-intervention_Wy68xByaedbmucS3Qu76XS.eval",
       "sha256": "e5f2507d750c110183b3dec085f44b629c8d67b6a9b192dd120d8ae11ea70ad7",
       "bytes": 597177,
       "task": "cot_monitorability/openai_monitorability_intervention",
@@ -9709,7 +9709,7 @@
       }
     },
     {
-      "file": "eval_logs/20261103T141734Z_monitorability-50/intervention/kimi-k3.1-pro/wmdp_sandbagging/2026-11-04T04-29-01-00-00_openai-monitorability-intervention_eHap3LX7VnSfxpfe4wXTxT.eval",
+      "file": "eval_logs/intervention/kimi-k3.1-pro/wmdp_sandbagging/2026-11-04T04-29-01-00-00_openai-monitorability-intervention_eHap3LX7VnSfxpfe4wXTxT.eval",
       "sha256": "2994f7807d0ada52d46af2e4a23299f4b0122d3373187a892b4a0f8b82e61d03",
       "bytes": 1373289,
       "task": "cot_monitorability/openai_monitorability_intervention",
@@ -9784,7 +9784,7 @@
       }
     },
     {
-      "file": "eval_logs/20261103T141734Z_monitorability-50/intervention/kimi-k3.1-pro/wmdp_sandbagging/2026-11-04T05-08-49-00-00_openai-monitorability-intervention_2G3hJynFinSWzzAFhvkmgW.eval",
+      "file": "eval_logs/intervention/kimi-k3.1-pro/wmdp_sandbagging/2026-11-04T05-08-49-00-00_openai-monitorability-intervention_2G3hJynFinSWzzAFhvkmgW.eval",
       "sha256": "c88e3acce2e03ea8745599d7737f407c35fb6d816fd27cc3d8062bf01db824b4",
       "bytes": 1332538,
       "task": "cot_monitorability/openai_monitorability_intervention",
@@ -9859,7 +9859,7 @@
       }
     },
     {
-      "file": "eval_logs/20261103T141734Z_monitorability-50/intervention/kimi-k3.1-pro/wmdp_sandbagging/2026-11-04T05-26-10-00-00_openai-monitorability-intervention_5Rqek2LBHjBFTVBMmASzsH.eval",
+      "file": "eval_logs/intervention/kimi-k3.1-pro/wmdp_sandbagging/2026-11-04T05-26-10-00-00_openai-monitorability-intervention_5Rqek2LBHjBFTVBMmASzsH.eval",
       "sha256": "3f0d5effae66196d5f68b0c49c655caea23ebfff806ba30bf1ab8f65b23bd7c8",
       "bytes": 885349,
       "task": "cot_monitorability/openai_monitorability_intervention",
@@ -9934,7 +9934,7 @@
       }
     },
     {
-      "file": "eval_logs/20261103T141734Z_monitorability-50/ncri/deepseek-v4.1-flash-1017/ncri-index_15bdae0c7566.eval",
+      "file": "eval_logs/ncri/deepseek-v4.1-flash-1017/ncri-index_15bdae0c7566.eval",
       "sha256": "0a2a8eea299eaa7e881ce354829cd6f56ec855708198a70c0a2022d965e1db1a",
       "bytes": 5283372,
       "task": "cot_monitorability/ncri_bench",
@@ -10046,7 +10046,7 @@
       }
     },
     {
-      "file": "eval_logs/20261103T141734Z_monitorability-50/ncri/kimi-k3.1-pro/ncri-index_f0bb7edc86af.eval",
+      "file": "eval_logs/ncri/kimi-k3.1-pro/ncri-index_f0bb7edc86af.eval",
       "sha256": "9c815f374df508d0fc9040adc7fc7adcf2c7b81b14ebea5d932a8214e67e7d21",
       "bytes": 5103651,
       "task": "cot_monitorability/ncri_bench",
@@ -10158,7 +10158,7 @@
       }
     },
     {
-      "file": "eval_logs/20261103T141734Z_monitorability-50/process/deepseek-v4.1-flash-1017/gpqa_physics/2026-11-03T15-19-03-00-00_openai-monitorability-process_dbe5XZfTmg5JjQogGtSy8x.eval",
+      "file": "eval_logs/process/deepseek-v4.1-flash-1017/gpqa_physics/2026-11-03T15-19-03-00-00_openai-monitorability-process_dbe5XZfTmg5JjQogGtSy8x.eval",
       "sha256": "7242b398e9f4dac985fd57cc72f216063afa6998bb6284061e60e72ae466e2ba",
       "bytes": 854796,
       "task": "cot_monitorability/openai_monitorability_process",
@@ -10225,7 +10225,7 @@
       }
     },
     {
-      "file": "eval_logs/20261103T141734Z_monitorability-50/process/deepseek-v4.1-flash-1017/gpqa_physics/2026-11-03T18-49-42-00-00_openai-monitorability-process_MvEZA483hiZw8D6P86SSm9.eval",
+      "file": "eval_logs/process/deepseek-v4.1-flash-1017/gpqa_physics/2026-11-03T18-49-42-00-00_openai-monitorability-process_MvEZA483hiZw8D6P86SSm9.eval",
       "sha256": "b381edc404fe541bb942693180f41b68c33386bbb96395dd523af2bc84432695",
       "bytes": 963925,
       "task": "cot_monitorability/openai_monitorability_process",
@@ -10292,7 +10292,7 @@
       }
     },
     {
-      "file": "eval_logs/20261103T141734Z_monitorability-50/process/deepseek-v4.1-flash-1017/gpqa_physics/2026-11-03T18-49-42-00-00_openai-monitorability-process_Qa3vaPM6jZ4u7yceCMhFPt.eval",
+      "file": "eval_logs/process/deepseek-v4.1-flash-1017/gpqa_physics/2026-11-03T18-49-42-00-00_openai-monitorability-process_Qa3vaPM6jZ4u7yceCMhFPt.eval",
       "sha256": "5163a9e51a652323a77917914d81e3764a2531575c533f0c0a3a08f0ab34df71",
       "bytes": 865185,
       "task": "cot_monitorability/openai_monitorability_process",
@@ -10359,7 +10359,7 @@
       }
     },
     {
-      "file": "eval_logs/20261103T141734Z_monitorability-50/process/kimi-k3.1-pro/gpqa_physics/2026-11-03T19-45-59-00-00_openai-monitorability-process_GE3sbhbfZTLmD22abuXfsB.eval",
+      "file": "eval_logs/process/kimi-k3.1-pro/gpqa_physics/2026-11-03T19-45-59-00-00_openai-monitorability-process_GE3sbhbfZTLmD22abuXfsB.eval",
       "sha256": "1dd7dfa2f03a62dd5918dcc371010ea815afd2a7b3757b99fcf97b9ad79460bd",
       "bytes": 771598,
       "task": "cot_monitorability/openai_monitorability_process",
@@ -10433,7 +10433,7 @@
       }
     },
     {
-      "file": "eval_logs/20261103T141734Z_monitorability-50/process/kimi-k3.1-pro/gpqa_physics/2026-11-04T05-08-49-00-00_openai-monitorability-process_4PRMFq4AkE8BEMiTmKpGAL.eval",
+      "file": "eval_logs/process/kimi-k3.1-pro/gpqa_physics/2026-11-04T05-08-49-00-00_openai-monitorability-process_4PRMFq4AkE8BEMiTmKpGAL.eval",
       "sha256": "fa21a77450a7a8e6fcbdb04e9a240d467365d75a66f1bacf63337cd1f078ed75",
       "bytes": 813879,
       "task": "cot_monitorability/openai_monitorability_process",
@@ -10507,7 +10507,7 @@
       }
     },
     {
-      "file": "eval_logs/20261103T141734Z_monitorability-50/process/kimi-k3.1-pro/gpqa_physics/2026-11-04T05-08-49-00-00_openai-monitorability-process_NqQc4dUnbqLyhJ37ZtEaYF.eval",
+      "file": "eval_logs/process/kimi-k3.1-pro/gpqa_physics/2026-11-04T05-08-49-00-00_openai-monitorability-process_NqQc4dUnbqLyhJ37ZtEaYF.eval",
       "sha256": "288846d39a01aa06a823abdb2f89c6e148343bae634473ff0277a07ce6793940",
       "bytes": 747159,
       "task": "cot_monitorability/openai_monitorability_process",
