@@ -219,7 +219,7 @@ async def test_bounded_retry_keeps_prompt_and_actor_settings(judge):
     assert result.stop_reason == "stop"
     assert model.calls[0][0] == model.calls[1][0]
     if judge:
-        assert model.calls[1][1]["config"].max_tokens == 32768
+        assert model.calls[1][1]["config"].max_tokens == 65536
     else:
         assert model.calls[1][1] == {"cache": False}
 

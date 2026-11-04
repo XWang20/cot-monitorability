@@ -116,7 +116,9 @@ async def _complete_response(model: Model, messages, *, judge: bool = False):
         # Retry the identical prompt once. Judge retries have room for a verdict;
         # actor retries retain their original generation configuration.
         if judge:
-            maximum = max(32768, model.config.max_tokens or 8192)
+            # Monitors can loop past the 32k recovery window on hard prompts;
+            # the retry stays bounded, but wide enough to finish a verdict.
+            maximum = max(65536, model.config.max_tokens or 8192)
             output = await model.generate(
                 messages, config=GenerateConfig(max_tokens=maximum)
             )
