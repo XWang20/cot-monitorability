@@ -149,6 +149,18 @@
       "dataset": "intervention/daft.jsonl",
       "sample_id": "intervention_daft__0",
       "reason": "No completed control answer within the 65536-token budget after retry; retain as incomplete."
+    },
+    {
+      "model": "kimi-k3.1-pro",
+      "dataset": "intervention/daft.jsonl",
+      "sample_id": "intervention_daft__39",
+      "reason": "Actor generation exceeded the 600s client timeout on four consecutive attempts with no completed arm; declared incomplete by operator decision."
+    },
+    {
+      "model": "kimi-k3.1-pro",
+      "dataset": "intervention/daft.jsonl",
+      "sample_id": "intervention_daft__61",
+      "reason": "Actor generation exceeded the 600s client timeout on four consecutive attempts with no completed arm; declared incomplete by operator decision."
     }
   ]
 }
