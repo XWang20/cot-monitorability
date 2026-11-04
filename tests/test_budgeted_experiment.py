@@ -128,6 +128,7 @@ def test_native_phase_preserves_completed_log_paths_and_cost_metadata(
     ]
     paths = experiment.phase(tasks, {"id": "ds"}, "test", "openai", False)
     assert len(paths) == 1
+    assert paths[0].parent == tmp_path / "logs" / "task" / "ds"
     assert read_eval_log(paths[0]).results.metadata["run_cost"]["amount"] == 0
     assert experiment.history[0]["audit"]["passed"]
 
